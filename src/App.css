@@ -1,0 +1,7 @@
+.App {
+    display: flex;
+    height: 100vw;
+    background-color: #FFC9B5;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+}

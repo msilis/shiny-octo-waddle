@@ -1,0 +1,9 @@
+.headerContainer {
+    display: flex;
+    justify-content: center;
+    background-color: #E1F16B;
+}
+
+.headerPic {
+    max-width: 600px;
+}

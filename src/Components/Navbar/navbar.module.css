@@ -1,0 +1,36 @@
+.navBackground {
+    background-color: #388697;
+}
+
+.navbarContainer {
+    display: flex;
+    width: 800px;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #388697;
+    border-radius: 10px;
+}
+
+.navList {
+    display: flex;
+    justify-items: center;
+    gap: 2rem;
+    list-style: none;
+    
+}
+
+.navLink {
+    text-decoration: none;
+    color: white;
+    transition: .5s;
+}
+
+.navLink:hover {
+    color: darkgray;
+}
+
+.navLink:active {
+    color: black;
+}
