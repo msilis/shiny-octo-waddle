@@ -1,8 +1,9 @@
 import style from "./about.module.css";
+import classnames from "classnames"
 
 export default function About() {
   return (
-    <div className={style.aboutContainer}>
+    <div className={classnames(style.aboutContainer, style.fadeContainer)}>
       <header className={style.headerContainer}>
         <h3 className={style.aboutHeading}>About this site</h3>
       </header>
