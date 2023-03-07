@@ -22,7 +22,6 @@ export default function Register() {
   const [passwordDoubleCheck, setPasswordDoubleCheck] = useState(false);
   const [countryInput, setCountryInput] = useState("");
 
-  // TODO List of countries for dropdown
   //List of countries
   const countryCodes = Object.keys(countries.countries);
   const countryNames = countryCodes.map(
@@ -31,16 +30,10 @@ export default function Register() {
   const sortedCountry = countryNames.sort();
 
   const options = sortedCountry.map((country, index) => {
-    return (
-     { value: country[index], label: country, key: index }
-    );
+    return { value: country[index], label: country, key: index };
   });
   //Selection menu functionality
-
-  
-  /* const dropdownMenu = () => (
-    <Select options={options} />
-  ) */
+  // TODO Sort out dropdown menu
 
   function handleRegisterClick() {
     // Check input fields
@@ -57,7 +50,7 @@ export default function Register() {
     } else if (checkPasswordInput.current?.value === "") {
       setPasswordDoubleCheck(true);
     } else if (
-        //Check password match
+      //Check password match
       passwordInput.current?.value != checkPasswordInput.current?.value
     ) {
       alert("Passwords do not match!");
@@ -72,7 +65,6 @@ export default function Register() {
       checkPasswordInput.current.value = "";
       setCountryInput(" ");
     }
-    
   }
 
   return (
@@ -102,7 +94,12 @@ export default function Register() {
           placeholder="Email"
           ref={emailInput}
         />
-        <Select  options={options} defaultValue={options[236]} isSearchable={true} onChange={(e) => setCountryInput(e.target)}/>
+        <Select
+          options={options}
+          defaultValue={options[236]}
+          isSearchable={true}
+          onChange={(e) => setCountryInput(e.target)}
+        />
         <input
           className={classnames(style.registerInput, {
             [style.registerInputError]: userNameCheck,
