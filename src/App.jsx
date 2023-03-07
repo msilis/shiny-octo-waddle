@@ -2,7 +2,6 @@ import "./App.css";
 import { Header, Navbar, Home, About, Login, Register } from "./Components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
-import classnames from "classnames";
 
 function App() {
   //State for user login

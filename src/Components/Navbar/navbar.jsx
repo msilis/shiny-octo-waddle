@@ -5,6 +5,7 @@ export default function Navbar(){
         <div className={style.navBackground}>
         <nav className={style.navbarContainer}>
             <ul className={style.navList}>
+                <a href="/" className={style.navLink}><li className={style.navListItem}>Home</li></a>
                 <a href="/about" className={style.navLink}><li className={style.navListItem}>About</li></a>
                 <a href="login" className={style.navLink}><li className={style.navListItem}>Log In</li></a>
                 <a href="/register" className={style.navLink}><li className={style.navListItem}>Register</li></a>
