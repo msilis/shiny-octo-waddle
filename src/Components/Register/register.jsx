@@ -30,7 +30,7 @@ export default function Register() {
   const sortedCountry = countryNames.sort();
 
   const options = sortedCountry.map((country, index) => {
-    return { value: country[index], label: country, key: index };
+    return { value: country, label: country, key: index };
   });
   //Selection menu functionality
   // TODO Sort out dropdown menu
@@ -98,7 +98,9 @@ export default function Register() {
           options={options}
           defaultValue={options[236]}
           isSearchable={true}
-          onChange={(e) => setCountryInput(e.target)}
+          onChange={(e) => {
+            console.log(e.value)
+            setCountryInput(e.value)}}
         />
         <input
           className={classnames(style.registerInput, {
