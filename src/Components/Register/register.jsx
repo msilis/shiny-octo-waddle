@@ -28,7 +28,7 @@ export default function Register() {
     (code) => countries.countries[code].name
   );
   const sortedCountry = countryNames.sort();
-
+  sortedCountry.unshift("--Select Country--")
   const options = sortedCountry.map((country, index) => {
     return { value: country, label: country, key: index };
   });
@@ -55,6 +55,26 @@ export default function Register() {
     ) {
       alert("Passwords do not match!");
     } else {
+        const newUserData = {
+            firstName: firstNameInput.current?.value,
+            lastName: lastNameInput.current?.value,
+            country: countryInput,
+            email: emailInput.current?.value,
+            userName: usernameInput.current?.value,
+            password: passwordInput.current?.value
+        }
+        try{
+            console.log(newUserData)
+            fetch("http://localhost:8080/addUser",{
+                method: "POST",
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(newUserData)
+            }).then(response => console.log(response))
+        }catch(err){
+            console.log(err)
+        }
       console.log("got to here sucessfully");
       //Reset field values
       firstNameInput.current.value = "";
@@ -96,7 +116,7 @@ export default function Register() {
         />
         <Select
           options={options}
-          defaultValue={options[236]}
+          defaultValue={options[0]}
           isSearchable={true}
           onChange={(e) => {
             console.log(e.value)
