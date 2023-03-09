@@ -23,7 +23,14 @@
 
 .registerInput {
     width: 30rem;
+    height: 2.5rem;
     font-size: 1.25rem;
+    border-radius: 3px;
+    outline: none;
+}
+
+.registerInput:focus {
+    border-color: royalblue;
 }
 
 .registerInputError {

@@ -20,7 +20,7 @@ export default function Register() {
   const [userNameCheck, setUserNameCheck] = useState(false);
   const [passwordCheck, setPasswordCheck] = useState(false);
   const [passwordDoubleCheck, setPasswordDoubleCheck] = useState(false);
-  const [countryInput, setCountryInput] = useState("");
+  const [countryInput, setCountryInput] = useState("0");
 
   //List of countries
   const countryCodes = Object.keys(countries.countries);
@@ -28,12 +28,11 @@ export default function Register() {
     (code) => countries.countries[code].name
   );
   const sortedCountry = countryNames.sort();
-  sortedCountry.unshift("--Select Country--")
+  sortedCountry.unshift("--Select Country--");
   const options = sortedCountry.map((country, index) => {
     return { value: country, label: country, key: index };
   });
   //Selection menu functionality
-  // TODO Sort out dropdown menu
 
   function handleRegisterClick() {
     // Check input fields
@@ -55,41 +54,57 @@ export default function Register() {
     ) {
       alert("Passwords do not match!");
     } else {
-        const newUserData = {
-            firstName: firstNameInput.current?.value,
-            lastName: lastNameInput.current?.value,
-            country: countryInput,
-            email: emailInput.current?.value,
-            userName: usernameInput.current?.value,
-            password: passwordInput.current?.value
-        }
-        try{
-            console.log(newUserData)
-            fetch("http://localhost:8080/addUser",{
-                method: "POST",
-                headers: {
-                    "content-type": "application/json"
-                },
-                body: JSON.stringify(newUserData)
-            }).then(response => console.log(response))
-        }catch(err){
-            console.log(err)
-        }
-      console.log("got to here sucessfully");
-      //Reset field values
-      firstNameInput.current.value = "";
-      lastNameInput.current.value = "";
-      emailInput.current.value = "";
-      usernameInput.current.value = "";
-      passwordInput.current.value = "";
-      checkPasswordInput.current.value = "";
-      setCountryInput(" ");
+      const newUserData = {
+        firstName: firstNameInput.current?.value,
+        lastName: lastNameInput.current?.value,
+        country: countryInput,
+        email: emailInput.current?.value,
+        userName: usernameInput.current?.value,
+        password: passwordInput.current?.value,
+      };
+      try {
+        console.log(newUserData);
+        fetch("http://localhost:8080/addUser", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(newUserData),
+        }).then((response) => {
+          //Check if username already exists
+          if (response.status === 409) {
+            return alert(
+              "That username already exists, please pick a different username."
+            );
+          } else {
+            alert("User added sucessfully!")
+            //Reset field values if submission sucessful
+            firstNameInput.current.value = "";
+            lastNameInput.current.value = "";
+            emailInput.current.value = "";
+            usernameInput.current.value = "";
+            passwordInput.current.value = "";
+            checkPasswordInput.current.value = "";
+            //Reset any error message fields
+            setFirstNameCheck(false);
+            setLastNameCheck(false);
+            setEmailCheck(false);
+            setUserNameCheck(false);
+            setPasswordCheck(false);
+            setPasswordDoubleCheck(false);
+            setCountryInput("0");
+          }
+        });
+      } catch (err) {
+        console.log(err);
+      }
+      
     }
   }
 
   return (
     <div
-      className={classnames(style.registerContainer, style.fadeContainer, {})}
+      className={classnames(style.registerContainer, style.fadeContainer)}
     >
       <h3 className={style.registerHeading}>Register</h3>
       <div className={style.inputContainer}>
@@ -116,11 +131,12 @@ export default function Register() {
         />
         <Select
           options={options}
-          defaultValue={options[0]}
+          value={options[countryInput]}
           isSearchable={true}
           onChange={(e) => {
-            console.log(e.value)
-            setCountryInput(e.value)}}
+            console.log(e.value);
+            setCountryInput(e.value);
+          }}
         />
         <input
           className={classnames(style.registerInput, {

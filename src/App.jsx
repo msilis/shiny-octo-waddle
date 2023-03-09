@@ -1,17 +1,16 @@
 import "./App.css";
 import { Header, Navbar, Home, About, Login, Register } from "./Components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
 
 function App() {
   //State for user login
 
-  const [userLogin, setuserLogin] = useState(false);
+  
 
   return (
     <div className="App">
       <Header />
-      <Navbar userLogin={userLogin} setuserLogin={setuserLogin} />
+      <Navbar />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />}></Route>
