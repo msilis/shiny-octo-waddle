@@ -3,6 +3,7 @@ import classnames from "classnames";
 import countries from "countries-list";
 import { useRef, useState } from "react";
 import Select from "react-select";
+import { useNavigate } from "react-router";
 
 export default function Register() {
   //Refs for inputs
@@ -21,6 +22,8 @@ export default function Register() {
   const [passwordCheck, setPasswordCheck] = useState(false);
   const [passwordDoubleCheck, setPasswordDoubleCheck] = useState(false);
   const [countryInput, setCountryInput] = useState("0");
+
+  const navigate = useNavigate();
 
   //List of countries
   const countryCodes = Object.keys(countries.countries);
@@ -93,6 +96,7 @@ export default function Register() {
             setPasswordCheck(false);
             setPasswordDoubleCheck(false);
             setCountryInput("0");
+            navigate("/login")
           }
         });
       } catch (err) {
