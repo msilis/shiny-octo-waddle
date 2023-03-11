@@ -16,7 +16,7 @@
 .navList {
     display: flex;
     justify-items: center;
-    gap: 2rem;
+    gap: 6rem;
     list-style: none;
     
 }

@@ -10,3 +10,8 @@ Content-Type: application/json
     "password": "pass"
 
 }
+
+###
+
+GET http://localhost:8080/tags
+Content-Content-Type: application/json

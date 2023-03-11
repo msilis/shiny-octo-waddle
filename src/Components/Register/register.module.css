@@ -70,7 +70,7 @@
 
 /* Animate container on load */
 .fadeContainer {
-    animation: 1s animate-fade-container ease-out 1;
+    animation: .25s animate-fade-container ease-out 1;
 }
 
 @keyframes animate-fade-container {

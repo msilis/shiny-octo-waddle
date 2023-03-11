@@ -1,17 +1,33 @@
+import { Link } from "react-router-dom";
 import style from "./navbar.module.css";
 
-export default function Navbar(){
-    return(
-        <div className={style.navBackground}>
-        <nav className={style.navbarContainer}>
-            <ul className={style.navList}>
-                <a href="/" className={style.navLink}><li className={style.navListItem}>Home</li></a>
-                <a href="/about" className={style.navLink}><li className={style.navListItem}>About</li></a>
-                <a href="login" className={style.navLink}><li className={style.navListItem}>Log In</li></a>
-                <a href="/register" className={style.navLink}><li className={style.navListItem}>Register</li></a>
-            </ul>
-        
-        </nav>
-        </div>
-    )
+export default function Navbar(props) {
+    console.log(props.loggedIn)
+  return (
+    <div className={style.navBackground}>
+      <nav className={style.navbarContainer}>
+        <ul className={style.navList}>
+          <Link to="/" className={style.navLink}>
+            <li className={style.navListItem}>Home</li>
+          </Link>
+          <Link to="about" className={style.navLink}>
+            <li className={style.navListItem}>About</li>
+          </Link>
+          {props.loggedIn ? (
+            <Link to="dashboard" className={style.navLink}>
+              <li className={style.navListItem}>Dashboard</li>
+            </Link>
+          ) : (
+            <Link to="/login" className={style.navLink}>
+                <li className={style.navListItem}>Log In</li>
+            </Link>
+          )}
+
+          <Link to="register" className={style.navLink}>
+            <li className={style.navListItem}>Register</li>
+          </Link>
+        </ul>
+      </nav>
+    </div>
+  );
 }
