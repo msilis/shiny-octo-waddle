@@ -32,7 +32,8 @@ export default function Login(props) {
             props.setLoggedIn(true)
             sessionStorage.setItem("loggedIn", true);
             console.log("User logged in.");
-            return navigate("/");
+            //Redirect user after sucessful login
+            return navigate("/dashboard");
           }
         });
         loginUsername.current.value = "";

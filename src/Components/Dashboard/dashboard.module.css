@@ -1,21 +1,125 @@
 .dashboardMainContainer {
-    border: 1px solid blue;
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
+  border: 1px solid blue;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .techniqueTagsContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
+/* Select menu and button */
+.selectInput {
+  width: 20rem;
+}
 
-.tagMapItem {
-    border: 1px solid red;
-    text-align: center;
-    width: 10rem;
+.goButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  width: 5rem;
+  height: 1.8rem;
+  color: white;
+  background-color: #241e4e;
+  padding: 0.25rem;
+  border-radius: 10px;
+  transition: 0.5s;
+}
+
+.goButton:hover {
+  cursor: pointer;
+}
+
+.goButton:active {
+  transform: translateY(5px);
+  box-shadow: 2px 2px 2px black;
+}
+
+/* Logout button */
+.dashboardUserButtonContainer {
+  display: flex;
+  justify-content: center;
+  width: 6rem;
+  color: white;
+  background-color: #241e4e;
+  margin-top: 3rem;
+  padding: 0.5rem;
+  border-radius: 10px;
+  transition: 0.5s;
+}
+
+.dashboardUserButtonContainer:hover {
+  cursor: pointer;
+}
+
+.dashboardUserButtonContainer:active {
+  transform: translateY(5px);
+  box-shadow: 2px 2px 2px black;
+}
+
+/* =========================================
+|||||||||||| Results |||||||||||||||||||||||
+============================================ */
+
+.resultsHidden {
+  display: none;
+}
+
+.resultContainer {
+  transition: 1s;
+}
+
+.reviewPieceContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.reviewPieceList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.reviewPieceItem {
+  display: flex;
+  color: white;
+  width: 10rem;
+  height: 4rem;
+  font-weight: bolder;
+  justify-content: center;
+  align-items: center;
+  background-color: #241e4e;
+  border-radius: 10px;
+}
+
+/* =========================================
+||||||||\\Animate container on load|||||||||
+============================================ */
+.fadeContainer {
+  animation: 0.25s animate-fade-container ease-out 1;
+}
+
+@keyframes animate-fade-container {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  80% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 1;
+  }
 }

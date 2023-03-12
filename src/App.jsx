@@ -1,5 +1,13 @@
 import "./App.css";
-import { Header, Navbar, Home, About, Login, Register, Dashboard } from "./Components";
+import {
+  Header,
+  Navbar,
+  Home,
+  About,
+  Login,
+  Register,
+  Dashboard,
+} from "./Components";
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 
@@ -20,7 +28,10 @@ function App() {
           path="/login"
           element={<Login setLoggedIn={setLoggedIn} loggedIn={loggedIn} />}
         ></Route>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route
+          path="/dashboard"
+          element={<Dashboard setLoggedIn={setLoggedIn} loggedIn={loggedIn} />}
+        ></Route>
         <Route path="/register" element={<Register />}></Route>
       </Routes>
     </div>
