@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import style from "./dashboard.module.css";
 import classnames from "classnames";
 import Select from "react-select";
+import Sidebar from "./Dashboard-sidebar/dashboard-sidebar";
 
 export default function Dashboard({ loggedIn, setLoggedIn }) {
   //State for tagArray
@@ -11,7 +12,6 @@ export default function Dashboard({ loggedIn, setLoggedIn }) {
   const [results, setResults] = useState(true);
   const [reviewPieces, setReviewPieces] = useState([]);
   //Redirect functionality
-  const navigate = useNavigate();
 
   //Call API to get tags on initial page load
   useEffect(() => {
@@ -47,13 +47,14 @@ export default function Dashboard({ loggedIn, setLoggedIn }) {
   });
 
   //Handle logout button click
-  function handleUserLogout() {
+  //TODO remove this if everything is working
+  /* function handleUserLogout() {
     setLoggedIn(false);
     //Remove session storage variable
     sessionStorage.removeItem("loggedIn");
     //redirect to login page
     navigate("/login");
-  }
+  } */
 
   //Handle Go button click
   function handleGoClick() {
@@ -82,45 +83,55 @@ export default function Dashboard({ loggedIn, setLoggedIn }) {
 
   return (
     <div
-      className={classnames(style.dashboardMainContainer, style.fadeContainer)}>
-      <div
+      className={classnames(style.dashboardMainContainer, style.fadeContainer)}
+    >
+      <div className={style.dashboardSidebar}>
+        <Sidebar setLoggedIn={setLoggedIn} loggedIn={loggedIn} />
+      </div>
+      <div className={style.dashboardMain}>
+        {/*/ !!! REMOVE IF EVERYTHING IS WORKING CORRECTLY */}
+        {/* <div
         className={style.dashboardUserButtonContainer}
         onClick={handleUserLogout}>
         <span>Log Out</span>
-      </div>
-      <h2>What do you want to work on in your group?</h2>
-      <h3>Book One Techniques</h3>
-      <div className={style.techniqueTagsContainer}>
-        <Select
-          className={style.selectInput}
-          options={tagOptions}
-          isSearchable={true}
-          onChange={(e) => {
-            console.log(e.value);
-            setSelectedTag(e.value);
-          }}
-        />
-      </div>
-      <div className={style.goButton} onClick={handleGoClick}>
-        <span>Go!</span>
-      </div>
-      <div
-        className={classnames(style.resultContainer, style.fadeContainer, {
-          [style.resultsHidden]: results,
-        })}
-      >
-        <div className={style.reviewPieceContainer}>
-          <div className={style.reviewHeading}>
-            <h3
-              className={style.reviewHeadingText}
-            >{`Suggested review pieces for: ${selectedTag}`}</h3>
-          </div>
-          <div className={style.reviewPieceList}>
-            {reviewPieces.map((piece) => (
-              <div className={style.reviewPieceItem} key={crypto.randomUUID()}>
-                {piece}
-              </div>
-            ))}
+      </div> */}
+        <h2>What do you want to work on in your group?</h2>
+        <h3>Book One Techniques</h3>
+        <div className={style.techniqueTagsContainer}>
+          <Select
+            className={style.selectInput}
+            options={tagOptions}
+            isSearchable={true}
+            onChange={(e) => {
+              console.log(e.value);
+              setSelectedTag(e.value);
+            }}
+          />
+        </div>
+        <div className={style.goButton} onClick={handleGoClick}>
+          <span>Go!</span>
+        </div>
+        <div
+          className={classnames(style.resultContainer, style.fadeContainer, {
+            [style.resultsHidden]: results,
+          })}
+        >
+          <div className={style.reviewPieceContainer}>
+            <div className={style.reviewHeading}>
+              <h3
+                className={style.reviewHeadingText}
+              >{`Suggested review pieces for: ${selectedTag}`}</h3>
+            </div>
+            <div className={style.reviewPieceList}>
+              {reviewPieces.map((piece) => (
+                <div
+                  className={style.reviewPieceItem}
+                  key={crypto.randomUUID()}
+                >
+                  {piece}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

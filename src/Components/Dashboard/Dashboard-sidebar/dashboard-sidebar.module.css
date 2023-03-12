@@ -1,0 +1,31 @@
+.sidebarContainer {
+  width: 10rem;
+  margin-right: 0.25rem;
+  border: 1px solid red;
+}
+
+.sidebarButtonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.sidebarButton {
+  display: flex;
+  justify-content: center;
+  width: 6rem;
+  color: white;
+  background-color: #241e4e;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 10px;
+  transition: 0.5s;
+}
+
+.sidebarButton:hover {
+  cursor: pointer;
+}
+
+.sidebarButton:active {
+  transform: translateY(5px);
+  box-shadow: 2px 2px 2px black;
+}
