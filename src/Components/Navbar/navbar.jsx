@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import style from "./navbar.module.css";
 
-export default function Navbar(props) {
-    console.log(props.loggedIn)
+export default function Navbar({ loggedIn, seeProfile, setSeeProfile }) {
+  console.log(loggedIn);
   return (
     <div className={style.navBackground}>
       <nav className={style.navbarContainer}>
@@ -13,13 +13,13 @@ export default function Navbar(props) {
           <Link to="about" className={style.navLink}>
             <li className={style.navListItem}>About</li>
           </Link>
-          {props.loggedIn ? (
-            <Link to="dashboard" className={style.navLink}>
+          {loggedIn ? (
+            <Link to="/dashboard" className={style.navLink}>
               <li className={style.navListItem}>Dashboard</li>
             </Link>
           ) : (
             <Link to="/login" className={style.navLink}>
-                <li className={style.navListItem}>Log In</li>
+              <li className={style.navListItem}>Log In</li>
             </Link>
           )}
 

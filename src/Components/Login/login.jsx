@@ -3,7 +3,7 @@ import classnames from "classnames";
 import { useRef } from "react";
 import { useNavigate } from "react-router";
 
-export default function Login(props) {
+export default function Login({setFirstName, setLastName, setEmail, loggedIn, setLoggedIn}) {
   //Refs for inputs
   const loginUsername = useRef();
   const loginPassword = useRef();
@@ -29,12 +29,19 @@ export default function Login(props) {
           if (response.status === 401) {
             alert("Incorrect Username or Password!");
           } else {
-            props.setLoggedIn(true)
+            return response.json()
+            
+          }
+        }).then(data => {
+          console.log(data.firstName);
+          setLoggedIn(true);
+          setFirstName(data.firstName);
+          setLastName(data.lastName);
+          setEmail(data.email)
             sessionStorage.setItem("loggedIn", true);
             console.log("User logged in.");
             //Redirect user after sucessful login
             return navigate("/dashboard");
-          }
         });
         loginUsername.current.value = "";
         loginPassword.current.value = "";
@@ -49,7 +56,7 @@ export default function Login(props) {
   }
 
   function handleLogout(){
-    props.setLoggedIn(false)
+    setLoggedIn(false);
     console.log('Logged out')
     sessionStorage.removeItem('loggedIn')
   }
@@ -76,7 +83,7 @@ export default function Login(props) {
           <span>Log In</span>
         </div>
       </div>
-      <div className={props.loggedIn ? style.loginButton : style.userLoggedIn} onClick={handleLogout}>
+      <div className={loggedIn ? style.loginButton : style.userLoggedIn} onClick={handleLogout}>
             <span>Log out</span>
         </div>
       

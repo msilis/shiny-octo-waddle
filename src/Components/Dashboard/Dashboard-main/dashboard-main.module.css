@@ -1,0 +1,81 @@
+/* ===========================================
+|||||||||||| Technique Tags ||||||||||||||||||
+==============================================
+*/
+.techniqueTagsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  
+  /* =========================================
+|||||||||||| Go Button Style  ||||||||||||||||
+============================================ */
+.goButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    width: 5rem;
+    height: 1.8rem;
+    color: white;
+    background-color: #241e4e;
+    padding: 0.25rem;
+    border-radius: 10px;
+    transition: 0.5s;
+  }
+  
+  .goButton:hover {
+    cursor: pointer;
+  }
+  
+  .goButton:active {
+    transform: translateY(5px);
+    box-shadow: 2px 2px 2px black;
+  }
+
+   /* =========================================
+|||||||||||| Select menu style|||||||||||||||||
+============================================ */
+
+  .selectInput {
+    width: 20rem;
+    color: black;
+  }
+
+  /* =========================================
+|||||||||||| Results |||||||||||||||||||||||
+============================================ */
+
+.resultsHidden {
+    display: none;
+  }
+  
+  .resultContainer {
+    transition: 1s;
+  }
+  
+  .reviewPieceContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .reviewPieceList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .reviewPieceItem {
+    display: flex;
+    color: white;
+    width: 10rem;
+    height: 4rem;
+    font-weight: bolder;
+    justify-content: center;
+    align-items: center;
+    background-color: #241e4e;
+    border-radius: 10px;
+  }
