@@ -3,7 +3,7 @@ import classnames from "classnames";
 import { useRef } from "react";
 import { useNavigate } from "react-router";
 
-export default function Login({setFirstName, setLastName, setEmail, loggedIn, setLoggedIn}) {
+export default function Login({setFirstName, setLastName, setEmail, loggedIn, setLoggedIn, setUserId}) {
   //Refs for inputs
   const loginUsername = useRef();
   const loginPassword = useRef();
@@ -38,6 +38,7 @@ export default function Login({setFirstName, setLastName, setEmail, loggedIn, se
           setFirstName(data.firstName);
           setLastName(data.lastName);
           setEmail(data.email)
+          setUserId(data.userId)
             sessionStorage.setItem("loggedIn", true);
             console.log("User logged in.");
             //Redirect user after sucessful login
@@ -54,6 +55,15 @@ export default function Login({setFirstName, setLastName, setEmail, loggedIn, se
       console.log("user already logged in");
     }
   }
+
+  //Enter key submits login info
+
+  function handleEnterKey(event){
+    if(event.key === "Enter"){
+      console.log(event.key)
+      handleLoginSubmit()
+    }
+  };
 
   function handleLogout(){
     setLoggedIn(false);
@@ -78,6 +88,7 @@ export default function Login({setFirstName, setLastName, setEmail, loggedIn, se
           ref={loginPassword}
           className={style.loginInput}
           type="password"
+          onKeyDown={handleEnterKey}
         ></input>
         <div className={style.loginButton} onClick={handleLoginSubmit}>
           <span>Log In</span>

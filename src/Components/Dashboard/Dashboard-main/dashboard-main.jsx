@@ -1,16 +1,18 @@
 import style from "./dashboard-main.module.css";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import classnames from "classnames";
 import Select from "react-select";
 
-export default function DashboardMain({ loggedIn, setLoggedIn, firstName}) {
+export default function DashboardMain({ loggedIn, setLoggedIn, firstName, userId }) {
   const [tagArray, setTagArray] = useState([]);
   const [selectedTag, setSelectedTag] = useState("0");
   const [results, setResults] = useState(true);
   const [reviewPieces, setReviewPieces] = useState([]);
+  const [randomGame, setRandomGame] = useState([]);
+  const [savedGame, setSavedGame] = useState(false)
   //Redirect functionality
 
-  //Call API to get tags on initial page load
+  //Call API to get tags on initial page load ==================================================
   useEffect(() => {
     try {
       fetch("http://localhost:8080/tags", {
@@ -37,13 +39,13 @@ export default function DashboardMain({ loggedIn, setLoggedIn, firstName}) {
     }
   }, []);
 
-  //Get options for tag dropdown
+  //Get options for tag dropdown ==============================================================
 
   const tagOptions = tagArray.map((tag, index) => {
     return { value: tag, label: tag, key: index };
   });
 
-  //Handle Go button click
+  //Handle Go button click ====================================================================
   function handleGoClick() {
     const tagSearchData = {
       tagToSearch: selectedTag,
@@ -61,19 +63,64 @@ export default function DashboardMain({ loggedIn, setLoggedIn, firstName}) {
         .then((data) => {
           const reviewArray = data.map((piece) => piece.pieceName);
           setReviewPieces(reviewArray);
-        });
+        }).then(
+            fetch("http://localhost:8080/randomGame", {
+                method: "GET",
+                headers: {
+                    "content-type": "application/json"
+                }
+            }).then(response => response.json()).then(data => setRandomGame(data))
+        )
     } catch (err) {
       console.log(err);
     }
     setResults(false);
-  };
+    setSavedGame(false);
+  }
 
-  //Text for greeting
-  const greetText = `Hi ${firstName}, what do you want to work on in your group?`
+  //Save game functionality ===================================================================
 
-  return(
-    <div className={classnames(style.dashboardMainContainer, style.fadeContainer)}>
-        <div className={style.dashboardMain}>
+  function handleGameSave(){
+    console.log(randomGame.gameName)
+    console.log(randomGame.gameText)
+    console.log(userId)
+    const saveGameData = {
+        gameName: randomGame.gameName,
+        gameText: randomGame.gameText,
+        saveUser: userId
+    };
+    try{
+        fetch("http://localhost:8080/saveGame", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(saveGameData)
+        }).then(response => {
+            console.log(response)
+            if(response.status === 201){
+                setSavedGame(true)
+            };
+            })
+    }catch(err){
+        console.log(err)
+    }
+  }
+
+  const saveGameText = savedGame ? null : handleGameSave;
+  const saveGameStyle = savedGame ? style.saveButtonDisable : style.saveButton;
+
+  //Text for greeting ==========================================================================
+  const greetText = `Hi ${firstName}, what do you want to work on in your group?`;
+
+  /* ============================================================================================
+                                    Return
+  =============================================================================================== */
+  return (
+    <div
+      className={classnames(style.dashboardMainContainer, style.fadeContainer)}
+    >
+      <div className={style.dashboardMain}>
         <h2>{greetText}</h2>
         <h3>Book One Techniques</h3>
         <div className={style.techniqueTagsContainer}>
@@ -90,6 +137,7 @@ export default function DashboardMain({ loggedIn, setLoggedIn, firstName}) {
         <div className={style.goButton} onClick={handleGoClick}>
           <span>Go!</span>
         </div>
+
         <div
           className={classnames(style.resultContainer, style.fadeContainer, {
             [style.resultsHidden]: results,
@@ -110,6 +158,13 @@ export default function DashboardMain({ loggedIn, setLoggedIn, firstName}) {
                   {piece}
                 </div>
               ))}
+            </div>
+          </div>
+          <div className={style.randomGameContainer}>
+            <h3 className={style.reviewHeadingText}>{randomGame.gameName}</h3>
+            <p className={style.randomGameText}>{randomGame.gameText}</p>
+            <div className={saveGameStyle} onClick={saveGameText}>
+                <span>{savedGame ? "Game saved" : "Save Game"}</span>
             </div>
           </div>
         </div>

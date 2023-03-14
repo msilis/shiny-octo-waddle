@@ -7,6 +7,7 @@ import {
   Login,
   Register,
   Dashboard,
+  Footer
 } from "./Components";
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
@@ -19,6 +20,7 @@ function App() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [userId, setUserId] = useState("")
   //Profile state
   const [seeProfile, setSeeProfile] = useState(false);
 
@@ -44,6 +46,7 @@ function App() {
               setFirstName={setFirstName}
               setLastName={setLastName}
               setEmail={setEmail}
+              setUserId={setUserId}
             />
           }
         ></Route>
@@ -58,11 +61,13 @@ function App() {
               email={email}
               seeProfile={seeProfile}
               setSeeProfile={setSeeProfile}
+              userId={userId}
             />
           }
         ></Route>
         <Route path="/register" element={<Register />}></Route>
       </Routes>
+      <Footer />
     </div>
   );
 }

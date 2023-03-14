@@ -5,5 +5,21 @@ import Login from "./Login/login";
 import Navbar from "./Navbar/navbar";
 import Register from "./Register/register";
 import Dashboard from "./Dashboard/dashboard.jsx";
+import DashboardMain from "./Dashboard/Dashboard-main/dashboard-main.jsx";
+import Profile from "./Profile/profile.jsx";
+import SavedGames from "./Profile/SavedGames/savedGames.jsx";
+import Footer from "./Footer/footer.jsx";
 
-export { About, Header, Home, Login, Navbar, Register, Dashboard };
+export {
+  About,
+  Header,
+  Home,
+  Login,
+  Navbar,
+  Register,
+  Dashboard,
+  DashboardMain,
+  Profile,
+  SavedGames,
+  Footer
+};

@@ -1,0 +1,11 @@
+body{
+    margin: 0;
+    
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    width: 100dvw;
+    background-color: #FFC9B5;
+}
