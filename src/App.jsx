@@ -34,6 +34,9 @@ function App() {
         seeProfile={seeProfile}
         setSeeProfile={setSeeProfile}
       />
+      <div className="routes-container">
+
+      
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/about" element={<About />}></Route>
@@ -67,6 +70,7 @@ function App() {
         ></Route>
         <Route path="/register" element={<Register />}></Route>
       </Routes>
+      </div>
       <Footer />
     </div>
   );
