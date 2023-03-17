@@ -9,6 +9,7 @@ export default function Profile({firstName, lastName, email, userId}){
                 <input placeholder={firstName} className={style.inputField}></input>
                 <input placeholder={lastName} className={style.inputField}></input>
                 <input placeholder={email} className={style.inputField}></input>
+                <div className={style.updateButton}><span>Update</span></div>
             </div>
             <div className={style.savedGamesContainer}>
                 <SavedGames userId={userId}/>

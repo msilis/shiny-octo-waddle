@@ -1,10 +1,36 @@
-.inputField {
-    font-weight: bolder;
-    height: 1.8rem;
-    width: 8rem;
+.profileFields {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+}
 
+.inputField {
+  font-weight: bolder;
+  height: 1.8rem;
+  width: 8rem;
+}
+
+.updateButton {
+  display: flex;
+  justify-content: center;
+  width: 6rem;
+  color: white;
+  background-color: #241e4e;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 10px;
+  transition: 0.5s;
+}
+
+.updateButton:hover {
+  cursor: pointer;
+}
+
+.updateButton:active {
+  transform: translateY(5px);
+  box-shadow: 2px 2px 2px black;
 }
 
 .savedGamesContainer {
-    margin-bottom: .5rem
+  margin-bottom: 0.5rem;
 }

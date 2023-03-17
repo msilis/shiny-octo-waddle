@@ -26,8 +26,9 @@ function App() {
 
   return (
     <div className="App">
+      <div className="headerContainer">
       <Header />
-
+    </div>
       <Navbar
         setLoggedIn={setLoggedIn}
         loggedIn={loggedIn}
