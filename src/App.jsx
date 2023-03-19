@@ -61,8 +61,11 @@ function App() {
               setLoggedIn={setLoggedIn}
               loggedIn={loggedIn}
               firstName={firstName}
+              setFirstName={setFirstName}
               lastName={lastName}
+              setLastName={setLastName}
               email={email}
+              setEmail={setEmail}
               seeProfile={seeProfile}
               setSeeProfile={setSeeProfile}
               userId={userId}
@@ -71,8 +74,9 @@ function App() {
         ></Route>
         <Route path="/register" element={<Register />}></Route>
       </Routes>
-      </div>
       <Footer />
+      </div>
+      
     </div>
   );
 }

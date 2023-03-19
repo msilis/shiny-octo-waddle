@@ -8,8 +8,11 @@ export default function Dashboard({
   loggedIn,
   setLoggedIn,
   firstName,
+  setFirstName,
   lastName,
+  setLastName,
   email,
+  setEmail,
   setSeeProfile,
   seeProfile,
   userId,
@@ -23,8 +26,11 @@ export default function Dashboard({
       return (
         <Profile
           firstName={firstName}
+          setFirstName={setFirstName}
           lastName={lastName}
+          setLastName={setLastName}
           email={email}
+          setEmail={setEmail}
           userId={userId}
         />
       );
