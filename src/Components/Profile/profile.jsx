@@ -17,6 +17,7 @@ export default function Profile({
 
   function handleUpdateClick() {
     console.log("Update clicked");
+    console.log(lastNameEditInput.current?.value)
     const updateUserData = {
       userId: userId,
       firstName:
@@ -48,9 +49,21 @@ export default function Profile({
             setFirstName(data.firstName);
             setLastName(data.lastName);
             setEmail(data.email);
+            //Set refs to empty strings to show updated values
+            firstNameEditInput.current.value = "";
+            lastNameEditInput.current.value = "";
+            emailEditInput.current.value = "";
+
         });
     } catch (err) {
       console.log(err);
+    }
+  }
+
+  //Enter key used to update info
+  function handleEnterKey(event){
+    if(event.key === "Enter"){
+        handleUpdateClick()
     }
   }
 
@@ -62,16 +75,19 @@ export default function Profile({
           placeholder={firstName}
           className={style.inputField}
           ref={firstNameEditInput}
+          onKeyDown={handleEnterKey}
         ></input>
         <input
           placeholder={lastName}
           className={style.inputField}
           ref={lastNameEditInput}
+          onKeyDown={handleEnterKey}
         ></input>
         <input
           placeholder={email}
           className={style.inputField}
           ref={emailEditInput}
+          onKeyDown={handleEnterKey}
         ></input>
         <div className={style.updateButton} onClick={handleUpdateClick}>
           <span>Update</span>

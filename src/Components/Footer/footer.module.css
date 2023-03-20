@@ -1,7 +1,7 @@
 .footerContainer {
     height: 4rem;
+    width: 100vw;
     background-color: #388697;
-    margin-top: 2rem;
-    bottom: 10rem;
-    
+    margin-top: auto;
+    margin-bottom: 0;
 }
