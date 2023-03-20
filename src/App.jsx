@@ -9,11 +9,13 @@ import {
   Dashboard,
   Footer,
 } from "./Components";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
+import Protected from "./Components/Protected/protected";
 
 function App() {
   //State for user login
+  //TODO Check localStorage for logged-in state and set appropriately
   const [loggedIn, setLoggedIn] = useState(false);
   //State for user's name
   const [firstName, setFirstName] = useState("");
@@ -22,14 +24,6 @@ function App() {
   const [userId, setUserId] = useState("");
   //Profile state
   const [seeProfile, setSeeProfile] = useState(false);
-
-  //Protected Dashboard Route
-  function DashbordAuthorised(loggedIn) {
-    if (loggedIn) {
-      return;
-    }
-    return <h3>You need to log in!</h3>;
-  }
 
   return (
     <div className="App">
@@ -45,7 +39,7 @@ function App() {
         />
       </div>
 
-      <div className="routes-container">
+      <div className="routesContainer">
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/about" element={<About />}></Route>
@@ -65,6 +59,7 @@ function App() {
           <Route
             path="/dashboard"
             element={
+              <Protected loggedIn={loggedIn}>
               <Dashboard
                 setLoggedIn={setLoggedIn}
                 loggedIn={loggedIn}
@@ -78,6 +73,7 @@ function App() {
                 setSeeProfile={setSeeProfile}
                 userId={userId}
               />
+              </Protected>
             }
           ></Route>
           <Route path="/register" element={<Register />}></Route>
