@@ -1,7 +1,7 @@
 import style from "./dashboard.module.css";
 import classnames from "classnames";
 import Sidebar from "./Dashboard-sidebar/dashboard-sidebar";
-import { DashboardMain, Profile } from "../../Components";
+import { DashboardMain, Profile, AddGame } from "../../Components";
 import { useState } from "react";
 
 export default function Dashboard({
@@ -20,6 +20,8 @@ export default function Dashboard({
   //State to keep track of sidebar button clicks
 
   const [addGame, setAddGame] = useState(false);
+  //State for technique tags so it can be passed to both DashboardMain and AddGame
+  const [tagArray, setTagArray] = useState([]);
 
   function mainDisplay() {
     if (seeProfile) {
@@ -34,8 +36,17 @@ export default function Dashboard({
           userId={userId}
         />
       );
+    } else if (addGame) {
+      return <AddGame userId={userId} setAddGame={setAddGame} tagArray={tagArray} />;
     } else {
-      return <DashboardMain firstName={firstName} userId={userId} />;
+      return (
+        <DashboardMain
+          firstName={firstName}
+          userId={userId}
+          tagArray={tagArray}
+          setTagArray={setTagArray}
+        />
+      );
     }
   }
 

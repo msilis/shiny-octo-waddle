@@ -1,8 +1,15 @@
-* {
+/* * {
     box-sizing: border-box;
+} */
+
+body {
+    height: 100dvh;
+    width: 100dvw;
+    padding: 0;
+    margin: 0;
 }
 
-#root, body{
+/* #root, body{
     position: absolute;
     top: 0;
     left: 0;
@@ -12,5 +19,5 @@
     height: 100%;
     width: 100%;
     
-}
+} */
 

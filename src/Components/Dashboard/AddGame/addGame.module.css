@@ -1,0 +1,31 @@
+.addGameContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.addGameSelectInput {
+    color: black;
+}
+
+
+.addGameViewButton {
+    display: flex;
+  justify-content: center;
+  width: 6rem;
+  color: white;
+  background-color: #241e4e;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 10px;
+  transition: 0.5s;
+}
+
+.addGameViewButton:hover {
+    cursor: pointer;
+    outline: 2px solid white;
+}
+
+.addGameViewButton:active {
+    transform: translateY(5px);
+    box-shadow: 2px 2px 2px black;
+}

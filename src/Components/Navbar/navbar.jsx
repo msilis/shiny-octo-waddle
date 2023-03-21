@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import style from "./navbar.module.css";
 
 export default function Navbar({ loggedIn, seeProfile, setSeeProfile }) {
+
+
   console.log(loggedIn);
   return (
     <div className={style.navBackground}>

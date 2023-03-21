@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import classnames from "classnames";
 import Select from "react-select";
 
-export default function DashboardMain({ loggedIn, setLoggedIn, firstName, userId }) {
-  const [tagArray, setTagArray] = useState([]);
+export default function DashboardMain({ loggedIn, setLoggedIn, firstName, userId, tagArray, setTagArray }) {
+  
   const [selectedTag, setSelectedTag] = useState("0");
   const [results, setResults] = useState(true);
   const [reviewPieces, setReviewPieces] = useState([]);
@@ -33,6 +33,7 @@ export default function DashboardMain({ loggedIn, setLoggedIn, firstName, userId
           );
 
           setTagArray(filteredArray);
+          
         });
     } catch (err) {
       console.log(err);

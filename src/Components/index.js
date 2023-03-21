@@ -9,6 +9,8 @@ import DashboardMain from "./Dashboard/Dashboard-main/dashboard-main.jsx";
 import Profile from "./Profile/profile.jsx";
 import SavedGames from "./Profile/SavedGames/savedGames.jsx";
 import Footer from "./Footer/footer.jsx";
+import Protected from "./Protected/protected.jsx";
+import AddGame from "./Dashboard/AddGame/addGame.jsx";
 
 export {
   About,
@@ -21,5 +23,7 @@ export {
   DashboardMain,
   Profile,
   SavedGames,
-  Footer
+  Footer,
+  Protected,
+  AddGame
 };

@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import style from "./dashboard-sidebar.module.css";
 
-export default function Sidebar({setLoggedIn, loggedIn, seeProfile ,setSeeProfile}){
+export default function Sidebar({setLoggedIn, loggedIn, seeProfile ,setSeeProfile, setAddGame}){
     //Import useNavigate to handle page redirect
     const navigate = useNavigate()
 
@@ -15,6 +16,18 @@ export default function Sidebar({setLoggedIn, loggedIn, seeProfile ,setSeeProfil
     //Handle 'My Info' button click
     function handleProfileClick(){
         setSeeProfile(true);
+        setAddGame(false)
+    }
+
+    //Handle Add Game click
+    function handleAddGame(){
+        console.log("Should show add game")
+        //If profile is visible, change profile state so Add Game view shows
+        if(seeProfile){
+            setSeeProfile(false);
+        }
+        //Set state to conditionally render Add Game view
+        setAddGame(true);
     }
 
     //Handle 'My Info' button click if profile visible
@@ -33,9 +46,11 @@ export default function Sidebar({setLoggedIn, loggedIn, seeProfile ,setSeeProfil
                 <div className={style.sidebarButton} onClick={infoButtonFunction}>
                     <span>{infoButtonText}</span>
                 </div>
-                <div className={style.sidebarButton}>
+                
+                <div className={style.sidebarButton} onClick={handleAddGame}>
                     <span>Add Game</span>
                 </div>
+                
                 <div className={style.sidebarButton} onClick={handleLogoutClick}>
                     <span>Log out</span>
                 </div>

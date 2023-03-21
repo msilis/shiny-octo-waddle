@@ -8,10 +8,11 @@ import {
   Register,
   Dashboard,
   Footer,
+  Protected,
+  AddGame,
 } from "./Components";
 import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
-import Protected from "./Components/Protected/protected";
+import { useEffect, useState } from "react";
 
 function App() {
   //State for user login
@@ -24,6 +25,15 @@ function App() {
   const [userId, setUserId] = useState("");
   //Profile state
   const [seeProfile, setSeeProfile] = useState(false);
+
+  //Check sessionStorage to see if user is logged in
+  useEffect(()=>{
+    if(sessionStorage.getItem("loggedIn")){
+      console.log("checking sessionStorage")
+      setLoggedIn(true);
+    }
+  }, [])
+ 
 
   return (
     <div className="App">
@@ -87,9 +97,9 @@ function App() {
           ></Route>
         </Routes>
       </div>
-      <div className="Footer">
+      
         <Footer />
-      </div>
+      
     </div>
   );
 }

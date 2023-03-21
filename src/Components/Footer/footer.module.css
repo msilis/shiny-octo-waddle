@@ -1,7 +1,9 @@
 .footerContainer {
-    height: 4rem;
-    width: 100vw;
+    height: 50px;   
     background-color: #388697;
-    margin-top: auto;
-    margin-bottom: 0;
+}
+
+.copyText {
+    font-size: .75rem;
+    margin-left: 1rem;
 }
