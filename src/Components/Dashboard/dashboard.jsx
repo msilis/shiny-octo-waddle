@@ -59,6 +59,7 @@ export default function Dashboard({
           seeProfile={seeProfile}
           setSeeProfile={setSeeProfile}
           setAddGame={setAddGame}
+          userId={userId}
         />
       </div>
       {mainDisplay()}
