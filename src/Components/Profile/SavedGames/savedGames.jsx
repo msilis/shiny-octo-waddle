@@ -53,23 +53,6 @@ export default function SavedGames({ userId }) {
     }
   }
 
-  
-
-  //Conditionally render created games
-  function showCreatedGames() {
-    if (savedCreatedGames.length === 0) {
-      return <p>You do not have any created games to show</p>;
-    } else {
-      console.log(savedCreatedGames);
-      savedCreatedGames.map((game) => {
-        <div className={style.gameItem} key={game._id} id={game._id}>
-          <h5>{game.gameName}</h5>
-          <p>{game.gameText}</p>
-        </div>;
-      });
-    }
-  }
-
   useEffect(() => {
     getSavedGames();
     getUserCreatedGames();
@@ -96,6 +79,26 @@ export default function SavedGames({ userId }) {
       });
   }
 
+  //Delete user created game =================================
+  function handleCreatedGameDelete(event){
+    //TODO Something is not working here
+    const gameId = event.target.parentNode.parentNode.id;
+    console.log(gameId)
+    const deleteCreatedData = {
+      gameToDelete: gameId
+    }
+
+    fetch("http://localhost:8080/deleteCreated", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify(deleteCreatedData)
+    }).then(response => response.json()).then(jsonResposne => console.log(jsonResposne)).then(()=>{
+      getUserCreatedGames()
+    })
+  }
+
   return (
     <div className={style.savedGamesDisplayContainer}>
       <h4 className={style.savedGamesHeading}>Your saved games:</h4>
@@ -119,9 +122,16 @@ export default function SavedGames({ userId }) {
           <p>You do not have any created games to show</p>
         ) : (
           savedCreatedGames.map((game) => {
-            <div key={game._id} id={game._id}>
+            console.log(game.gameName);
+            return (<div className={style.gameItem} key={game._id} id={game._id}>
               <h5>{game.gameName}</h5>
-            </div>;
+              <p>{game.gameText}</p>
+              <div
+              className={style.deleteSavedGameButton}
+              onClick={handleCreatedGameDelete}>
+              <span>Delete</span>
+            </div>
+            </div>);
           })
         )}
       </div>
