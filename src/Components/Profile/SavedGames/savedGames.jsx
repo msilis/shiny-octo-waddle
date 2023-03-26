@@ -81,7 +81,6 @@ export default function SavedGames({ userId }) {
 
   //Delete user created game =================================
   function handleCreatedGameDelete(event){
-    //TODO Something is not working here
     const gameId = event.target.parentNode.parentNode.id;
     console.log(gameId)
     const deleteCreatedData = {
@@ -103,7 +102,7 @@ export default function SavedGames({ userId }) {
     <div className={style.savedGamesDisplayContainer}>
       <h4 className={style.savedGamesHeading}>Your saved games:</h4>
       <div className={style.savedGamesDisplay}>
-        {savedGames.map((game) => (
+        {savedGames.length === 0 ? (<p>You do not have any saved games to show</p>):(savedGames.map((game) => (
           <div className={style.gameItem} key={game._id} id={game._id}>
             <h5>{game.gameName}</h5>
             <p>{game.gameText}</p>
@@ -114,7 +113,7 @@ export default function SavedGames({ userId }) {
               <span>Delete</span>
             </div>
           </div>
-        ))}
+        )))}
       </div>
       <h4 className={style.savedGamesHeading}>Your Created Games:</h4>
       <div className={style.savedGamesDisplay}>

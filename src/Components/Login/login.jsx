@@ -40,6 +40,13 @@ export default function Login({setFirstName, setLastName, setEmail, loggedIn, se
           setEmail(data.email)
           setUserId(data.userId)
             sessionStorage.setItem("loggedIn", true);
+            const userInfo = {
+              firstName: data.firstName,
+              lastName: data.lastName,
+              email: data.email,
+              userId: data.userId
+            }
+            sessionStorage.setItem("user", JSON.stringify(userInfo))
             console.log("User logged in.");
             //Redirect user after sucessful login
             return navigate("/dashboard");

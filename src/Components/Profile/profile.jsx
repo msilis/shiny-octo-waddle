@@ -33,7 +33,6 @@ export default function Profile({
           ? emailEditInput.current?.value
           : email,
     };
-    //TODO Update is sucessful but component doesn't re-render with new information
     try {
       fetch("http://localhost:8080/updateUser", {
         method: "PATCH",

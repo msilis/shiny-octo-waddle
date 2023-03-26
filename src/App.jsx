@@ -27,13 +27,17 @@ function App() {
   const [seeProfile, setSeeProfile] = useState(false);
 
   //Check sessionStorage to see if user is logged in
-  useEffect(()=>{
-    if(sessionStorage.getItem("loggedIn")){
-      console.log("checking sessionStorage")
+  useEffect(() => {
+    if (sessionStorage.getItem("loggedIn")) {
+      console.log("checking sessionStorage");
       setLoggedIn(true);
+      let parsedUserInfo = JSON.parse(sessionStorage.user);
+      setFirstName(parsedUserInfo.firstName);
+      setLastName(parsedUserInfo.lastName);
+      setEmail(parsedUserInfo.email);
+      setUserId(parsedUserInfo.userId);
     }
-  }, [])
- 
+  }, []);
 
   return (
     <div className="App">
@@ -70,19 +74,19 @@ function App() {
             path="/dashboard"
             element={
               <Protected loggedIn={loggedIn}>
-              <Dashboard
-                setLoggedIn={setLoggedIn}
-                loggedIn={loggedIn}
-                firstName={firstName}
-                setFirstName={setFirstName}
-                lastName={lastName}
-                setLastName={setLastName}
-                email={email}
-                setEmail={setEmail}
-                seeProfile={seeProfile}
-                setSeeProfile={setSeeProfile}
-                userId={userId}
-              />
+                <Dashboard
+                  setLoggedIn={setLoggedIn}
+                  loggedIn={loggedIn}
+                  firstName={firstName}
+                  setFirstName={setFirstName}
+                  lastName={lastName}
+                  setLastName={setLastName}
+                  email={email}
+                  setEmail={setEmail}
+                  seeProfile={seeProfile}
+                  setSeeProfile={setSeeProfile}
+                  userId={userId}
+                />
               </Protected>
             }
           ></Route>
@@ -97,9 +101,8 @@ function App() {
           ></Route>
         </Routes>
       </div>
-      
-        <Footer />
-      
+
+      <Footer />
     </div>
   );
 }
