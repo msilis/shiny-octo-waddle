@@ -2,36 +2,27 @@ import { useEffect, useRef, useState } from "react";
 import Select from "react-select";
 import style from "./addGame.module.css";
 
-export default function AddGame({ setAddGame, tagArray, userId }) {
+export default function AddGame({ setAddGame, userId }) {
+  //Refs ***********************
   const gameName = useRef();
   const gameText = useRef();
   const container = useRef();
-  const techniqueRef = useRef();
   const piecesRef = useRef();
+  //State **********************
   const [addGameTags, setAddGameTags] = useState([]);
   const [listOfPieces, setListOfPieces] = useState([]);
   const [addPieces, setAddPieces] = useState([]);
-  const [val, setVal] = useState([]);
+  const [gameTechniques, setGameTechniques] = useState([]);
+  const [addGameTechniques, setAddGameTechniques] = useState([]);
   console.log(addGameTags);
   //Cancel Button click
   function handleCancelClick(event) {
     setAddGame(false);
   }
 
-  //Options to send to Select element
-  const addGameOptions = tagArray.map((tag, index) => {
-    return { value: tag, label: tag, key: index };
-  });
+  // Functions to pass to useEffect ==============================================================================
 
-  //Handle tag input
-  function handleTagChange(e) {
-    console.log(e);
-    setAddGameTags(e);
-  }
-
-  //Get a list of all of the Book 1 pieces to feed to Select dropdown
-
-  useEffect(() => {
+  function fetchPieces() {
     try {
       fetch("http://localhost:8080/getPieces")
         .then((response) => response.json())
@@ -44,25 +35,63 @@ export default function AddGame({ setAddGame, tagArray, userId }) {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  function fetchGameTechniques() {
+    try {
+      fetch("http://localhost:8080/getGameTechniques", {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const gameTechniqueArray = data.map((tag) => tag.gameTechnique);
+          const flattedGameTechniqueArray = gameTechniqueArray.flat(1);
+          const filteredGameTechniqueArray = flattedGameTechniqueArray.filter(
+            (tag, index) => flattedGameTechniqueArray.indexOf(tag) === index
+          );
+          setGameTechniques(filteredGameTechniqueArray);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  // useEffect to get info on page load ============================================================
+  useEffect(() => {
+    fetchPieces();
+    fetchGameTechniques();
   }, []);
-  //Assign pieces to value to send to reac-select dropdown list
+
+  //Options to send to Select element ===============================================================
+  const addGameOptions = gameTechniques.map((tag, index) => {
+    return { value: tag, label: tag[0].toUpperCase() + tag.substring(1), key: index };
+  });
+
+  //Handle tag input ================================================================================
+  function handleTagChange(e) {
+    console.log(e);
+    setAddGameTechniques(e);
+  }
+
+  //Assign pieces to value to send to reac-select dropdown list ======================================
 
   const pieceOptions = listOfPieces.map((piece, index) => {
     return { value: piece, label: piece, key: index };
   });
-  //Handle adding a piece to game
+  //Handle adding a piece to game ====================================================================
   function handlePieceChange(e) {
     console.log(e);
     setAddPieces(e);
   }
 
-  //Handle adding game to user's games
+  //Handle adding game to user's games ===============================================================
   function handleAddGame() {
-    //TODO Post request to add game
     const newGameData = {
       gameName: gameName.current?.value,
       gameText: gameText.current?.value,
-      gameTechnique: addGameTags,
+      gameTechnique: addGameTechniques,
       gamePieces: addPieces,
       saveUser: userId,
     };
@@ -75,8 +104,7 @@ export default function AddGame({ setAddGame, tagArray, userId }) {
         body: JSON.stringify(newGameData),
       }).then((response) => {
         if (response.status === 201) {
-          //TODO Clear inputs after sucessful submission
-          alert("Game added sucessfully")
+          alert("Game added sucessfully");
           console.log("From inside the if check");
           gameName.current.value = "";
           gameText.current.value = "";
@@ -88,6 +116,10 @@ export default function AddGame({ setAddGame, tagArray, userId }) {
       console.log(err);
     }
   }
+/* ==============================================================
+|||||||||||| Return |||||||||||||||||||||||||||||||||||||||||||||
+================================================================= */
+
 
   return (
     <div
@@ -110,8 +142,8 @@ export default function AddGame({ setAddGame, tagArray, userId }) {
         isSearchable={true}
         isClearable={true}
         onChange={handleTagChange}
-        placeholder="Select Techniques"
-        value={addGameTags}
+        placeholder="Select Game Focus"
+        value={addGameTechniques}
       />
       <Select
         options={pieceOptions}

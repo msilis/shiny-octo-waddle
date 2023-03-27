@@ -3,13 +3,20 @@ import { useState, useEffect } from "react";
 import classnames from "classnames";
 import Select from "react-select";
 
-export default function DashboardMain({ loggedIn, setLoggedIn, firstName, userId, tagArray, setTagArray }) {
-  
+export default function DashboardMain({
+  loggedIn,
+  setLoggedIn,
+  firstName,
+  userId,
+  tagArray,
+  setTagArray,
+}) {
   const [selectedTag, setSelectedTag] = useState("0");
   const [results, setResults] = useState(true);
   const [reviewPieces, setReviewPieces] = useState([]);
   const [randomGame, setRandomGame] = useState([]);
-  const [savedGame, setSavedGame] = useState(false)
+  const [savedGame, setSavedGame] = useState(false);
+  const [loadRandomGame, setLoadRandomGame] = useState(false);
   //Redirect functionality
 
   //Call API to get tags on initial page load ==================================================
@@ -33,7 +40,6 @@ export default function DashboardMain({ loggedIn, setLoggedIn, firstName, userId
           );
 
           setTagArray(filteredArray);
-          
         });
     } catch (err) {
       console.log(err);
@@ -53,6 +59,7 @@ export default function DashboardMain({ loggedIn, setLoggedIn, firstName, userId
     };
     console.log(tagSearchData);
     try {
+      setLoadRandomGame(true);
       fetch("http://localhost:8080/techniqueSearch", {
         method: "POST",
         headers: {
@@ -64,14 +71,20 @@ export default function DashboardMain({ loggedIn, setLoggedIn, firstName, userId
         .then((data) => {
           const reviewArray = data.map((piece) => piece.pieceName);
           setReviewPieces(reviewArray);
-        }).then(
-            fetch("http://localhost:8080/randomGame", {
-                method: "GET",
-                headers: {
-                    "content-type": "application/json"
-                }
-            }).then(response => response.json()).then(data => setRandomGame(data))
-        )
+        })
+        .then(
+          fetch("http://localhost:8080/randomGame", {
+            method: "GET",
+            headers: {
+              "content-type": "application/json",
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              setRandomGame(data);
+              setLoadRandomGame(false);
+            })
+        );
     } catch (err) {
       console.log(err);
     }
@@ -81,30 +94,30 @@ export default function DashboardMain({ loggedIn, setLoggedIn, firstName, userId
 
   //Save game functionality ===================================================================
 
-  function handleGameSave(){
-    console.log(randomGame.gameName)
-    console.log(randomGame.gameText)
-    console.log(userId)
+  function handleGameSave() {
+    console.log(randomGame.gameName);
+    console.log(randomGame.gameText);
+    console.log(userId);
     const saveGameData = {
-        gameName: randomGame.gameName,
-        gameText: randomGame.gameText,
-        saveUser: userId
+      gameName: randomGame.gameName,
+      gameText: randomGame.gameText,
+      saveUser: userId,
     };
-    try{
-        fetch("http://localhost:8080/saveGame", {
-            method: "POST",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(saveGameData)
-        }).then(response => {
-            console.log(response)
-            if(response.status === 201){
-                setSavedGame(true)
-            };
-            })
-    }catch(err){
-        console.log(err)
+    try {
+      fetch("http://localhost:8080/saveGame", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(saveGameData),
+      }).then((response) => {
+        console.log(response);
+        if (response.status === 201) {
+          setSavedGame(true);
+        }
+      });
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -151,23 +164,31 @@ export default function DashboardMain({ loggedIn, setLoggedIn, firstName, userId
               >{`Suggested review pieces for: ${selectedTag}`}</h3>
             </div>
             <div className={style.reviewPieceList}>
-              {reviewPieces.map((piece) => (
-                <div
-                  className={style.reviewPieceItem}
-                  key={crypto.randomUUID()}
-                >
-                  {piece}
-                </div>
-              ))}
+              {loadRandomGame ? (
+                <>Loading...</>
+              ) : (
+                reviewPieces.map((piece) => (
+                  <div
+                    className={style.reviewPieceItem}
+                    key={crypto.randomUUID()}
+                  >
+                    {piece}
+                  </div>
+                ))
+              )}
             </div>
           </div>
-          <div className={style.randomGameContainer}>
-            <h3 className={style.reviewHeadingText}>{randomGame.gameName}</h3>
-            <p className={style.randomGameText}>{randomGame.gameText}</p>
-            <div className={saveGameStyle} onClick={saveGameText}>
+          {loadRandomGame ? (
+            <></>
+          ) : (
+            <div className={style.randomGameContainer}>
+              <h3 className={style.reviewHeadingText}>{randomGame.gameName}</h3>
+              <p className={style.randomGameText}>{randomGame.gameText}</p>
+              <div className={saveGameStyle} onClick={saveGameText}>
                 <span>{savedGame ? "Game saved" : "Save Game"}</span>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

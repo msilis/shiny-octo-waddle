@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./savedGames.module.css";
 
 export default function SavedGames({ userId }) {
   //State for saved games
   const [savedGames, setSavedGames] = useState([]);
   const [savedCreatedGames, setSavedCreatedGames] = useState([]);
+  const [loadingSaved, setLoadingSaved] = useState(false);
+  const [loadingCreated, setLoadingCreated] = useState(false);
 
   //Function to fetch saved games
 
@@ -14,6 +16,7 @@ export default function SavedGames({ userId }) {
         saveUser: userId,
       };
       console.log(savedGameInfo);
+      setLoadingSaved(true);
       fetch("http://localhost:8080/getSavedGames", {
         method: "POST",
         headers: {
@@ -24,6 +27,7 @@ export default function SavedGames({ userId }) {
         .then((response) => response.json())
         .then((jsonResponse) => {
           setSavedGames(jsonResponse);
+          setLoadingSaved(false);
         });
     } catch (err) {
       console.log(err);
@@ -37,6 +41,7 @@ export default function SavedGames({ userId }) {
       userId: userId,
     };
     try {
+      setLoadingCreated(true);
       fetch("http://localhost:8080/getUserCreatedGames", {
         method: "POST",
         headers: {
@@ -47,6 +52,7 @@ export default function SavedGames({ userId }) {
         .then((response) => response.json())
         .then((jsonResponse) => {
           setSavedCreatedGames(jsonResponse);
+          setLoadingCreated(false);
         });
     } catch (err) {
       console.log(err);
@@ -58,7 +64,6 @@ export default function SavedGames({ userId }) {
     getUserCreatedGames();
   }, []);
 
-  console.log(savedCreatedGames);
 
   function handleSavedGameDelete(event) {
     const gameToDelete = event.target.parentNode.parentNode.id;
@@ -80,59 +85,91 @@ export default function SavedGames({ userId }) {
   }
 
   //Delete user created game =================================
-  function handleCreatedGameDelete(event){
+  function handleCreatedGameDelete(event) {
     const gameId = event.target.parentNode.parentNode.id;
-    console.log(gameId)
+    console.log(gameId);
     const deleteCreatedData = {
-      gameToDelete: gameId
-    }
+      gameToDelete: gameId,
+    };
 
     fetch("http://localhost:8080/deleteCreated", {
       method: "POST",
       headers: {
-        "content-type": "application/json"
+        "content-type": "application/json",
       },
-      body: JSON.stringify(deleteCreatedData)
-    }).then(response => response.json()).then(jsonResposne => console.log(jsonResposne)).then(()=>{
-      getUserCreatedGames()
+      body: JSON.stringify(deleteCreatedData),
     })
+      .then((response) => response.json())
+      .then((jsonResposne) => console.log(jsonResposne))
+      .then(() => {
+        getUserCreatedGames();
+      });
+  }
+
+  //Conditionally render game display depending on fetch state and saved games array
+
+  function displaySavedGames() {
+    if (loadingSaved) {
+      return <p>Loading...</p>;
+    } else if (savedGames.length === 0) {
+      return <p>You do not have any saved games to show</p>;
+    } else {
+      return (
+      savedGames.map((game) => (
+        <div className={style.gameItem} key={game._id} id={game._id}>
+          <h5>{game.gameName}</h5>
+          <p>{game.gameText}</p>
+
+          <div
+            className={style.deleteSavedGameButton}
+            onClick={handleSavedGameDelete}
+          >
+            <span>Delete</span>
+          </div>
+        </div>
+      ))
+    )}
+  }
+
+  function displaySavedCreatedGames() {
+    if (loadingCreated){
+      return <p>Loading...</p>
+    } else if (savedCreatedGames.length === 0){
+      return <p>You do not have any created games to show</p>
+    } else {
+      return(savedCreatedGames.map((game) => {
+        return (
+          <div className={style.gameItem} key={game._id} id={game._id}>
+            <h5>{game.gameName}</h5>
+            <p>{game.gameText}</p>
+            <h5>Game focus:</h5>
+            <div className={style.gameTechniqueContainer}>
+              {game.gameTechnique.map((item) => {
+                console.log(item.label);
+                return <p key={item.key}>{item.label}</p>;
+              })}
+            </div>
+            <div
+              className={style.deleteSavedGameButton}
+              onClick={handleCreatedGameDelete}
+            >
+              <span>Delete</span>
+            </div>
+          </div>
+        );
+      }))
+    }
   }
 
   return (
     <div className={style.savedGamesDisplayContainer}>
       <h4 className={style.savedGamesHeading}>Your saved games:</h4>
       <div className={style.savedGamesDisplay}>
-        {savedGames.length === 0 ? (<p>You do not have any saved games to show</p>):(savedGames.map((game) => (
-          <div className={style.gameItem} key={game._id} id={game._id}>
-            <h5>{game.gameName}</h5>
-            <p>{game.gameText}</p>
-            <div
-              className={style.deleteSavedGameButton}
-              onClick={handleSavedGameDelete}
-            >
-              <span>Delete</span>
-            </div>
-          </div>
-        )))}
+        {displaySavedGames()}
       </div>
       <h4 className={style.savedGamesHeading}>Your Created Games:</h4>
       <div className={style.savedGamesDisplay}>
-        {savedCreatedGames.length === 0 ? (
-          <p>You do not have any created games to show</p>
-        ) : (
-          savedCreatedGames.map((game) => {
-            console.log(game.gameName);
-            return (<div className={style.gameItem} key={game._id} id={game._id}>
-              <h5>{game.gameName}</h5>
-              <p>{game.gameText}</p>
-              <div
-              className={style.deleteSavedGameButton}
-              onClick={handleCreatedGameDelete}>
-              <span>Delete</span>
-            </div>
-            </div>);
-          })
-        )}
+        {displaySavedCreatedGames()}
       </div>
     </div>
   );
