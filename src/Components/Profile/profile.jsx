@@ -10,7 +10,9 @@ export default function Profile({
   setFirstName,
   setLastName,
   setEmail,
+  userToken
 }) {
+  // Refs for inputs ==================================================
   const firstNameEditInput = useRef();
   const lastNameEditInput = useRef();
   const emailEditInput = useRef();
@@ -38,6 +40,7 @@ export default function Profile({
         method: "PATCH",
         headers: {
           "content-type": "application/json",
+          "authorization": `Bearer ${userToken}`
         },
         body: JSON.stringify(updateUserData),
       })
@@ -59,12 +62,16 @@ export default function Profile({
     }
   }
 
-  //Enter key used to update info
+  //Enter key used to update info =================================
   function handleEnterKey(event){
     if(event.key === "Enter"){
         handleUpdateClick()
     }
   }
+
+/* =============================================================
+||||||||||||||||| ||||||||||||||||||||||||||||||||||||||||||||||\
+================================================================= */
 
   return (
     <div className={style.profileContainer}>

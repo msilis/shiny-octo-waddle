@@ -16,6 +16,7 @@ export default function Dashboard({
   setSeeProfile,
   seeProfile,
   userId,
+  userToken
 }) {
   //State to keep track of sidebar button clicks
 
@@ -34,6 +35,7 @@ export default function Dashboard({
           email={email}
           setEmail={setEmail}
           userId={userId}
+          userToken={userToken}
         />
       );
     } else if (addGame) {

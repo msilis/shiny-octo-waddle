@@ -25,6 +25,8 @@ function App() {
   const [userId, setUserId] = useState("");
   //Profile state
   const [seeProfile, setSeeProfile] = useState(false);
+  //JWT Token
+  const [userToken, setUserToken] = useState("")
 
   //Check sessionStorage to see if user is logged in
   useEffect(() => {
@@ -67,6 +69,7 @@ function App() {
                 setLastName={setLastName}
                 setEmail={setEmail}
                 setUserId={setUserId}
+                setUserToken={setUserToken}
               />
             }
           ></Route>
@@ -86,6 +89,7 @@ function App() {
                   seeProfile={seeProfile}
                   setSeeProfile={setSeeProfile}
                   userId={userId}
+                  userToken={userToken}
                 />
               </Protected>
             }
