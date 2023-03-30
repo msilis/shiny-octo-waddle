@@ -47,6 +47,7 @@ export default function Dashboard({
           userId={userId}
           tagArray={tagArray}
           setTagArray={setTagArray}
+          userToken={userToken}
         />
       );
     }

@@ -10,6 +10,7 @@ export default function DashboardMain({
   userId,
   tagArray,
   setTagArray,
+  userToken
 }) {
   const [selectedTag, setSelectedTag] = useState("0");
   const [results, setResults] = useState(true);
@@ -63,7 +64,8 @@ export default function DashboardMain({
       fetch("http://localhost:8080/techniqueSearch", {
         method: "POST",
         headers: {
-          "content-type": "application/json",
+          "content-type": "application/json"
+           
         },
         body: JSON.stringify(tagSearchData),
       })
@@ -77,6 +79,7 @@ export default function DashboardMain({
             method: "GET",
             headers: {
               "content-type": "application/json",
+              "authorization": `Bearer ${userToken}`
             },
           })
             .then((response) => response.json())

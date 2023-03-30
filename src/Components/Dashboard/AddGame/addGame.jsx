@@ -88,6 +88,8 @@ export default function AddGame({ setAddGame, userId }) {
 
   //Handle adding game to user's games ===============================================================
   function handleAddGame() {
+
+    //TODO check empty inputs
     const newGameData = {
       gameName: gameName.current?.value,
       gameText: gameText.current?.value,

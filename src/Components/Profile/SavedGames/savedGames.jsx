@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import style from "./savedGames.module.css";
+import SavedCreatedGames from "./savedCreatedGames";
 
 export default function SavedGames({ userId }) {
   //State for saved games
   const [savedGames, setSavedGames] = useState([]);
-  const [savedCreatedGames, setSavedCreatedGames] = useState([]);
   const [loadingSaved, setLoadingSaved] = useState(false);
-  const [loadingCreated, setLoadingCreated] = useState(false);
 
   //Function to fetch saved games
 
@@ -34,34 +33,9 @@ export default function SavedGames({ userId }) {
     }
   }
 
-  //Function to get games created by user
-
-  function getUserCreatedGames() {
-    const createdById = {
-      userId: userId,
-    };
-    try {
-      setLoadingCreated(true);
-      fetch("http://localhost:8080/getUserCreatedGames", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(createdById),
-      })
-        .then((response) => response.json())
-        .then((jsonResponse) => {
-          setSavedCreatedGames(jsonResponse);
-          setLoadingCreated(false);
-        });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
+  // Get user's saved games
   useEffect(() => {
     getSavedGames();
-    getUserCreatedGames();
   }, []);
 
 
@@ -84,27 +58,7 @@ export default function SavedGames({ userId }) {
       });
   }
 
-  //Delete user created game =================================
-  function handleCreatedGameDelete(event) {
-    const gameId = event.target.parentNode.parentNode.id;
-    console.log(gameId);
-    const deleteCreatedData = {
-      gameToDelete: gameId,
-    };
-
-    fetch("http://localhost:8080/deleteCreated", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(deleteCreatedData),
-    })
-      .then((response) => response.json())
-      .then((jsonResposne) => console.log(jsonResposne))
-      .then(() => {
-        getUserCreatedGames();
-      });
-  }
+  
 
   //Conditionally render game display depending on fetch state and saved games array
 
@@ -131,35 +85,6 @@ export default function SavedGames({ userId }) {
     )}
   }
 
-  function displaySavedCreatedGames() {
-    if (loadingCreated){
-      return <p>Loading...</p>
-    } else if (savedCreatedGames.length === 0){
-      return <p>You do not have any created games to show</p>
-    } else {
-      return(savedCreatedGames.map((game) => {
-        return (
-          <div className={style.gameItem} key={game._id} id={game._id}>
-            <h5>{game.gameName}</h5>
-            <p>{game.gameText}</p>
-            <h5>Game focus:</h5>
-            <div className={style.gameTechniqueContainer}>
-              {game.gameTechnique.map((item) => {
-                console.log(item.label);
-                return <p key={item.key}>{item.label}</p>;
-              })}
-            </div>
-            <div
-              className={style.deleteSavedGameButton}
-              onClick={handleCreatedGameDelete}
-            >
-              <span>Delete</span>
-            </div>
-          </div>
-        );
-      }))
-    }
-  }
 
   return (
     <div className={style.savedGamesDisplayContainer}>
@@ -169,7 +94,7 @@ export default function SavedGames({ userId }) {
       </div>
       <h4 className={style.savedGamesHeading}>Your Created Games:</h4>
       <div className={style.savedGamesDisplay}>
-        {displaySavedCreatedGames()}
+        <SavedCreatedGames userId={userId} />
       </div>
     </div>
   );

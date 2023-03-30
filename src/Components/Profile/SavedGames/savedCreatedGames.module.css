@@ -1,0 +1,39 @@
+.savedGameDisplayContainer {
+    margin-bottom: 5rem;
+    
+  }
+  
+  .gameItem {
+    background-color: #388697;
+    padding: 1rem;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    border-radius: 30px 0px 30px 0px;
+    box-shadow: 8px 8px 8px black;
+  }
+  
+  .gameTechniqueContainer {
+    display: flex;
+    margin-top: -2rem;
+    gap: 1rem;
+  }
+  
+  .deleteSavedGameButton {
+    outline: 2px solid white;
+    width: 4rem;
+    padding: .10rem;
+    text-align: center;
+    transition: .3s;
+    border-radius: 5px 0px 5px 0px;
+  }
+  
+  .deleteSavedGameButton:hover {
+    cursor: pointer;
+    color: red;
+    outline: 2px solid red;
+  }
+  
+  .deleteSavedGameButton:active {
+    transform: translateY(5px);
+  }
+  
