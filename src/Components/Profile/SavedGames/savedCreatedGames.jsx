@@ -1,11 +1,14 @@
 import style from "./savedCreatedGames.module.css";
-import { useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
+import EditModal from "./SavedEditModal/savedEditModal";
 
 
 export default function SavedCreatedGames({ userId }){
 //State for user-created saved games
 const [savedCreatedGames, setSavedCreatedGames] = useState([]);
 const [loadingCreated, setLoadingCreated] = useState(false);
+const [gameToEditId, setGameToEditId] = useState("");
+const [showModal, setShowModal] = useState(false)
 
 
     function getUserCreatedGames() {
@@ -24,6 +27,7 @@ const [loadingCreated, setLoadingCreated] = useState(false);
             .then((response) => response.json())
             .then((jsonResponse) => {
               setSavedCreatedGames(jsonResponse);
+              console.log(jsonResponse)
               setLoadingCreated(false);
             });
         } catch (err) {
@@ -53,6 +57,18 @@ const [loadingCreated, setLoadingCreated] = useState(false);
       });
   };
 
+  //Edit user created game =========================================
+  function handleEditUserCreatedGame(e){
+    const gameId = e.target.parentNode.parentNode.parentNode.id
+     setGameToEditId(gameId);
+     console.log(gameId)
+     console.log(gameToEditId)
+     setShowModal(true);
+     
+
+
+  }
+
 //Get user created games with effect hook
       useEffect(()=>{
         getUserCreatedGames();
@@ -71,16 +87,27 @@ const [loadingCreated, setLoadingCreated] = useState(false);
               <h5>Game focus:</h5>
               <div className={style.gameTechniqueContainer}>
                 {game.gameTechnique.map((item) => {
-                  console.log(item.label);
                   return <p key={item.key}>{item.label}</p>;
                 })}
               </div>
+              <div className={style.buttonContainer}>
               <div
                 className={style.deleteSavedGameButton}
                 onClick={handleCreatedGameDelete}
               >
                 <span>Delete</span>
               </div>
+              <div
+                className={style.editSavedGameButton}
+                onClick={handleEditUserCreatedGame}
+              >
+                <span>Edit</span>
+              </div>
+              </div>
+              <div className={style.modalContainer}>
+              <EditModal gameToEditId={gameToEditId} showModal={showModal} setShowModal={setShowModal}/>
+              </div>
+              
             </div>
           );
         }))

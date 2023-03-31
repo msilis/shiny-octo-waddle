@@ -1,0 +1,81 @@
+
+.mainModalContainer {
+    position: relative;
+    top: 25%;
+    left: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    height: 40%;
+    gap: 1rem;
+    
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 30px 0px 30px 0px;
+}
+
+.modalVisible {
+    display: block;
+    border: 1px solid red;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    border: 1px solid red;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    animation: modalFadeIn 0.5s;
+    
+}
+
+@keyframes modalFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+.modalHidden {
+    display: none;
+}
+
+/* Buttons */
+
+.buttonContainer {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    
+}
+
+.saveButton {
+    outline: 2px solid white;
+    width: 4rem;
+    padding: .10rem;
+    text-align: center;
+    transition: .3s;
+    border-radius: 5px 0px 5px 0px;
+}
+
+.cancelButton {
+    outline: 2px solid white;
+    width: 4rem;
+    padding: .10rem;
+    text-align: center;
+    transition: .3s;
+    border-radius: 5px 0px 5px 0px;
+}
+
+.saveButton:hover{
+    cursor: pointer;
+    color: lightgreen;
+    outline: 2px solid lightgreen;
+}
+
+.cancelButton:hover {
+    cursor: pointer;
+    color: red;
+    outline: 2px solid red;
+}

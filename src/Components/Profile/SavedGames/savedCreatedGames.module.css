@@ -17,6 +17,12 @@
     margin-top: -2rem;
     gap: 1rem;
   }
+
+  .buttonContainer {
+    display: flex;
+    gap: 1rem;
+  }
+  
   
   .deleteSavedGameButton {
     outline: 2px solid white;
@@ -36,4 +42,24 @@
   .deleteSavedGameButton:active {
     transform: translateY(5px);
   }
+
+  .editSavedGameButton {
+    outline: 2px solid white;
+    width: 4rem;
+    padding: .10rem;
+    text-align: center;
+    transition: .3s;
+    border-radius: 5px 0px 5px 0px;
+  }
+
+  .editSavedGameButton:hover {
+    cursor: pointer;
+    color: lightgreen;
+    outline: 2px solid lightgreen;
+  }
+  
+  .editSavedGameButton:active {
+    transform: translateY(5px);
+  }
+
   
