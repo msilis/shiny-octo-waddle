@@ -18,6 +18,12 @@
     gap: 1rem;
   }
 
+  /* Clear default button styling so new style can be applied */
+  button {
+    all: unset;
+    cursor: pointer;
+  }
+
   .buttonContainer {
     display: flex;
     gap: 1rem;

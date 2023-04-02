@@ -14,7 +14,6 @@ export default function AddGame({ setAddGame, userId }) {
   const [addPieces, setAddPieces] = useState([]);
   const [gameTechniques, setGameTechniques] = useState([]);
   const [addGameTechniques, setAddGameTechniques] = useState([]);
-  console.log(addGameTags);
   //Cancel Button click
   function handleCancelClick(event) {
     setAddGame(false);
@@ -71,7 +70,6 @@ export default function AddGame({ setAddGame, userId }) {
 
   //Handle tag input ================================================================================
   function handleTagChange(e) {
-    console.log(e);
     setAddGameTechniques(e);
   }
 
@@ -82,7 +80,6 @@ export default function AddGame({ setAddGame, userId }) {
   });
   //Handle adding a piece to game ====================================================================
   function handlePieceChange(e) {
-    console.log(e);
     setAddPieces(e);
   }
 
@@ -110,7 +107,7 @@ export default function AddGame({ setAddGame, userId }) {
           console.log("From inside the if check");
           gameName.current.value = "";
           gameText.current.value = "";
-          setAddGameTags([]);
+          setAddGameTechniques([]);
           setAddPieces([]);
         }
       });
@@ -146,9 +143,11 @@ export default function AddGame({ setAddGame, userId }) {
         onChange={handleTagChange}
         placeholder="Select Game Focus"
         value={addGameTechniques}
+        
       />
       <Select
         options={pieceOptions}
+        defaultValue={[pieceOptions[2]]}
         isMulti={true}
         ref={piecesRef}
         className={style.addGameSelectInput}

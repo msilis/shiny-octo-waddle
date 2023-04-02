@@ -2,40 +2,39 @@ import style from "./savedCreatedGames.module.css";
 import { React, useEffect, useState } from "react";
 import EditModal from "./SavedEditModal/savedEditModal";
 
+export default function SavedCreatedGames({ userId }) {
+  //State for user-created saved games
+  const [savedCreatedGames, setSavedCreatedGames] = useState([]);
+  const [loadingCreated, setLoadingCreated] = useState(false);
+  const [gameToEditId, setGameToEditId] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [gameToEdit, setGameToEdit] = useState("");
 
-export default function SavedCreatedGames({ userId }){
-//State for user-created saved games
-const [savedCreatedGames, setSavedCreatedGames] = useState([]);
-const [loadingCreated, setLoadingCreated] = useState(false);
-const [gameToEditId, setGameToEditId] = useState("");
-const [showModal, setShowModal] = useState(false)
+  function getUserCreatedGames() {
+    const createdById = {
+      userId: userId,
+    };
+    try {
+      setLoadingCreated(true);
+      fetch("http://localhost:8080/getUserCreatedGames", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(createdById),
+      })
+        .then((response) => response.json())
+        .then((jsonResponse) => {
+          setSavedCreatedGames(jsonResponse);
+          console.log(jsonResponse);
+          setLoadingCreated(false);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-
-    function getUserCreatedGames() {
-        const createdById = {
-          userId: userId,
-        };
-        try {
-          setLoadingCreated(true);
-          fetch("http://localhost:8080/getUserCreatedGames", {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify(createdById),
-          })
-            .then((response) => response.json())
-            .then((jsonResponse) => {
-              setSavedCreatedGames(jsonResponse);
-              console.log(jsonResponse)
-              setLoadingCreated(false);
-            });
-        } catch (err) {
-          console.log(err);
-        }
-      };
-
-      //Delete user created game =================================
+  //Delete user created game =================================
   function handleCreatedGameDelete(event) {
     const gameId = event.target.parentNode.parentNode.id;
     console.log(gameId);
@@ -55,61 +54,94 @@ const [showModal, setShowModal] = useState(false)
       .then(() => {
         getUserCreatedGames();
       });
-  };
-
-  //Edit user created game =========================================
-  function handleEditUserCreatedGame(e){
-    const gameId = e.target.parentNode.parentNode.parentNode.id
-     setGameToEditId(gameId);
-     console.log(gameId)
-     console.log(gameToEditId)
-     setShowModal(true);
-     
-
-
   }
 
-//Get user created games with effect hook
-      useEffect(()=>{
-        getUserCreatedGames();
-      },[])
+  //Edit user created game =========================================
 
-      if (loadingCreated){
-        return <p>Loading...</p>
-      } else if (savedCreatedGames.length === 0){
-        return <p>You do not have any created games to show</p>
-      } else {
-        return(savedCreatedGames.map((game) => {
-          return (
-            <div className={style.gameItem} key={game._id} id={game._id}>
-              <h5>{game.gameName}</h5>
-              <p>{game.gameText}</p>
-              <h5>Game focus:</h5>
-              <div className={style.gameTechniqueContainer}>
-                {game.gameTechnique.map((item) => {
-                  return <p key={item.key}>{item.label}</p>;
-                })}
-              </div>
-              <div className={style.buttonContainer}>
-              <div
-                className={style.deleteSavedGameButton}
-                onClick={handleCreatedGameDelete}
-              >
-                <span>Delete</span>
-              </div>
-              <div
-                className={style.editSavedGameButton}
-                onClick={handleEditUserCreatedGame}
-              >
-                <span>Edit</span>
-              </div>
-              </div>
-              <div className={style.modalContainer}>
-              <EditModal gameToEditId={gameToEditId} showModal={showModal} setShowModal={setShowModal}/>
-              </div>
-              
-            </div>
-          );
-        }))
-      }
+  //API Call for data
+  //Call API and get game details
+  function getUserGameToEdit(gameId) {
+
+    try {
+      fetch(`http://localhost:8080/getOneUserGame/${gameId}`, {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data, "This is from the fetch call");
+          setGameToEdit(data);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  console.log(gameToEditId, "gameToEditId");
+
+  function handleEditUserCreatedGame(event) {
+    const gameId = event.target.parentNode.parentNode.id;
+    setGameToEditId(gameId);
+    setShowModal(true);
+    getUserGameToEdit(gameId);
+  }
+
+  //Get user created games with effect hook
+  useEffect(() => {
+    getUserCreatedGames();
+  }, []);
+
+  if (loadingCreated) {
+    return <p>Loading...</p>;
+  } else if (savedCreatedGames.length === 0) {
+    return <p>You do not have any created games to show</p>;
+  } else {
+    return savedCreatedGames.map((game) => {
+      return (
+        <div className={style.gameItem} key={game._id} id={game._id}>
+          <h5>{game.gameName}</h5>
+          <p>{game.gameText}</p>
+          <h5>Game focus:</h5>
+          <div className={style.gameTechniqueContainer}>
+            {game.gameTechnique.map((item) => {
+              return <p key={item.key}>{item.label}</p>;
+            })}
+          </div>
+          <div className={style.buttonContainer}>
+            <button
+              className={style.deleteSavedGameButton}
+              onClick={handleCreatedGameDelete}
+            >
+              Delete
+            </button>
+            <button
+              className={style.editSavedGameButton}
+              onClick={handleEditUserCreatedGame}
+            >
+              Edit
+            </button>
+          </div>
+          <div className={style.modalContainer}>
+            {
+                showModal && gameToEdit &&
+                    <EditModal
+              gameToEditId={gameToEditId}
+              setGameToEditId={setGameToEditId}
+              showModal={showModal}
+              setShowModal={setShowModal}
+              gameToEdit={gameToEdit}
+            />
+
+                
+
+
+            }
+            
+          </div>
+        </div>
+      );
+    });
+  }
 }
