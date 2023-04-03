@@ -6,9 +6,12 @@ export default function SavedCreatedGames({ userId }) {
   //State for user-created saved games
   const [savedCreatedGames, setSavedCreatedGames] = useState([]);
   const [loadingCreated, setLoadingCreated] = useState(false);
+  const { loadingSaved, setLoadingSaved } = useState(false);
   const [gameToEditId, setGameToEditId] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [gameToEdit, setGameToEdit] = useState("");
+  const [addGameTechniques, setAddGameTechniques] = useState([]);
+  const [addGamePieces, setAddGamePieces] = useState([]);
 
   function getUserCreatedGames() {
     const createdById = {
@@ -61,7 +64,6 @@ export default function SavedCreatedGames({ userId }) {
   //API Call for data
   //Call API and get game details
   function getUserGameToEdit(gameId) {
-
     try {
       fetch(`http://localhost:8080/getOneUserGame/${gameId}`, {
         method: "GET",
@@ -72,6 +74,8 @@ export default function SavedCreatedGames({ userId }) {
         .then((response) => response.json())
         .then((data) => {
           console.log(data, "This is from the fetch call");
+          setAddGameTechniques(data.gameTechnique);
+          setAddGamePieces(data.gamePieces);
           setGameToEdit(data);
         });
     } catch (err) {
@@ -124,21 +128,21 @@ export default function SavedCreatedGames({ userId }) {
             </button>
           </div>
           <div className={style.modalContainer}>
-            {
-                showModal && gameToEdit &&
-                    <EditModal
-              gameToEditId={gameToEditId}
-              setGameToEditId={setGameToEditId}
-              showModal={showModal}
-              setShowModal={setShowModal}
-              gameToEdit={gameToEdit}
-            />
-
-                
-
-
-            }
-            
+            {showModal && gameToEdit && (
+              <EditModal
+                gameToEditId={gameToEditId}
+                setGameToEditId={setGameToEditId}
+                showModal={showModal}
+                setShowModal={setShowModal}
+                gameToEdit={gameToEdit}
+                setGameToEdit={setGameToEdit}
+                addGameTechniques={addGameTechniques}
+                setAddGameTechniques={setAddGameTechniques}
+                addGamePieces={addGamePieces}
+                setAddGamePieces={setAddGamePieces}
+                getUserCreatedGames={getUserCreatedGames}
+              />
+            )}
           </div>
         </div>
       );

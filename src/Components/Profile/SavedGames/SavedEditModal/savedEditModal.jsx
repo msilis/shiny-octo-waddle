@@ -7,6 +7,13 @@ export default function EditModal({
   showModal,
   setShowModal,
   gameToEdit,
+  setGameToEdit,
+  addGameTechniques,
+  setAddGameTechniques,
+  addGamePieces,
+  setAddGamePieces,
+  gameToEditId,
+  getUserCreatedGames
 }) {
   //Conditionally render modal depending on state
   const modalDisplay = showModal
@@ -17,10 +24,8 @@ export default function EditModal({
   const editedGameText = useRef();
   const [listOfPieces, setListOfPieces] = useState([]);
   const [gameTechniques, setGameTechniques] = useState([]);
-  const [addGameTechniques, setAddGameTechniques] = useState(gameToEdit.gameTechnique);
-  const [defaultTechniques, setDefaultTechniques] = useState([]);
-  const [addGamePieces, setAddGamePieces] = useState([]);
-  console.log(addGameTechniques);
+  const [loadingPieces, setLoadingPieces] = useState(false);
+  const [loadingFocus, setLoadingFocus] = useState(false);
 
   //Cancel button function
   function handleCancelEditClick() {
@@ -29,6 +34,7 @@ export default function EditModal({
     editedGameText.current.value = gameToEdit.gameText;
     setAddGameTechniques([]);
     setAddGamePieces([]);
+    setGameToEdit([]);
     setShowModal(false);
   }
   console.log(gameToEdit, "Game to edit");
@@ -36,6 +42,7 @@ export default function EditModal({
   //Get techniques and pieces from database
   function fetchPieces() {
     try {
+      setLoadingPieces(true);
       fetch("http://localhost:8080/getPieces")
         .then((response) => response.json())
         .then((data) => {
@@ -43,6 +50,7 @@ export default function EditModal({
             return item.pieceName;
           });
           setListOfPieces(sortedPieces);
+          setLoadingPieces(false);
         });
     } catch (err) {
       console.log(err);
@@ -51,6 +59,7 @@ export default function EditModal({
 
   function fetchGameTechniques() {
     try {
+      setLoadingFocus(true);
       fetch("http://localhost:8080/getGameTechniques", {
         method: "GET",
         headers: {
@@ -65,7 +74,7 @@ export default function EditModal({
             (tag, index) => flattedGameTechniqueArray.indexOf(tag) === index
           );
           setGameTechniques(filteredGameTechniqueArray);
-          
+          setLoadingFocus(false);
         });
     } catch (err) {
       console.log(err);
@@ -96,8 +105,8 @@ export default function EditModal({
     setAddGameTechniques(e);
   }
 
-  function handleAddPieces(e){
-    setAddGamePieces(e)
+  function handleAddPieces(e) {
+    setAddGamePieces(e);
   }
 
   //piecesOptions
@@ -106,12 +115,32 @@ export default function EditModal({
     return { value: piece, label: piece, key: index };
   });
 
-  console.log(gameToEdit.gameTechnique);
-  console.log(gameToEdit.gamePieces)
-  console.log(defaultTechniques)
-  console.log(addTechniqueOptions[1])
+  console.log(addGameTechniques);
+  console.log(addGamePieces);
 
-  //default value for pieces
+  // Save edited piece to database =====================================
+  function handleSaveEditedGame() {
+    const saveGameData = {
+      saveUser: gameToEdit.saveUser,
+      gameName: editedGameName.current?.value,
+      gamePieces: addGamePieces,
+      gameTechnique: addGameTechniques,
+      gameText: editedGameText.current?.value,
+    };
+    try {
+      fetch(`http://localhost:8080/editCreated/${gameToEditId}`, {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(saveGameData),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data)).then(()=> getUserCreatedGames()).then(()=> setShowModal(false));
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <div className={modalDisplay}>
@@ -128,9 +157,8 @@ export default function EditModal({
           className={style.editTextInput}
         />
 
-        {/* //TODO! Select not displaying default values */}
         <Select
-          placeholder="Select focus"
+          placeholder={loadingFocus ? "Loading..." : "Select focus"}
           className={style.selectComponent}
           isMulti={true}
           isSearchable={true}
@@ -138,23 +166,19 @@ export default function EditModal({
           options={addTechniqueOptions}
           onChange={handleTechniqueChange}
           value={addGameTechniques}
-          
-          
         />
         <Select
-          placeholder="Relevant Pieces"
+          placeholder={loadingPieces ? "Loading..." : "Choose pieces"}
           className={style.selectComponent}
           isMulti={true}
           isSearchable={true}
           isClearable={true}
           options={piecesOptions}
-          value={addGamePieces}
           onChange={handleAddPieces}
-          defaultValue={[gameToEdit.gamePieces]}
-          
+          value={addGamePieces}
         />
         <div className={style.buttonContainer}>
-          <div className={style.saveButton}>
+          <div className={style.saveButton} onClick={handleSaveEditedGame}>
             <span>Save</span>
           </div>
           <div className={style.cancelButton} onClick={handleCancelEditClick}>
