@@ -12,6 +12,7 @@ import Footer from "./Footer/footer.jsx";
 import Protected from "./Protected/protected.jsx";
 import AddGame from "./Dashboard/AddGame/addGame.jsx";
 import SavedCreatedGames from "./Profile/SavedGames/savedCreatedGames.jsx";
+import Vote from "./Dashboard/Vote/vote.jsx";
 
 export {
   About,
@@ -27,5 +28,6 @@ export {
   Footer,
   Protected,
   AddGame,
-  SavedCreatedGames
+  SavedCreatedGames,
+  Vote
 };

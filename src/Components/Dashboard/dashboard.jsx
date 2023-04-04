@@ -1,7 +1,7 @@
 import style from "./dashboard.module.css";
 import classnames from "classnames";
 import Sidebar from "./Dashboard-sidebar/dashboard-sidebar";
-import { DashboardMain, Profile, AddGame } from "../../Components";
+import { DashboardMain, Profile, AddGame, Vote } from "../../Components";
 import { useState } from "react";
 
 export default function Dashboard({
@@ -16,11 +16,12 @@ export default function Dashboard({
   setSeeProfile,
   seeProfile,
   userId,
-  userToken
+  userToken,
 }) {
   //State to keep track of sidebar button clicks
 
   const [addGame, setAddGame] = useState(false);
+  const [seeVote, setSeeVote] = useState(false);
   //State for technique tags so it can be passed to both DashboardMain and AddGame
   const [tagArray, setTagArray] = useState([]);
 
@@ -40,7 +41,9 @@ export default function Dashboard({
       );
     } else if (addGame) {
       return <AddGame userId={userId} setAddGame={setAddGame} tagArray={tagArray} />;
-    } else {
+    } else if(seeVote){
+      return <Vote />
+    }else{
       return (
         <DashboardMain
           firstName={firstName}
@@ -63,6 +66,8 @@ export default function Dashboard({
           setSeeProfile={setSeeProfile}
           setAddGame={setAddGame}
           userId={userId}
+          seeVote={seeVote}
+          setSeeVote={setSeeVote}
         />
       </div>
       {mainDisplay()}

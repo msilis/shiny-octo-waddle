@@ -13,7 +13,7 @@ export default function EditModal({
   addGamePieces,
   setAddGamePieces,
   gameToEditId,
-  getUserCreatedGames
+  getUserCreatedGames,
 }) {
   //Conditionally render modal depending on state
   const modalDisplay = showModal
@@ -136,7 +136,9 @@ export default function EditModal({
         body: JSON.stringify(saveGameData),
       })
         .then((response) => response.json())
-        .then((data) => console.log(data)).then(()=> getUserCreatedGames()).then(()=> setShowModal(false));
+        .then((data) => console.log(data))
+        .then(() => getUserCreatedGames())
+        .then(() => setShowModal(false));
     } catch (err) {
       console.log(err);
     }

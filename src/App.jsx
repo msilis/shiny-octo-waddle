@@ -27,6 +27,9 @@ function App() {
   const [seeProfile, setSeeProfile] = useState(false);
   //JWT Token
   const [userToken, setUserToken] = useState("")
+  
+
+  console.log(seeVote, "See Vote")
 
   //Check sessionStorage to see if user is logged in
   useEffect(() => {
@@ -90,6 +93,7 @@ function App() {
                   setSeeProfile={setSeeProfile}
                   userId={userId}
                   userToken={userToken}
+                  
                 />
               </Protected>
             }
