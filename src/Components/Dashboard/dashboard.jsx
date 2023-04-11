@@ -42,7 +42,7 @@ export default function Dashboard({
     } else if (addGame) {
       return <AddGame userId={userId} setAddGame={setAddGame} tagArray={tagArray} />;
     } else if(seeVote){
-      return <Vote />
+      return <Vote userId={userId}/>
     }else{
       return (
         <DashboardMain

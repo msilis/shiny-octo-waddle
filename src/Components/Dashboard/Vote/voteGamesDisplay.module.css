@@ -1,0 +1,71 @@
+.gameItem {
+  background-color: #388697;
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  border-radius: 30px 0px 30px 0px;
+  box-shadow: 8px 8px 8px black;
+  animation: gameItemFadeIn 1s;
+}
+
+@keyframes gameItemFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.voteCountDisplay {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+/* Button styles */
+
+
+
+.voteButtonContainer {
+  display: flex;
+  gap: 1rem;
+}
+
+.voteNoButton {
+  outline: 2px solid white;
+  width: 4rem;
+  padding: 0.1rem;
+  text-align: center;
+  transition: 0.3s;
+  border-radius: 5px 0px 5px 0px;
+}
+
+.voteNoButton:hover {
+  cursor: pointer;
+  color: red;
+  outline: 2px solid red;
+}
+
+.voteNoButton:active {
+  transform: translateY(5px);
+}
+
+.voteYesButton {
+  outline: 2px solid white;
+  width: 4rem;
+  padding: 0.1rem;
+  text-align: center;
+  transition: 0.3s;
+  border-radius: 5px 0px 5px 0px;
+}
+
+.voteYesButton:hover {
+  cursor: pointer;
+  color: lightgreen;
+  outline: 2px solid lightgreen;
+}
+
+.voteYesButton:active {
+  transform: translateY(5px);
+}

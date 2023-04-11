@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Select from "react-select";
 import style from "./addGame.module.css";
+import AddGameModal from "./addGameModal/addGameModal";
 
 export default function AddGame({ setAddGame, userId }) {
   //Refs ***********************
@@ -14,6 +15,7 @@ export default function AddGame({ setAddGame, userId }) {
   const [addPieces, setAddPieces] = useState([]);
   const [gameTechniques, setGameTechniques] = useState([]);
   const [addGameTechniques, setAddGameTechniques] = useState([]);
+  const [showAddGameModal, setShowAddGameModal] = useState(false);
   //Cancel Button click
   function handleCancelClick(event) {
     setAddGame(false);
@@ -65,7 +67,11 @@ export default function AddGame({ setAddGame, userId }) {
 
   //Options to send to Select element ===============================================================
   const addGameOptions = gameTechniques.map((tag, index) => {
-    return { value: tag, label: tag[0].toUpperCase() + tag.substring(1), key: index };
+    return {
+      value: tag,
+      label: tag[0].toUpperCase() + tag.substring(1),
+      key: index,
+    };
   });
 
   //Handle tag input ================================================================================
@@ -85,7 +91,6 @@ export default function AddGame({ setAddGame, userId }) {
 
   //Handle adding game to user's games ===============================================================
   function handleAddGame() {
-
     //TODO check empty inputs
     const newGameData = {
       gameName: gameName.current?.value,
@@ -115,10 +120,51 @@ export default function AddGame({ setAddGame, userId }) {
       console.log(err);
     }
   }
-/* ==============================================================
+
+  function handleAddVoteGame(){
+    const newVoteGameData = {
+      gameName: gameName.current?.value,
+      gameText: gameText.current?.value,
+      gameTechnique: addGameTechniques,
+      gamePieces: addPieces,
+      saveUser: userId,
+      yesVote: 0,
+      noVote: 0,
+    };
+    try {
+      fetch("http://localhost:8080/addGameForVote", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify(newVoteGameData)
+      }).then((response)=>{
+        console.log(response, "Game submitted for voting")
+      })
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+  //If user selects yes, add game to vote list. If user selects no, add game only to profile.
+
+  function handleYesClick() {
+    handleAddGame();
+    handleAddVoteGame();
+  }
+
+  function handleNoClick() {
+    handleAddGame();
+  }
+
+  //Show modal and ask if user wants game added to vote list
+
+  function handleShowModal() {
+    setShowAddGameModal(true);
+  }
+  /* ==============================================================
 |||||||||||| Return |||||||||||||||||||||||||||||||||||||||||||||
 ================================================================= */
-
 
   return (
     <div
@@ -143,7 +189,6 @@ export default function AddGame({ setAddGame, userId }) {
         onChange={handleTagChange}
         placeholder="Select Game Focus"
         value={addGameTechniques}
-        
       />
       <Select
         options={pieceOptions}
@@ -157,11 +202,21 @@ export default function AddGame({ setAddGame, userId }) {
         value={addPieces}
         placeholder="Select Relevant Pieces"
       />
-      <div className={style.addGameViewButton} onClick={handleAddGame}>
+      <div className={style.addGameViewButton} onClick={handleShowModal}>
         Add
       </div>
       <div className={style.addGameViewButton} onClick={handleCancelClick}>
         Cancel
+      </div>
+      <div className={style.addGameModal}>
+        {showAddGameModal && (
+          <AddGameModal
+            showAddGameModal={showAddGameModal}
+            setShowAddGameModal={setShowAddGameModal}
+            handleNoClick={handleNoClick}
+            handleYesClick={handleYesClick}
+          />
+        )}
       </div>
     </div>
   );
