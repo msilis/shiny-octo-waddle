@@ -23,6 +23,9 @@ export default function VoteGamesDisplay({ voteProps }) {
             <p>Yes: {voteProps.voteTotal.length === 0 ? "0" : voteProps.voteTotal[index].yesVote }</p>
             <p>No: {voteProps.voteTotal.length === 0 ? "0" : voteProps.voteTotal[index].noVote}</p>
           </div>
+          <div className={style.votedText}>
+            {voteProps.userVotedGames.includes(voteGame._id) ? "yes" : "" }
+          </div>
           <div className={style.voteButtonContainer}>
             <button
               className={style.voteYesButton}

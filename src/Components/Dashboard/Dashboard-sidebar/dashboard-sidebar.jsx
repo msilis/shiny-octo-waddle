@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
 import style from "./dashboard-sidebar.module.css";
 
 export default function Sidebar({
