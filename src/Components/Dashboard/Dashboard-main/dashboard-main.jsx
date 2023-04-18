@@ -10,7 +10,7 @@ export default function DashboardMain({
   userId,
   tagArray,
   setTagArray,
-  userToken
+  userToken,
 }) {
   const [selectedTag, setSelectedTag] = useState("0");
   const [results, setResults] = useState(true);
@@ -18,6 +18,7 @@ export default function DashboardMain({
   const [randomGame, setRandomGame] = useState([]);
   const [savedGame, setSavedGame] = useState(false);
   const [loadRandomGame, setLoadRandomGame] = useState(false);
+  const [error, setError] = useState(false);
   //Redirect functionality
 
   //Call API to get tags on initial page load ==================================================
@@ -58,39 +59,43 @@ export default function DashboardMain({
     const tagSearchData = {
       tagToSearch: selectedTag,
     };
-    console.log(tagSearchData);
-    try {
-      setLoadRandomGame(true);
-      fetch("http://localhost:8080/techniqueSearch", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json"
-           
-        },
-        body: JSON.stringify(tagSearchData),
+    setLoadRandomGame(true);
+    fetch("http://localhost:8080/techniqueSearch", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(tagSearchData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const reviewArray = data.map((piece) => piece.pieceName);
+        setReviewPieces(reviewArray);
       })
-        .then((response) => response.json())
-        .then((data) => {
-          const reviewArray = data.map((piece) => piece.pieceName);
-          setReviewPieces(reviewArray);
+      .then(
+        fetch("http://localhost:8080/randomGame", {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            authorization: `Bearer ${userToken}`,
+          },
         })
-        .then(
-          fetch("http://localhost:8080/randomGame", {
-            method: "GET",
-            headers: {
-              "content-type": "application/json",
-              "authorization": `Bearer ${userToken}`
-            },
+          .then((response) => {
+            console.log(response);
+            if (response.status === 401) {
+              setError(true);
+              throw new Error("There was an error with the server");
+            } else {
+              return response.json();
+            }
           })
-            .then((response) => response.json())
-            .then((data) => {
-              setRandomGame(data);
-              setLoadRandomGame(false);
-            })
-        );
-    } catch (err) {
-      console.log(err);
-    }
+          .then((data) => {
+            setRandomGame(data);
+            setLoadRandomGame(false);
+          })
+      )
+      .catch((err) => console.log(err));
+
     setResults(false);
     setSavedGame(false);
   }
@@ -106,26 +111,29 @@ export default function DashboardMain({
       gameText: randomGame.gameText,
       saveUser: userId,
     };
-    try {
-      fetch("http://localhost:8080/saveGame", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(saveGameData),
-      }).then((response) => {
+
+    fetch("http://localhost:8080/saveGame", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(saveGameData),
+    })
+      .then((response) => {
         console.log(response);
         if (response.status === 201) {
           setSavedGame(true);
         }
-      });
-    } catch (err) {
-      console.log(err);
-    }
+      })
+      .catch((err) => console.log(err));
   }
 
   const saveGameText = savedGame ? null : handleGameSave;
-  const saveGameStyle = savedGame ? style.saveButtonDisable : style.saveButton;
+  const saveGameStyle =
+    savedGame || error ? style.saveButtonDisable : style.saveButton;
+
+  console.log(randomGame);
+  console.log(error);
 
   //Text for greeting ==========================================================================
   const greetText = `Hi ${firstName}, what do you want to work on in your group?`;
@@ -164,7 +172,7 @@ export default function DashboardMain({
             <div className={style.reviewHeading}>
               <h3
                 className={style.reviewHeadingText}
-              >{`Suggested review pieces for: ${selectedTag}`}</h3>
+              >{error ? "There was an error" : `Suggested review pieces for: ${selectedTag}`}</h3>
             </div>
             <div className={style.reviewPieceList}>
               {loadRandomGame ? (
@@ -185,7 +193,9 @@ export default function DashboardMain({
             <></>
           ) : (
             <div className={style.randomGameContainer}>
-              <h3 className={style.reviewHeadingText}>{randomGame.gameName}</h3>
+              <h3 className={style.reviewHeadingText}>
+                {error ? "There was an error" : randomGame.gameName}
+              </h3>
               <p className={style.randomGameText}>{randomGame.gameText}</p>
               <div className={saveGameStyle} onClick={saveGameText}>
                 <span>{savedGame ? "Game saved" : "Save Game"}</span>

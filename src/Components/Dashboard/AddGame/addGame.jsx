@@ -31,6 +31,9 @@ export default function AddGame({ setAddGame, userId }) {
           let sortedPieces = data.map((item) => {
             return item.pieceName;
           });
+          //Include option to add various pieces to game
+          sortedPieces.push("Various")
+          sortedPieces.sort()
           setListOfPieces(sortedPieces);
         });
     } catch (err) {
@@ -53,6 +56,7 @@ export default function AddGame({ setAddGame, userId }) {
           const filteredGameTechniqueArray = flattedGameTechniqueArray.filter(
             (tag, index) => flattedGameTechniqueArray.indexOf(tag) === index
           );
+          filteredGameTechniqueArray.sort()
           setGameTechniques(filteredGameTechniqueArray);
         });
     } catch (err) {
@@ -79,7 +83,7 @@ export default function AddGame({ setAddGame, userId }) {
     setAddGameTechniques(e);
   }
 
-  //Assign pieces to value to send to reac-select dropdown list ======================================
+  //Assign pieces to value to send to react-select dropdown list ======================================
 
   const pieceOptions = listOfPieces.map((piece, index) => {
     return { value: piece, label: piece, key: index };

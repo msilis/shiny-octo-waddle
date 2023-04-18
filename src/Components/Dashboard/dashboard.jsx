@@ -42,7 +42,7 @@ export default function Dashboard({
     } else if (addGame) {
       return <AddGame userId={userId} setAddGame={setAddGame} tagArray={tagArray} />;
     } else if(seeVote){
-      return <Vote userId={userId}/>
+      return <Vote userId={userId} userToken={userToken}/>
     }else{
       return (
         <DashboardMain
@@ -68,6 +68,7 @@ export default function Dashboard({
           userId={userId}
           seeVote={seeVote}
           setSeeVote={setSeeVote}
+          userToken={userToken}
         />
       </div>
       {mainDisplay()}

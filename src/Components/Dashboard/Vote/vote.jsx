@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import style from "./vote.module.css";
 import VoteGamesDisplay from "./voteGamesDisplay";
 
-export default function Vote({ userId }) {
+export default function Vote({ userId, userToken }) {
   //Loading state
   const [loadingVote, setLoadingVote] = useState(false);
   //State for games to be voted on
@@ -28,6 +28,7 @@ export default function Vote({ userId }) {
     setVoteError,
     voteTotal,
     userVotedGames,
+    
   };
 
   //Vote error overlay
@@ -50,31 +51,33 @@ export default function Vote({ userId }) {
 
   //Fetch games to vote on from the database
   function getVoteGames() {
-    return new Promise((resolve, reject) => {
-      try {
+    
         setLoadingVote(true);
         fetch("http://localhost:8080/gamesForVote", {
-          method: "GET",
+          method: "POST",
           headers: {
             "content-type": "application/json",
+            "authorization": `Bearer ${userToken}`
           },
         })
-          .then((response) => response.json())
+          .then((response) => {
+            if(response.status === 401){
+              throw new Error("You do not have permission to see this")
+            }else{
+              return response.json()
+            }
+            })
           .then((jsonResponse) => {
             setVotingGames(jsonResponse);
             return;
           })
           .then(() => {
             getOnlyVotes();
-
             setLoadingVote(false);
             resolve();
-          });
-      } catch (err) {
-        console.log(err);
-        reject(err);
-      }
-    });
+          }).catch((err)=>console.log(err)).finally(()=>setLoadingVote(false));
+      
+    
   }
 
   //Fetch vote count to be able to update only count, not whole component
