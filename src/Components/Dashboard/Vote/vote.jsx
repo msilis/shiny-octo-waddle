@@ -27,7 +27,7 @@ export default function Vote({ userId }) {
     voteError,
     setVoteError,
     voteTotal,
-    userVotedGames
+    userVotedGames,
   };
 
   //Vote error overlay
@@ -66,6 +66,7 @@ export default function Vote({ userId }) {
           })
           .then(() => {
             getOnlyVotes();
+
             setLoadingVote(false);
             resolve();
           });
@@ -103,34 +104,34 @@ export default function Vote({ userId }) {
 
   //Handle yes and no votes
   function handleYesVote(e) {
-    
     const yesVoteData = {
       gameId: e.target.parentNode.parentNode.id,
       updateVoteValue: 1,
       userId: userId,
     };
     fetch("http://localhost:8080/trackVote", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(yesVoteData),
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(yesVoteData),
+    })
+      .then((response) => {
+        if (response.status === 409) {
+          setVoteError(true);
+          throw new Error("You have already vote for this game");
+        } else {
+          return response.json();
+        }
       })
-        .then((response) => {
-          if (response.status === 409) {
-            setVoteError(true);
-            throw new Error("You have already vote for this game");
-          } else {
-            return response.json();
-          }
-        })
-        .then(() => {
-          getOnlyVotes().then(() => {
-            setTimeout(() => {
-              setVoteSuccess(true);
-            }, 1000);
-          });
-        }).catch((error)=>{console.log(error)});
+      .then(() => {
+        getOnlyVotes().then(() => {
+          getUserVotedGames();
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   function handleNoVote(e) {
@@ -141,52 +142,54 @@ export default function Vote({ userId }) {
       userId: userId,
     };
     fetch("http://localhost:8080/trackVote", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(noVoteData),
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(noVoteData),
+    })
+      .then((response) => {
+        if (response.status === 409) {
+          setVoteError(true);
+          throw new Error("You have already voted for this game");
+        } else {
+          return response.json();
+        }
       })
-        .then((response) => {
-          if (response.status === 409) {
-            setVoteError(true);
-            throw new Error("You have already voted for this game");
-          } else {
-            return response.json();
-          }
-        })
-        .then(() => {
-          getOnlyVotes().then(() => {
-            setTimeout(() => {
-              setVoteSuccess(true);
-            }, 1000);
-          });
-        }).catch((error)=>{console.log(error)});
+      .then(() => {
+        getOnlyVotes().then(() => {
+          getUserVotedGames();
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   //Get a list of games the user has voted on
 
-  function getUserVotedGames(){
-
+  function getUserVotedGames() {
     const idToCheck = {
-      userId: userId
-    }
-    console.log(idToCheck)
+      userId: userId,
+    };
+    console.log(idToCheck);
     fetch("http://localhost:8080/getUserVotes", {
       method: "POST",
       headers: {
-        "content-type": "application/json"
+        "content-type": "application/json",
       },
-      body: JSON.stringify(idToCheck)
-    }).then(response => response.json()).then((jsonResponse)=> {
-      let votedGames = jsonResponse.map((el)=>{
-        return el._id
-      });
-      setUserVotedGames(votedGames);
+      body: JSON.stringify(idToCheck),
     })
-  };
+      .then((response) => response.json())
+      .then((jsonResponse) => {
+        let votedGames = jsonResponse.map((el) => {
+          return el._id;
+        });
+        setUserVotedGames(votedGames);
+      });
+  }
 
-  console.log(userVotedGames, "User voted games")
+  console.log(userVotedGames, "User voted games");
   //Call function at page load to get games to be voted on
   useEffect(() => {
     getVoteGames();
@@ -203,14 +206,7 @@ export default function Vote({ userId }) {
           </button>
         </div>
       </div>
-      <div className={voteSuccessOverlay}>
-        <div className={style.overlayContainer}>
-          <h3>Vote counted successfully!</h3>
-          <button className={style.okButton} onClick={handleOkSuccessClick}>
-            Sweet!
-          </button>
-        </div>
-      </div>
+      <div className={voteSuccessOverlay}></div>
       <div className={style.voteText}>
         <h2>Vote</h2>
         <p>

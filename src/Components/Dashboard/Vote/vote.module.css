@@ -1,21 +1,5 @@
 /* Overlay visibility */
 
-/* Vote Success */
-
-.voteSuccessHidden {
-  display: none;
-}
-
-.voteSuccessVisible {
-  display: block;
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  animation: modalFadeIn 0.5s;
-}
 
 /* Vote Error */
 .voteErrorHidden {
@@ -31,6 +15,7 @@
   left: 0;
   background-color: rgba(0, 0, 0, 0.6);
   animation: modalFadeIn 0.5s;
+  z-index: 15;
 }
 
 .overlayContainer {

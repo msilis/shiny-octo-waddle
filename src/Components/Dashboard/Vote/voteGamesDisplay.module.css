@@ -1,5 +1,6 @@
 .gameItem {
   background-color: #388697;
+  position: relative;
   padding: 1rem;
   margin-top: 1rem;
   margin-right: 1rem;
@@ -69,3 +70,27 @@
 .voteYesButton:active {
   transform: translateY(5px);
 }
+
+.votedTextVisible {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 1rem;
+  top: .5rem;
+  color: black;
+  font-size: .5rem;
+  background-color: rgba(244, 236, 194, .8);
+  transform: rotate(45deg);
+  outline: 2px solid yellow;
+  margin-bottom: .5rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+
+.votedTextHidden {
+  display: none;
+}
+
+
