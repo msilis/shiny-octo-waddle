@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import style from "./vote.module.css";
 import VoteGamesDisplay from "./voteGamesDisplay";
 
-export default function Vote({ userId, userToken }) {
+export default function Vote({ userId}) {
   //Loading state
   const [loadingVote, setLoadingVote] = useState(false);
   //State for games to be voted on
@@ -31,6 +31,8 @@ export default function Vote({ userId, userToken }) {
     
   };
 
+  console.log(votingGames, "Voting games")
+
   //Vote error overlay
   const voteErrorOverlay = voteError
     ? `${style.voteErrorVisible}`
@@ -57,8 +59,9 @@ export default function Vote({ userId, userToken }) {
           method: "POST",
           headers: {
             "content-type": "application/json",
-            "authorization": `Bearer ${userToken}`
+            "X-custom-cookie": "jwt" //include cookie in header
           },
+          credentials: "include" //make sure endpoint knows to expect a cookie
         })
           .then((response) => {
             if(response.status === 401){
@@ -73,7 +76,6 @@ export default function Vote({ userId, userToken }) {
           })
           .then(() => {
             getOnlyVotes();
-            setLoadingVote(false);
             resolve();
           }).catch((err)=>console.log(err)).finally(()=>setLoadingVote(false));
       
@@ -88,7 +90,9 @@ export default function Vote({ userId, userToken }) {
           method: "GET",
           headers: {
             "content-type": "application/json",
+            "X-custon-cookie": "jwt"
           },
+          credentials: "include"
         })
           .then((response) => {
             return response.json();
@@ -116,7 +120,9 @@ export default function Vote({ userId, userToken }) {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        "X-custom-cookie": "jwt" 
       },
+      credentials: "include",
       body: JSON.stringify(yesVoteData),
     })
       .then((response) => {
@@ -148,7 +154,9 @@ export default function Vote({ userId, userToken }) {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        "X-custom-cookie": "jwt"
       },
+      credentials: "include",
       body: JSON.stringify(noVoteData),
     })
       .then((response) => {

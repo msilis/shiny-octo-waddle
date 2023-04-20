@@ -1,6 +1,6 @@
 import style from "./login.module.css";
 import classnames from "classnames";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 
 export default function Login({
@@ -10,13 +10,15 @@ export default function Login({
   loggedIn,
   setLoggedIn,
   setUserId,
-  setUserToken
+  setUsername
 }) {
   //Refs for inputs
   const loginUsername = useRef();
   const loginPassword = useRef();
-
   const navigate = useNavigate();
+
+  //Get login status from sessionStorage
+  const loginStatus = sessionStorage.getItem("loggedIn");
 
   //Handle login button click =============================================================
 
@@ -32,7 +34,9 @@ export default function Login({
           headers: {
             "content-type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify(loginData),
+          mode: "cors",
         })
           .then((response) => {
             if (response.status === 401) {
@@ -42,13 +46,14 @@ export default function Login({
             }
           })
           .then((data) => {
+            console.log(data)
             console.log(data.firstName);
-            setUserToken(data.token)
             setLoggedIn(true);
             setFirstName(data.firstName);
             setLastName(data.lastName);
             setEmail(data.email);
             setUserId(data.userId);
+            setUsername(data.username);
             sessionStorage.setItem("loggedIn", true);
             const userInfo = {
               firstName: data.firstName,
@@ -69,7 +74,16 @@ export default function Login({
     } else {
       loginUsername.current.value = "";
       loginPassword.current.value = "";
-      console.log("user already logged in");
+    }
+  }
+
+  //If already logged in, redirect to dashboard
+
+  function checkLoggedIn(){
+    const isLoggedIn = sessionStorage.getItem("loggedIn")
+    if(isLoggedIn){
+      console.log(sessionStorage.getItem("loggedIn"))
+      navigate("/dashboard");
     }
   }
 
@@ -88,9 +102,11 @@ export default function Login({
     sessionStorage.removeItem("loggedIn");
   }
 
-  //Get login status from sessionStorage
-  const loginStatus = sessionStorage.getItem("loggedIn");
-  
+  useEffect(()=>{
+    console.log("effect ran")
+    checkLoggedIn()
+  }, [])
+
   /* ======================================
   |||||||||||||||||||||||||||||||||||||||||
   ========================================= */

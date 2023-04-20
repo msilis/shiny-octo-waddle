@@ -3,8 +3,6 @@ import style from "./voteGamesDisplay.module.css";
 export default function VoteGamesDisplay({ voteProps }) {
 
   //conditional style for vote badge
-
-  
  
   if (voteProps.loadingVote) {
     return <p>Loading...</p>;
@@ -13,10 +11,11 @@ export default function VoteGamesDisplay({ voteProps }) {
   } else {
 
     return voteProps.votingGames.map((voteGame, index) => {
+      console.log(voteGame, "Vote Game")
       const voteStyle = voteProps.userVotedGames.includes(voteGame._id) ? `${style.votedTextVisible}` : `${style.votedTextHidden}`
       return (
         <div className={style.gameItem} key={index} id={voteGame._id}>
-          <h4>{voteGame.gameName}</h4>
+          <h4>{`${voteGame.gameName} created by ${voteGame.username ? voteGame.username : "Anonymous"}`}</h4>
           <p>{voteGame.gameText}</p>
           <h5>Game focus:</h5>
           <div className={style.gameTechniqueContainer}>
@@ -29,7 +28,7 @@ export default function VoteGamesDisplay({ voteProps }) {
             <p>No: {voteProps.voteTotal.length === 0 ? "0" : voteProps.voteTotal[index].noVote}</p>
           </div>
           <div className={voteStyle}>
-            <p>You've voted!</p>
+            <p>I voted!</p>
           </div>
           <div className={style.voteButtonContainer}>
             <button

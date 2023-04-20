@@ -3,7 +3,7 @@ import Select from "react-select";
 import style from "./addGame.module.css";
 import AddGameModal from "./addGameModal/addGameModal";
 
-export default function AddGame({ setAddGame, userId }) {
+export default function AddGame({ setAddGame, userId, username }) {
   //Refs ***********************
   const gameName = useRef();
   const gameText = useRef();
@@ -24,7 +24,7 @@ export default function AddGame({ setAddGame, userId }) {
   // Functions to pass to useEffect ==============================================================================
 
   function fetchPieces() {
-    try {
+    
       fetch("http://localhost:8080/getPieces")
         .then((response) => response.json())
         .then((data) => {
@@ -35,10 +35,7 @@ export default function AddGame({ setAddGame, userId }) {
           sortedPieces.push("Various")
           sortedPieces.sort()
           setListOfPieces(sortedPieces);
-        });
-    } catch (err) {
-      console.log(err);
-    }
+        }).catch((err)=> console.log(err));
   }
 
   function fetchGameTechniques() {
@@ -102,6 +99,7 @@ export default function AddGame({ setAddGame, userId }) {
       gameTechnique: addGameTechniques,
       gamePieces: addPieces,
       saveUser: userId,
+      username: username
     };
     try {
       fetch("http://localhost:8080/addGame", {
@@ -132,6 +130,7 @@ export default function AddGame({ setAddGame, userId }) {
       gameTechnique: addGameTechniques,
       gamePieces: addPieces,
       saveUser: userId,
+      username: username,
       yesVote: 0,
       noVote: 0,
     };

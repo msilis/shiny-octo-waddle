@@ -1,7 +1,7 @@
 import style from "./about.module.css";
 import classnames from "classnames";
 
-export default function About() {
+const About = () => {
   return (
     <div className={classnames(style.aboutContainer, style.fadeContainer)}>
       <header className={style.headerContainer}>
@@ -27,3 +27,6 @@ export default function About() {
     </div>
   );
 }
+
+export default About;
+

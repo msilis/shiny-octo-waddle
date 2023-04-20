@@ -10,7 +10,6 @@ export default function Profile({
   setFirstName,
   setLastName,
   setEmail,
-  userToken
 }) {
   // Refs for inputs ==================================================
   const firstNameEditInput = useRef();
@@ -40,8 +39,9 @@ export default function Profile({
         method: "PATCH",
         headers: {
           "content-type": "application/json",
-          "authorization": `Bearer ${userToken}`
+          "X-custom-cookie": "jwt"
         },
+        credentials: "include",
         body: JSON.stringify(updateUserData),
       })
         .then((result) => result.json())

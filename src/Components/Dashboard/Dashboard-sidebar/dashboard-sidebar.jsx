@@ -3,7 +3,6 @@ import style from "./dashboard-sidebar.module.css";
 
 export default function Sidebar({
   setLoggedIn,
-  loggedIn,
   seeProfile,
   setSeeProfile,
   setAddGame,

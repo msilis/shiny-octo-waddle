@@ -16,7 +16,8 @@ export default function Dashboard({
   setSeeProfile,
   seeProfile,
   userId,
-  userToken,
+  username
+  
 }) {
   //State to keep track of sidebar button clicks
 
@@ -24,6 +25,8 @@ export default function Dashboard({
   const [seeVote, setSeeVote] = useState(false);
   //State for technique tags so it can be passed to both DashboardMain and AddGame
   const [tagArray, setTagArray] = useState([]);
+
+  console.log(username, "from dashboard")
 
   function mainDisplay() {
     if (seeProfile) {
@@ -36,13 +39,13 @@ export default function Dashboard({
           email={email}
           setEmail={setEmail}
           userId={userId}
-          userToken={userToken}
+          
         />
       );
     } else if (addGame) {
-      return <AddGame userId={userId} setAddGame={setAddGame} tagArray={tagArray} />;
+      return <AddGame userId={userId} setAddGame={setAddGame} tagArray={tagArray} username={username}/>;
     } else if(seeVote){
-      return <Vote userId={userId} userToken={userToken}/>
+      return <Vote userId={userId} />
     }else{
       return (
         <DashboardMain
@@ -50,7 +53,7 @@ export default function Dashboard({
           userId={userId}
           tagArray={tagArray}
           setTagArray={setTagArray}
-          userToken={userToken}
+          
         />
       );
     }
@@ -68,7 +71,7 @@ export default function Dashboard({
           userId={userId}
           seeVote={seeVote}
           setSeeVote={setSeeVote}
-          userToken={userToken}
+          
         />
       </div>
       {mainDisplay()}

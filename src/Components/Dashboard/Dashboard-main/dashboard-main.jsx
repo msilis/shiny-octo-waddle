@@ -4,13 +4,10 @@ import classnames from "classnames";
 import Select from "react-select";
 
 export default function DashboardMain({
-  loggedIn,
-  setLoggedIn,
   firstName,
   userId,
   tagArray,
   setTagArray,
-  userToken,
 }) {
   const [selectedTag, setSelectedTag] = useState("0");
   const [results, setResults] = useState(true);
@@ -77,8 +74,9 @@ export default function DashboardMain({
           method: "GET",
           headers: {
             "content-type": "application/json",
-            authorization: `Bearer ${userToken}`,
+            "X-custom-cookie": "jwt",
           },
+          credentials: "include",
         })
           .then((response) => {
             console.log(response);
@@ -132,9 +130,6 @@ export default function DashboardMain({
   const saveGameStyle =
     savedGame || error ? style.saveButtonDisable : style.saveButton;
 
-  console.log(randomGame);
-  console.log(error);
-
   //Text for greeting ==========================================================================
   const greetText = `Hi ${firstName}, what do you want to work on in your group?`;
 
@@ -170,9 +165,11 @@ export default function DashboardMain({
         >
           <div className={style.reviewPieceContainer}>
             <div className={style.reviewHeading}>
-              <h3
-                className={style.reviewHeadingText}
-              >{error ? "There was an error" : `Suggested review pieces for: ${selectedTag}`}</h3>
+              <h3 className={style.reviewHeadingText}>
+                {error
+                  ? "There was an error"
+                  : `Suggested review pieces for: ${selectedTag}`}
+              </h3>
             </div>
             <div className={style.reviewPieceList}>
               {loadRandomGame ? (
