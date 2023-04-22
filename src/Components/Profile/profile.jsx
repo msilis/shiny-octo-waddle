@@ -1,6 +1,6 @@
 import style from "./profile.module.css";
 import { SavedGames } from "../../Components";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function Profile({
   firstName,
@@ -15,10 +15,11 @@ export default function Profile({
   const firstNameEditInput = useRef();
   const lastNameEditInput = useRef();
   const emailEditInput = useRef();
+  const [showProfile, setShowProfile] = useState(false);
 
   function handleUpdateClick() {
     console.log("Update clicked");
-    console.log(lastNameEditInput.current?.value)
+    console.log(lastNameEditInput.current?.value);
     const updateUserData = {
       userId: userId,
       firstName:
@@ -39,44 +40,60 @@ export default function Profile({
         method: "PATCH",
         headers: {
           "content-type": "application/json",
-          "X-custom-cookie": "jwt"
+          "X-custom-cookie": "jwt",
         },
         credentials: "include",
         body: JSON.stringify(updateUserData),
       })
         .then((result) => result.json())
         .then((data) => {
-            
-            //Set state for updated values
-            setFirstName(data.firstName);
-            setLastName(data.lastName);
-            setEmail(data.email);
-            //Set refs to empty strings to show updated values
-            firstNameEditInput.current.value = "";
-            lastNameEditInput.current.value = "";
-            emailEditInput.current.value = "";
-
+          //Set state for updated values
+          setFirstName(data.firstName);
+          setLastName(data.lastName);
+          setEmail(data.email);
+          //Set refs to empty strings to show updated values
+          firstNameEditInput.current.value = "";
+          lastNameEditInput.current.value = "";
+          emailEditInput.current.value = "";
         });
     } catch (err) {
       console.log(err);
     }
   }
 
+  //Conditionally show profile info
+  const profileDisplay = showProfile
+    ? `${style.profileVisible}`
+    : `${style.profileHidden}`;
+
+  function handleProfileButtonClick() {
+    setShowProfile(true);
+  }
+
+  function handleProfileHide() {
+    setShowProfile(false);
+  }
+
   //Enter key used to update info =================================
-  function handleEnterKey(event){
-    if(event.key === "Enter"){
-        handleUpdateClick()
+  function handleEnterKey(event) {
+    if (event.key === "Enter") {
+      handleUpdateClick();
     }
   }
 
-/* =============================================================
+  /* =============================================================
 ||||||||||||||||| ||||||||||||||||||||||||||||||||||||||||||||||\
 ================================================================= */
 
   return (
     <div className={style.profileContainer}>
-      <h4>Profile</h4>
-      <div className={style.profileFields}>
+      <button
+        className={style.profileButton}
+        onClick={showProfile ? handleProfileHide : handleProfileButtonClick}
+      >
+        {showProfile ? "Hide Profile" : "Show Profile"}
+      </button>
+      <div className={profileDisplay}>
         <input
           placeholder={firstName}
           className={style.inputField}

@@ -1,8 +1,14 @@
 import style from "./dashboard.module.css";
 import classnames from "classnames";
 import Sidebar from "./Dashboard-sidebar/dashboard-sidebar";
-import { DashboardMain, Profile, AddGame, Vote, BrowseGames } from "../../Components";
-import { useState } from "react";
+import {
+  DashboardMain,
+  Profile,
+  AddGame,
+  Vote,
+  BrowseGames,
+} from "../../Components";
+import { useEffect, useState } from "react";
 
 export default function Dashboard({
   loggedIn,
@@ -23,6 +29,11 @@ export default function Dashboard({
   const [addGame, setAddGame] = useState(false);
   //State for technique tags so it can be passed to both DashboardMain and AddGame
   const [tagArray, setTagArray] = useState([]);
+
+  //Get back to top of window
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className={classnames(style.dashboardContainer, style.fadeContainer)}>

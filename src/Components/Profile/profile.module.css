@@ -1,7 +1,11 @@
-.profileFields {
+.profileVisible {
   display: flex;
   gap: 1rem;
   align-items: baseline;
+}
+
+.profileHidden {
+  display: none;
 }
 
 .inputField {
@@ -34,3 +38,26 @@
 .savedGamesContainer {
   margin-bottom: 0.5rem;
 }
+
+.profileButton {
+  outline: 2px solid white;
+  width: 7rem;
+  padding: .10rem;
+  text-align: center;
+  transition: .3s;
+  border-radius: 5px 0px 5px 0px;
+  margin-bottom: 1rem;
+ 
+}
+
+.profileButton:hover {
+  cursor: pointer;
+  color: green;
+  outline: 2px solid green;
+}
+
+.profileButton:active {
+  transform: translateY(5px);
+}
+
+
