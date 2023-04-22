@@ -13,6 +13,7 @@ import Protected from "./Protected/protected.jsx";
 import AddGame from "./Dashboard/AddGame/addGame.jsx";
 import SavedCreatedGames from "./Profile/SavedGames/savedCreatedGames.jsx";
 import Vote from "./Dashboard/Vote/vote.jsx";
+import BrowseGames from "./Dashboard/Browse/browseGames.jsx";
 
 export {
   About,
@@ -29,5 +30,6 @@ export {
   Protected,
   AddGame,
   SavedCreatedGames,
-  Vote
+  Vote,
+  BrowseGames
 };

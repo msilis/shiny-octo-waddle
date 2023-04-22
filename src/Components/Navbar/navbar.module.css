@@ -1,18 +1,12 @@
-.navBackground {
-    background-color: #388697;
-    position: sticky;
-    top: 0;
-}
 
 .navbarContainer {
     
     display: flex;
-    width: 800px;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
     background-color: #388697;
-    border-radius: 10px;
+    
 }
 
 .navList {

@@ -34,3 +34,11 @@
   text-align: center;
   color: white;
 }
+
+.navbarContainer {
+  box-sizing: border-box;
+  position: sticky;
+  top: 0px;
+  z-index: 8;
+  box-shadow: 0 4px 10px -1px black;
+}

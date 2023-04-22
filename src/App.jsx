@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useEffect, useState, lazy, Suspense } from "react";
-import { Header, Navbar, Footer } from "./Components";
-import { Routes, Route } from "react-router-dom";
+import { Header, Navbar, Footer, Profile, AddGame, Vote } from "./Components";
+import { Routes, Route, useLocation } from "react-router-dom";
 //Lazy load components
 const Home = lazy(() => import("./Components/Home/home.jsx"));
 const About = lazy(() => import("./Components/About/about.jsx"));
@@ -9,8 +9,10 @@ const Login = lazy(() => import("./Components/Login/login.jsx"));
 const Register = lazy(() => import("./Components/Register/register.jsx"));
 const Dashboard = lazy(() => import("./Components/Dashboard/dashboard.jsx"));
 const Protected = lazy(() => import("./Components/Protected/protected.jsx"));
+//For router
 
 function App() {
+  const location = useLocation();
   //State for user login
 
   const [loggedIn, setLoggedIn] = useState(false);
@@ -22,9 +24,16 @@ function App() {
   const [userId, setUserId] = useState("");
   //Profile state
   const [seeProfile, setSeeProfile] = useState(false);
+
+  //Main display
+  const [mainDisplay, setMainDisplay] = useState("dashboard");
   //JWT Token
 
-  const suspenseLoading = <div className="loadingMessage"><h3 className="loadingText">Loading...</h3></div>;
+  const suspenseLoading = (
+    <div className="loadingMessage">
+      <h3 className="loadingText">Loading...</h3>
+    </div>
+  );
 
   //Check sessionStorage to see if user is logged in
   useEffect(() => {
@@ -39,7 +48,7 @@ function App() {
     }
   }, []);
 
-  console.log(username, "from App")
+  console.log(username, "from App");
 
   //Routes
 
@@ -79,6 +88,8 @@ function App() {
                 setSeeProfile={setSeeProfile}
                 userId={userId}
                 username={username}
+                mainDisplay={mainDisplay}
+                setMainDisplay={setMainDisplay}
               />
             </Protected>
           }
@@ -105,6 +116,7 @@ function App() {
           loggedIn={loggedIn}
           seeProfile={seeProfile}
           setSeeProfile={setSeeProfile}
+          setMainDisplay={setMainDisplay}
         />
       </div>
 

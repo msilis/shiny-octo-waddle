@@ -3,11 +3,8 @@ import style from "./dashboard-sidebar.module.css";
 
 export default function Sidebar({
   setLoggedIn,
-  seeProfile,
-  setSeeProfile,
-  setAddGame,
-  seeVote,
-  setSeeVote,
+  setMainDisplay,
+  
 }) {
   //Import useNavigate to handle page redirect
   const navigate = useNavigate();
@@ -21,53 +18,41 @@ export default function Sidebar({
 
   //Handle 'My Info' button click
   function handleProfileClick() {
-    setSeeProfile(true);
-    setAddGame(false);
-    setSeeVote(false)
+    setMainDisplay("seeProfile");
   }
 
   //Handle Add Game click
   function handleAddGame() {
-    //If profile is visible, change profile state so Add Game view shows
-    if (seeProfile) {
-      setSeeProfile(false);
-      if(seeVote){
-        setSeeVote(false)
-      }
-    }
-    //Set state to conditionally render Add Game view
-    setAddGame(true);
-    if(seeVote){
-        setSeeVote(false)
-    }
+    setMainDisplay("addGame");
   }
 
   //Handle Vote button click
   function handleVoteClick() {
-    setSeeVote(true);
-    setSeeProfile(false);
-    setAddGame(false);
+    setMainDisplay("vote");
   }
 
-  //Handle 'My Info' button click if profile visible
-  function handleProfileVisibleClick() {
-    setSeeProfile(false);
-    if(seeVote){
-        setSeeVote(false)
-    }
+  //Dashboard click
+  function handleDashboardClick() {
+    setMainDisplay("dashboard");
   }
 
-  //Conditional rendering of info button
-  const infoButtonText = seeProfile ? "Dashboard" : "My Info";
-  const infoButtonFunction = seeProfile
-    ? handleProfileVisibleClick
-    : handleProfileClick;
+  //Browse click
+  function handleBrowseClick(){
+    setMainDisplay("browse");
+  }
+
 
   return (
     <div className={style.sidebarContainer}>
       <div className={style.sidebarButtonContainer}>
-        <div className={style.sidebarButton} onClick={infoButtonFunction}>
-          <span>{infoButtonText}</span>
+        <div className={style.sidebarButton} onClick={handleDashboardClick}>
+          <span>Dashboard</span>
+        </div>
+        <div className={style.sidebarButton} onClick={handleProfileClick}>
+          <span>My Games</span>
+        </div>
+        <div className={style.sidebarButton} onClick={handleBrowseClick}>
+          <span>Browse</span>
         </div>
 
         <div className={style.sidebarButton} onClick={handleAddGame}>

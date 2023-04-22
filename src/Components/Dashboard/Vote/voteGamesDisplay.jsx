@@ -1,21 +1,22 @@
 import style from "./voteGamesDisplay.module.css";
 
 export default function VoteGamesDisplay({ voteProps }) {
-
   //conditional style for vote badge
- 
+
   if (voteProps.loadingVote) {
     return <p>Loading...</p>;
   } else if (voteProps.votingGames.length === 0) {
     return <p>There are no games to vote on now</p>;
   } else {
-
     return voteProps.votingGames.map((voteGame, index) => {
-      console.log(voteGame, "Vote Game")
-      const voteStyle = voteProps.userVotedGames.includes(voteGame._id) ? `${style.votedTextVisible}` : `${style.votedTextHidden}`
+      const voteStyle = voteProps.userVotedGames.includes(voteGame._id)
+        ? `${style.votedTextVisible}`
+        : `${style.votedTextHidden}`;
       return (
         <div className={style.gameItem} key={index} id={voteGame._id}>
-          <h4>{`${voteGame.gameName} created by ${voteGame.username ? voteGame.username : "Anonymous"}`}</h4>
+          <h4>{`${voteGame.gameName} created by ${
+            voteGame.username ? voteGame.username : "Anonymous"
+          }`}</h4>
           <p>{voteGame.gameText}</p>
           <h5>Game focus:</h5>
           <div className={style.gameTechniqueContainer}>
@@ -24,8 +25,18 @@ export default function VoteGamesDisplay({ voteProps }) {
             })}
           </div>
           <div className={style.voteCountDisplay}>
-            <p>Yes: {voteProps.voteTotal.length === 0 ? "0" : voteProps.voteTotal[index].yesVote }</p>
-            <p>No: {voteProps.voteTotal.length === 0 ? "0" : voteProps.voteTotal[index].noVote}</p>
+            <p>
+              Yes:{" "}
+              {voteProps.voteTotal.length === 0
+                ? "0"
+                : voteProps.voteTotal[index].yesVote}
+            </p>
+            <p>
+              No:{" "}
+              {voteProps.voteTotal.length === 0
+                ? "0"
+                : voteProps.voteTotal[index].noVote}
+            </p>
           </div>
           <div className={voteStyle}>
             <p>I voted!</p>

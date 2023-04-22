@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import style from "./navbar.module.css";
 
-export default function Navbar({ loggedIn, seeProfile, setSeeProfile }) {
+export default function Navbar({ loggedIn, setMainDisplay }) {
 
 
-  console.log(loggedIn);
   return (
     <div className={style.navBackground}>
       <nav className={style.navbarContainer}>
@@ -16,7 +15,7 @@ export default function Navbar({ loggedIn, seeProfile, setSeeProfile }) {
             <li className={style.navListItem}>About</li>
           </Link>
           {loggedIn ? (
-            <Link to="/dashboard" className={style.navLink}>
+            <Link to="/dashboard" className={style.navLink} onClick={()=> setMainDisplay("dashboard")}>
               <li className={style.navListItem}>Dashboard</li>
             </Link>
           ) : (

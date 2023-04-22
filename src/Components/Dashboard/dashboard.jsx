@@ -1,7 +1,7 @@
 import style from "./dashboard.module.css";
 import classnames from "classnames";
 import Sidebar from "./Dashboard-sidebar/dashboard-sidebar";
-import { DashboardMain, Profile, AddGame, Vote } from "../../Components";
+import { DashboardMain, Profile, AddGame, Vote, BrowseGames } from "../../Components";
 import { useState } from "react";
 
 export default function Dashboard({
@@ -13,24 +13,33 @@ export default function Dashboard({
   setLastName,
   email,
   setEmail,
-  setSeeProfile,
-  seeProfile,
   userId,
-  username
-  
+  username,
+  mainDisplay,
+  setMainDisplay,
 }) {
-  //State to keep track of sidebar button clicks
+  //State to keep track of sidebar button clickS
 
   const [addGame, setAddGame] = useState(false);
-  const [seeVote, setSeeVote] = useState(false);
   //State for technique tags so it can be passed to both DashboardMain and AddGame
   const [tagArray, setTagArray] = useState([]);
 
-  console.log(username, "from dashboard")
-
-  function mainDisplay() {
-    if (seeProfile) {
-      return (
+  return (
+    <div className={classnames(style.dashboardContainer, style.fadeContainer)}>
+      <div className={style.dashboardSidebar}>
+        <Sidebar
+          setLoggedIn={setLoggedIn}
+          loggedIn={loggedIn}
+          addGame={addGame}
+          userId={userId}
+          mainDisplay={mainDisplay}
+          setMainDisplay={setMainDisplay}
+        />
+      </div>
+      {mainDisplay === "addGame" && (
+        <AddGame userId={userId} setAddGame={setAddGame} username={username} />
+      )}
+      {mainDisplay === "seeProfile" && (
         <Profile
           firstName={firstName}
           setFirstName={setFirstName}
@@ -39,42 +48,18 @@ export default function Dashboard({
           email={email}
           setEmail={setEmail}
           userId={userId}
-          
         />
-      );
-    } else if (addGame) {
-      return <AddGame userId={userId} setAddGame={setAddGame} tagArray={tagArray} username={username}/>;
-    } else if(seeVote){
-      return <Vote userId={userId} />
-    }else{
-      return (
+      )}
+      {mainDisplay === "vote" && <Vote userId={userId} />}
+      {mainDisplay === "dashboard" && (
         <DashboardMain
           firstName={firstName}
           userId={userId}
           tagArray={tagArray}
           setTagArray={setTagArray}
-          
         />
-      );
-    }
-  }
-
-  return (
-    <div className={classnames(style.dashboardContainer, style.fadeContainer)}>
-      <div className={style.dashboardSidebar}>
-        <Sidebar
-          setLoggedIn={setLoggedIn}
-          loggedIn={loggedIn}
-          seeProfile={seeProfile}
-          setSeeProfile={setSeeProfile}
-          setAddGame={setAddGame}
-          userId={userId}
-          seeVote={seeVote}
-          setSeeVote={setSeeVote}
-          
-        />
-      </div>
-      {mainDisplay()}
+      )}
+      {mainDisplay === "browse" && <BrowseGames />}
     </div>
   );
 }

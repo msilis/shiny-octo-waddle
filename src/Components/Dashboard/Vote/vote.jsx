@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import style from "./vote.module.css";
 import VoteGamesDisplay from "./voteGamesDisplay";
 
-export default function Vote({ userId}) {
+export default function Vote({ userId }) {
   //Loading state
   const [loadingVote, setLoadingVote] = useState(false);
   //State for games to be voted on
@@ -28,10 +28,7 @@ export default function Vote({ userId}) {
     setVoteError,
     voteTotal,
     userVotedGames,
-    
   };
-
-  console.log(votingGames, "Voting games")
 
   //Vote error overlay
   const voteErrorOverlay = voteError
@@ -53,59 +50,62 @@ export default function Vote({ userId}) {
 
   //Fetch games to vote on from the database
   function getVoteGames() {
-    
-        setLoadingVote(true);
-        fetch("http://localhost:8080/gamesForVote", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-            "X-custom-cookie": "jwt" //include cookie in header
-          },
-          credentials: "include" //make sure endpoint knows to expect a cookie
+    return new Promise((resolve, reject)=> {
+      setLoadingVote(true);
+      fetch("http://localhost:8080/gamesForVote", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "X-custom-cookie": "jwt", //include cookie in header
+        },
+        credentials: "include", //make sure endpoint knows to expect a cookie
+      })
+        .then((response) => {
+          if (response.status === 401) {
+            throw new Error("You do not have permission to see this");
+          } else {
+            return response.json();
+          }
         })
-          .then((response) => {
-            if(response.status === 401){
-              throw new Error("You do not have permission to see this")
-            }else{
-              return response.json()
-            }
-            })
-          .then((jsonResponse) => {
-            setVotingGames(jsonResponse);
-            return;
-          })
-          .then(() => {
-            getOnlyVotes();
-            resolve();
-          }).catch((err)=>console.log(err)).finally(()=>setLoadingVote(false));
-      
+        .then((jsonResponse) => {
+          setVotingGames(jsonResponse);
+          return;
+        })
+        .then(() => {
+          getOnlyVotes();
+          resolve();
+        })
+        .catch((err) => {
+          console.log(err);
+          reject();  
+        })
+        .finally(() => setLoadingVote(false));
+    })
     
   }
 
   //Fetch vote count to be able to update only count, not whole component
   function getOnlyVotes() {
     return new Promise((resolve, reject) => {
-      try {
-        fetch("http://localhost:8080/getVoteTotals", {
-          method: "GET",
-          headers: {
-            "content-type": "application/json",
-            "X-custon-cookie": "jwt"
-          },
-          credentials: "include"
+      fetch("http://localhost:8080/getVoteTotals", {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+          "X-custon-cookie": "jwt",
+        },
+        credentials: "include",
+      })
+        .then((response) => {
+          return response.json();
         })
-          .then((response) => {
-            return response.json();
-          })
-          .then((jsonResponse) => setVoteTotal(jsonResponse))
-          .then(() => {
-            console.log(voteTotal);
-            resolve();
-          });
-      } catch (err) {
-        console.log(err);
-        reject();
-      }
+        .then((jsonResponse) => setVoteTotal(jsonResponse))
+        .then(() => {
+          resolve();
+        })
+        .catch((err) => {
+          console.log(err);
+          reject();
+        });
     });
   }
 
@@ -120,7 +120,7 @@ export default function Vote({ userId}) {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "X-custom-cookie": "jwt" 
+        "X-custom-cookie": "jwt",
       },
       credentials: "include",
       body: JSON.stringify(yesVoteData),
@@ -144,7 +144,6 @@ export default function Vote({ userId}) {
   }
 
   function handleNoVote(e) {
-    console.log(e.target.parentNode.parentNode.id);
     const noVoteData = {
       gameId: e.target.parentNode.parentNode.id,
       updateVoteValue: 0,
@@ -154,7 +153,7 @@ export default function Vote({ userId}) {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "X-custom-cookie": "jwt"
+        "X-custom-cookie": "jwt",
       },
       credentials: "include",
       body: JSON.stringify(noVoteData),
@@ -200,7 +199,7 @@ export default function Vote({ userId}) {
       });
   }
 
-  console.log(userVotedGames, "User voted games");
+
   //Call function at page load to get games to be voted on
   useEffect(() => {
     getVoteGames();
