@@ -1,3 +1,4 @@
+import GamePagination from "../../Pagination/gamePagination";
 import style from "./voteGamesDisplay.module.css";
 
 export default function VoteGamesDisplay({ voteProps }) {
@@ -55,6 +56,7 @@ export default function VoteGamesDisplay({ voteProps }) {
               No
             </button>
           </div>
+          {/* <GamePagination /> */}
         </div>
       );
     });

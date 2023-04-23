@@ -38,7 +38,6 @@ function App() {
   //Check sessionStorage to see if user is logged in
   useEffect(() => {
     if (sessionStorage.getItem("loggedIn")) {
-      console.log("checking sessionStorage");
       setLoggedIn(true);
       let parsedUserInfo = JSON.parse(sessionStorage.user);
       setFirstName(parsedUserInfo.firstName);
@@ -47,8 +46,6 @@ function App() {
       setUserId(parsedUserInfo.userId);
     }
   }, []);
-
-  console.log(username, "from App");
 
   //Routes
 
