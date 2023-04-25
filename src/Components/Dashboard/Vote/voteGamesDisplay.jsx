@@ -9,7 +9,7 @@ export default function VoteGamesDisplay({ voteProps }) {
   } else if (voteProps.votingGames.length === 0) {
     return <p>There are no games to vote on now</p>;
   } else {
-    return voteProps.votingGames.map((voteGame, index) => {
+    return voteProps.gamesForPagination.map((voteGame, index) => {
       const voteStyle = voteProps.userVotedGames.includes(voteGame._id)
         ? `${style.votedTextVisible}`
         : `${style.votedTextHidden}`;
@@ -56,7 +56,7 @@ export default function VoteGamesDisplay({ voteProps }) {
               No
             </button>
           </div>
-          {/* <GamePagination /> */}
+          
         </div>
       );
     });

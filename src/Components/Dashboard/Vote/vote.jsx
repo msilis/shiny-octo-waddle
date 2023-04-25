@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import style from "./vote.module.css";
 import VoteGamesDisplay from "./voteGamesDisplay";
+import VoteGamePagination from "../../Pagination/gamePagination";
 
 export default function Vote({ userId }) {
   //Loading state
@@ -14,6 +15,7 @@ export default function Vote({ userId }) {
   const [voteError, setVoteError] = useState(false);
   //Vote sucess
   const [voteSuccess, setVoteSuccess] = useState(false);
+  const [gamesForPagination, setGamesForPagination] = useState([]);
 
   //props to send to VoteGamesDisplay componenet
 
@@ -21,15 +23,19 @@ export default function Vote({ userId }) {
     loadingVote,
     setLoadingVote,
     votingGames,
-    setVotingGames,
+    setVotingGames,/* setGamesForPagination(votingGames.slice(pagination.from, pagination.to)); */
+    /* console.log(pagination.from, pagination.to) */
     handleYesVote,
     handleNoVote,
     voteError,
     setVoteError,
     voteTotal,
     userVotedGames,
+    gamesForPagination,
+    setGamesForPagination
   };
 
+  console.log(gamesForPagination, "from vote.jsx")
   //Vote error overlay
   const voteErrorOverlay = voteError
     ? `${style.voteErrorVisible}`
@@ -49,7 +55,7 @@ export default function Vote({ userId }) {
   }
 
   //Fetch games to vote on from the database
-  function getVoteGames() {
+  /* function getVoteGames() {
     return new Promise((resolve, reject)=> {
       setLoadingVote(true);
       fetch("http://localhost:8080/gamesForVote", {
@@ -82,7 +88,7 @@ export default function Vote({ userId }) {
         .finally(() => setLoadingVote(false));
     })
     
-  }
+  } */
 
   //Fetch vote count to be able to update only count, not whole component
   function getOnlyVotes() {
@@ -199,10 +205,9 @@ export default function Vote({ userId }) {
       });
   }
 
-
   //Call function at page load to get games to be voted on
   useEffect(() => {
-    getVoteGames();
+    /* getVoteGames(); */
     getUserVotedGames();
   }, []);
 
@@ -226,6 +231,17 @@ export default function Vote({ userId }) {
       </div>
       <div className={style.voteGamesDisplay}>
         <VoteGamesDisplay voteProps={voteProps} />
+      </div>
+      <div className={style.paginationDisplay}>
+        <VoteGamePagination
+          votingGames={votingGames}
+          setVotingGames={setVotingGames}
+          setVoteTotal={setVoteTotal}
+          voteTotal={voteTotal}
+          setLoadingVote={setLoadingVote}
+          gamesForPagination={gamesForPagination}
+          setGamesForPagination={setGamesForPagination}
+        />
       </div>
     </div>
   );

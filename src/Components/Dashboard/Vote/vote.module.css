@@ -52,3 +52,10 @@
 .okButton:active {
   transform: translateY(5px);
 }
+
+.paginationDisplay {
+  width: 30rem;
+  margin-top: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+}
