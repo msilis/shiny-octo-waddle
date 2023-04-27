@@ -55,6 +55,10 @@ This application has the following development dependencies:
     - @types/react-dom (version 18.0.10) - TypeScript type definitions for react-dom.
     - @vitejs/plugin-react (version 3.1.0) - A plugin for integrating React with Vite.
     - vite (version 4.1.0) - A fast build tool for modern web applications.
+    
+## Backend
+
+If you want to check out the backend for this project it can be found here: [Group Ideas Backend](https://github.com/msilis/legendary-telegram)
 
 ## License
 
