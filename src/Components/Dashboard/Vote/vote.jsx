@@ -23,8 +23,7 @@ export default function Vote({ userId }) {
     loadingVote,
     setLoadingVote,
     votingGames,
-    setVotingGames,/* setGamesForPagination(votingGames.slice(pagination.from, pagination.to)); */
-    /* console.log(pagination.from, pagination.to) */
+    setVotingGames, 
     handleYesVote,
     handleNoVote,
     voteError,
@@ -32,10 +31,9 @@ export default function Vote({ userId }) {
     voteTotal,
     userVotedGames,
     gamesForPagination,
-    setGamesForPagination
+    setGamesForPagination,
   };
 
-  console.log(gamesForPagination, "from vote.jsx")
   //Vote error overlay
   const voteErrorOverlay = voteError
     ? `${style.voteErrorVisible}`
@@ -53,42 +51,6 @@ export default function Vote({ userId }) {
   function handleOkSuccessClick() {
     setVoteSuccess(false);
   }
-
-  //Fetch games to vote on from the database
-  /* function getVoteGames() {
-    return new Promise((resolve, reject)=> {
-      setLoadingVote(true);
-      fetch("http://localhost:8080/gamesForVote", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          "X-custom-cookie": "jwt", //include cookie in header
-        },
-        credentials: "include", //make sure endpoint knows to expect a cookie
-      })
-        .then((response) => {
-          if (response.status === 401) {
-            throw new Error("You do not have permission to see this");
-          } else {
-            return response.json();
-          }
-        })
-        .then((jsonResponse) => {
-          setVotingGames(jsonResponse);
-          return;
-        })
-        .then(() => {
-          getOnlyVotes();
-          resolve();
-        })
-        .catch((err) => {
-          console.log(err);
-          reject();  
-        })
-        .finally(() => setLoadingVote(false));
-    })
-    
-  } */
 
   //Fetch vote count to be able to update only count, not whole component
   function getOnlyVotes() {
@@ -211,6 +173,13 @@ export default function Vote({ userId }) {
     getUserVotedGames();
   }, []);
 
+  //Conditionally show pagination
+  const paginationDisplay = loadingVote
+    ? `${style.paginationDisplayHidden}`
+    : `${style.paginationDisplay}`;
+
+  console.log();
+
   return (
     <div className={style.voteContainer}>
       <div className={voteErrorOverlay}>
@@ -232,7 +201,7 @@ export default function Vote({ userId }) {
       <div className={style.voteGamesDisplay}>
         <VoteGamesDisplay voteProps={voteProps} />
       </div>
-      <div className={style.paginationDisplay}>
+      <div className={paginationDisplay}>
         <VoteGamePagination
           votingGames={votingGames}
           setVotingGames={setVotingGames}

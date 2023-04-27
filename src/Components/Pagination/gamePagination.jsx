@@ -4,12 +4,26 @@ import { ThemeProvider, createTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getVoteGames } from "../Dashboard/Vote/getVotes";
 
+//Theme for pagination
+export const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#E1F16B",
+      contrastText: "#000",
+    },
+    text: {
+      primary: {
+        main: "#FFF",
+      },
+    },
+  },
+});
+
 export default function VoteGamePagination({
   votingGames,
   setVotingGames,
   setVoteTotal,
   setLoadingVote,
-  gamesForPagination,
   setGamesForPagination,
 }) {
   const pageSize = 5;
@@ -17,20 +31,6 @@ export default function VoteGamePagination({
     count: 0,
     from: 0,
     to: pageSize,
-  });
-
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: "#E1F16B",
-        contrastText: "#000",
-      },
-      text: {
-        primary: {
-          main: "#FFF",
-        },
-      },
-    },
   });
 
   useEffect(() => {
@@ -42,8 +42,6 @@ export default function VoteGamePagination({
       pagination.to,
       setGamesForPagination
     );
-    console.log("effect ran in gamePagination");
-
     setPagination({ ...pagination, count: votingGames.length });
   }, [pagination.from, pagination.to, votingGames.length]);
 

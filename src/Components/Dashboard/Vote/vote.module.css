@@ -53,6 +53,10 @@
   transform: translateY(5px);
 }
 
+.paginationDisplayHidden {
+  display: none;
+}
+
 .paginationDisplay {
   width: 30rem;
   margin-top: 2rem;
