@@ -63,3 +63,24 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+/* ====================================
+||||||||| Small Screen ||||||||||||||||
+======================================= */
+
+@media only screen and (width < 500px){
+  .voteSectionText {
+    display: flex;
+    width: 275px;
+  }
+
+  .overlayContainer {
+    width: 275px;
+    left: 10%;
+  }
+
+  .overlayContainer > h3 {
+    display: flex;
+    width: 90%;
+  }
+}

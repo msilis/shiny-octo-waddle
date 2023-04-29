@@ -78,3 +78,13 @@
         opacity: 1;
     }
 }
+
+@media only screen and (width < 500px){
+    .loginContainer {
+        max-width: 320px;
+    }
+
+    .loginInput {
+        width: 20rem;
+    }
+}

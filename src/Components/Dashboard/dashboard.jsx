@@ -1,6 +1,6 @@
 import style from "./dashboard.module.css";
 import classnames from "classnames";
-import Sidebar from "./Dashboard-sidebar/dashboard-sidebar";
+import SecondaryNavigation from "./SecondaryNavigation/secondaryNavigation";
 import {
   DashboardMain,
   Profile,
@@ -24,7 +24,7 @@ export default function Dashboard({
   mainDisplay,
   setMainDisplay,
 }) {
-  //State to keep track of sidebar button clickS
+  //State to keep track of Secondary Navigation button clickS
 
   const [addGame, setAddGame] = useState(false);
   //State for technique tags so it can be passed to both DashboardMain and AddGame
@@ -38,7 +38,7 @@ export default function Dashboard({
   return (
     <div className={classnames(style.dashboardContainer, style.fadeContainer)}>
       <div className={style.dashboardSidebar}>
-        <Sidebar
+        <SecondaryNavigation
           setLoggedIn={setLoggedIn}
           loggedIn={loggedIn}
           addGame={addGame}

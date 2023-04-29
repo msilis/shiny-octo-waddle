@@ -91,3 +91,21 @@
 .votedTextHidden {
   display: none;
 }
+
+
+/* ============================
+|||||||||| Small Screen |||||||
+=============================== */
+
+@media only screen and ( width < 500px ){
+    .gameItem {
+      display: flex;
+      flex-direction: column;
+      width: 275px;
+    }
+
+    .votedTextVisible {
+      top: auto;
+      bottom: 1rem;
+    }
+}

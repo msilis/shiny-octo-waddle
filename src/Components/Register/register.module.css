@@ -91,3 +91,11 @@
         opacity: 1;
     }
 }
+
+/* Small screens */
+
+@media only screen and (width < 500px){
+    .registerInput {
+        width: 20rem;
+    }
+}

@@ -193,7 +193,7 @@ export default function Vote({ userId }) {
       <div className={voteSuccessOverlay}></div>
       <div className={style.voteText}>
         <h2>Vote</h2>
-        <p>
+        <p className={style.voteSectionText}>
           Vote on games on this page. If a game gets to 25 votes, it will be
           added to the main games database.
         </p>

@@ -176,12 +176,13 @@ export default function AddGame({ setAddGame, userId, username }) {
       ref={container}
     >
       <h3>Add a game!</h3>
-      <input placeholder="Game Name" ref={gameName} />
+      <input placeholder="Game Name" ref={gameName} className={style.gameNameInput}/>
       <textarea
         placeholder="Game Description"
         ref={gameText}
         rows="6"
         cols="75"
+        className={style.gameDescriptionInput}
       />
       <Select
         options={addGameOptions}

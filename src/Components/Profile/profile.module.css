@@ -61,3 +61,15 @@
 }
 
 
+/* ============ Small Screen ============ */
+
+@media only screen and (width < 500px){
+  .profileVisible {
+    flex-direction: column;
+  }
+
+  .inputField {
+    width: 15rem;
+  }
+}
+

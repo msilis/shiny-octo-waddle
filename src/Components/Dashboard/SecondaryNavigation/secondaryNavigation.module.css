@@ -7,8 +7,6 @@
   box-shadow: 8px 8px 8px black;
   position: sticky;
   top: 4rem;
-  
-
 }
 
 .sidebarButtonContainer {
@@ -36,4 +34,12 @@
 .sidebarButton:active {
   transform: translateY(5px);
   box-shadow: 2px 2px 2px black;
+}
+
+/* Small Screen */
+
+@media only screen and (width < 500px){
+  .sidebarContainer {
+    display: none;
+  }
 }

@@ -45,3 +45,11 @@
         opacity: 1;
     }
 }
+
+/* Small screen */
+
+@media only screen and (width < 500px) {
+    .homeContainer {
+        max-width: 75dvw;
+    }
+}

@@ -1,32 +1,150 @@
+.navBackground {
+  display: flex;
+  justify-content: flex-start;
+  background-color: #388697;
+}
 
 .navbarContainer {
-    
-    display: flex;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #388697;
-    
+  display: flex;
+  background-color: #388697;
+}
+/* This sets a fallback for when the screen is large and hamburger menu isn't shown. navBarContainer is visible*/
+.navbarContainerHide {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #388697;
 }
 
 .navList {
-    display: flex;
-    justify-items: center;
-    gap: 6rem;
-    list-style: none;
-    
+  display: flex;
+  justify-items: left;
+  gap: 6rem;
+  list-style: none;
+}
+/* This sets a fallback for when the screen is large and hamburger menu isn't shown. Navlist is visible */
+.navListHidden {
+  display: flex;
+  justify-items: center;
+  gap: 6rem;
+  list-style: none;
 }
 
 .navLink {
-    text-decoration: none;
-    color: white;
-    transition: .5s;
+  text-decoration: none;
+  color: white;
+  transition: 0.5s;
 }
 
 .navLink:hover {
-    color: darkgray;
+  color: darkgray;
 }
 
 .navLink:active {
-    color: black;
+  color: black;
+}
+
+/* ==================================== Logged In Navigation Big screen =========================== */
+
+.loggedInNavigation {
+  display: none;
+}
+
+/* ==================================== Hamurger Menu=============================================== */
+
+.hamburgerMenu {
+  display: none;
+}
+
+.hamburgerLine {
+  display: block;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background-color: #333;
+  border-radius: 3px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0);
+  transition: transform 0.25s ease-in-out, opacity 0.25s ease-in-out;
+}
+
+.hamburgerLine:nth-child(1) {
+  top: 0;
+}
+
+.hamburgerLine:nth-child(2) {
+  top: 11px;
+}
+
+.hamburgerLine:nth-child(3) {
+  top: 22px;
+}
+
+.hamburgerLine.active:nth-child(1) {
+  transform: rotate(45deg);
+  top: 11px;
+  left: 8px;
+}
+
+.hamburgerLine.active:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburgerLine.active:nth-child(3) {
+  transform: rotate(-45deg);
+  top: 11px;
+  left: 8px;
+}
+
+/* ========================== Small Screen ============================= */
+
+@media only screen and (width < 500px) {
+  .navbarContainer {
+    justify-content: center;
+  }
+
+  .navbarContainerHide {
+    padding-left: 15px;
+    padding-bottom: 10px;
+    justify-items: left;
+    margin-left: 0;
+  }
+
+  .navList {
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    height: 7rem;
+    gap: 0.25rem;
+  }
+
+  .navListItem {
+    margin-right: 5rem;
+  }
+
+  .navListHidden {
+    display: none;
+  }
+
+  .hamburgerMenu {
+    display: block;
+    width: 30px;
+    height: 25px;
+    left: 5px;
+    position: relative;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  /* Logged in navigation */
+
+  .loggedInNavigation {
+    display: block;
+  }
+
+  .loggedInNavigationHidden {
+    display: none;
+  }
 }

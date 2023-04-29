@@ -1,11 +1,7 @@
 import { useNavigate } from "react-router";
-import style from "./dashboard-sidebar.module.css";
+import style from "./secondaryNavigation.module.css";
 
-export default function Sidebar({
-  setLoggedIn,
-  setMainDisplay,
-  
-}) {
+export default function SecondaryNavigation({ setLoggedIn, setMainDisplay }) {
   //Import useNavigate to handle page redirect
   const navigate = useNavigate();
 
@@ -37,10 +33,9 @@ export default function Sidebar({
   }
 
   //Browse click
-  function handleBrowseClick(){
+  function handleBrowseClick() {
     setMainDisplay("browse");
   }
-
 
   return (
     <div className={style.sidebarContainer}>
