@@ -1,8 +1,12 @@
 .navBackground {
   display: flex;
   justify-content: flex-start;
+  /* position: sticky;
+  top: 0;
+  z-index: 9999; */
   background-color: #388697;
 }
+
 
 .navbarContainer {
   display: flex;

@@ -122,7 +122,6 @@ function App() {
           <PageRoutes />
         </Suspense>
       </div>
-
       <Footer />
     </div>
   );
