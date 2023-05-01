@@ -90,7 +90,7 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
                 setHamburgerActive(false);
               }}
             >
-              <li className={style.navListItem}>Dashboard</li>
+              <li className={style.navListItem}>Ideas</li>
             </Link>
           ) : (
             <Link to="/login" className={style.navLink} onClick={()=> setHamburgerActive(false)}>

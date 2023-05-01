@@ -41,7 +41,7 @@ export default function SecondaryNavigation({ setLoggedIn, setMainDisplay }) {
     <div className={style.sidebarContainer}>
       <div className={style.sidebarButtonContainer}>
         <div className={style.sidebarButton} onClick={handleDashboardClick}>
-          <span>Dashboard</span>
+          <span>Ideas</span>
         </div>
         <div className={style.sidebarButton} onClick={handleProfileClick}>
           <span>My Games</span>
