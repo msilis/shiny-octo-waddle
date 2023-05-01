@@ -83,4 +83,8 @@
     display: flex;
     width: 90%;
   }
+
+  .paginationDisplay {
+    width: 12rem;
+  }
 }

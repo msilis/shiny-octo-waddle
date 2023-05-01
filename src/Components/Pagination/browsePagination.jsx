@@ -15,9 +15,9 @@ export default function BrowsePagination({
     const to = (page - 1) * browsePageSize + browsePageSize;
     setBrowsePagination({...browsePagination, from: from, to: to})
     setCurrentPage(()=>page)
-    console.log(page, "page")
+    
   }
-  console.log(currentPage, "currentPage")
+  
   return (
     <ThemeProvider theme={theme}>
       <Pagination

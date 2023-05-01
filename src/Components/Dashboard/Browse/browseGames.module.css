@@ -7,7 +7,7 @@
     box-shadow: 8px 8px 8px black;
     
   }
-
+  /* Pagination styling  */
   .browsePaginationHidden {
     display: none;
   }
@@ -18,4 +18,50 @@
     margin-right: auto;
     margin-left: auto;
   }
+
+  /* Select Menu Style */
+
+  .browseInput {
+    width: 20rem;
+    color: black;
+  }
+
+  .filterContainer {
+    display: flex;
+    gap: 1rem;
+  }
+
+  /* Button style */
+
+  .clearButton {
+    outline: 2px solid white;
+    margin-top: .1875rem;
+    width: 4rem;
+    height: 1.80rem;
+    padding: 0.1rem;
+    text-align: center;
+    transition: 0.3s;
+    border-radius: 5px 0px 5px 0px;
+  }
+  
+  .clearButton:hover {
+    cursor: pointer;
+    color: red;
+    outline: 2px solid red;
+  }
+  
+  .clearButton:active {
+    transform: translateY(5px);
+  }
+
+  /* ===================================
+  ||||||||| Small Screen |||||||||||||||
+  ====================================== */
+
+  @media only screen and (width < 500px){
+    .browsePaginationVisible {
+      width: 12rem;
+    }
+  }
+
 

@@ -12,6 +12,6 @@
 
 @media only screen and (width < 500px){
     .headerPic {
-        width: 400px;
+        width: 98dvw;
     }
 }
