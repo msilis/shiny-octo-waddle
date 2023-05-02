@@ -61,10 +61,7 @@ export default function Profile({
     }
   }
 
-  //Conditionally show profile info
-  const profileDisplay = showProfile
-    ? `${style.profileVisible}`
-    : `${style.profileHidden}`;
+
 
   function handleProfileButtonClick() {
     setShowProfile(true);
@@ -82,18 +79,12 @@ export default function Profile({
   }
 
   /* =============================================================
-||||||||||||||||| ||||||||||||||||||||||||||||||||||||||||||||||\
+||||||||||||||||| Return ||||||||||||||||||||||||||||||||||||||||\
 ================================================================= */
 
   return (
     <div className={style.profileContainer}>
-      <button
-        className={style.profileButton}
-        onClick={showProfile ? handleProfileHide : handleProfileButtonClick}
-      >
-        {showProfile ? "Hide Profile" : "Show Profile"}
-      </button>
-      <div className={profileDisplay}>
+      <div className={style.profileVisible}>
         <input
           placeholder={firstName}
           className={style.inputField}
@@ -116,9 +107,7 @@ export default function Profile({
           <span>Update</span>
         </div>
       </div>
-      <div className={style.savedGamesContainer}>
-        <SavedGames userId={userId} />
-      </div>
+      
     </div>
   );
 }
