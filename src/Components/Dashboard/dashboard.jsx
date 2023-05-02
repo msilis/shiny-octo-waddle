@@ -9,6 +9,7 @@ import {
   BrowseGames,
 } from "../../Components";
 import { useEffect, useState } from "react";
+import MyGames from "../MyGames/myGames";
 
 export default function Dashboard({
   loggedIn,
@@ -50,17 +51,7 @@ export default function Dashboard({
       {mainDisplay === "addGame" && (
         <AddGame userId={userId} setAddGame={setAddGame} username={username} />
       )}
-      {mainDisplay === "seeProfile" && (
-        <Profile
-          firstName={firstName}
-          setFirstName={setFirstName}
-          lastName={lastName}
-          setLastName={setLastName}
-          email={email}
-          setEmail={setEmail}
-          userId={userId}
-        />
-      )}
+      {mainDisplay === "myGames" && <MyGames userId={userId} />}
       {mainDisplay === "vote" && <Vote userId={userId} />}
       {mainDisplay === "dashboard" && (
         <DashboardMain
@@ -71,6 +62,17 @@ export default function Dashboard({
         />
       )}
       {mainDisplay === "browse" && <BrowseGames />}
+      {mainDisplay === "seeProfile" && (
+        <Profile
+          firstName={firstName}
+          lastName={lastName}
+          email={email}
+          userId={userId}
+          setFirstName={setFirstName}
+          setLastName={setLastName}
+          setEmail={setEmail}
+        />
+      )}
     </div>
   );
 }

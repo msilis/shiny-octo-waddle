@@ -12,9 +12,9 @@ export default function SecondaryNavigation({ setLoggedIn, setMainDisplay }) {
     navigate("/login");
   }
 
-  //Handle 'My Info' button click
-  function handleProfileClick() {
-    setMainDisplay("seeProfile");
+  //Handle 'My Games' button click
+  function handleMyGamesClick() {
+    setMainDisplay("myGames");
   }
 
   //Handle Add Game click
@@ -37,13 +37,18 @@ export default function SecondaryNavigation({ setLoggedIn, setMainDisplay }) {
     setMainDisplay("browse");
   }
 
+  //Handle Profile click
+  function handleProfileCLick(){
+    setMainDisplay("seeProfile");
+  }
+
   return (
     <div className={style.sidebarContainer}>
       <div className={style.sidebarButtonContainer}>
         <div className={style.sidebarButton} onClick={handleDashboardClick}>
           <span>Ideas</span>
         </div>
-        <div className={style.sidebarButton} onClick={handleProfileClick}>
+        <div className={style.sidebarButton} onClick={handleMyGamesClick}>
           <span>My Games</span>
         </div>
         <div className={style.sidebarButton} onClick={handleBrowseClick}>
@@ -55,6 +60,9 @@ export default function SecondaryNavigation({ setLoggedIn, setMainDisplay }) {
         </div>
         <div className={style.sidebarButton} onClick={handleVoteClick}>
           <span>Vote</span>
+        </div>
+        <div className={style.sidebarButton} onClick={handleProfileCLick}>
+          <span>Profile</span>
         </div>
         <div className={style.sidebarButton} onClick={handleLogoutClick}>
           <span>Log out</span>
