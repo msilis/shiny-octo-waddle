@@ -1,17 +1,30 @@
+//This component displays the games a user has created and saved to their profile
+
 import style from "./savedCreatedGames.module.css";
 import { React, useEffect, useState } from "react";
 import EditModal from "./SavedEditModal/savedEditModal";
+import MyGamesPagination from "../Pagination/MyGamesPagination";
+
+const createdGamePageSize = 3;
 
 export default function SavedCreatedGames({ userId }) {
   //State for user-created saved games
   const [savedCreatedGames, setSavedCreatedGames] = useState([]);
   const [loadingCreated, setLoadingCreated] = useState(false);
-  const { loadingSaved, setLoadingSaved } = useState(false);
+  const [ loadingSaved, setLoadingSaved ] = useState(false);
   const [gameToEditId, setGameToEditId] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [gameToEdit, setGameToEdit] = useState("");
   const [addGameTechniques, setAddGameTechniques] = useState([]);
   const [addGamePieces, setAddGamePieces] = useState([]);
+  //State for pagination
+  const [currentGamesPage, setCurrentGamesPage] = useState(1);
+  const [myGamesForPagination, setMyGamesForPagination] = useState([]); 
+  const [myGamesPagination, setMyGamesPagination] = useState({
+    count: 0,
+    from: 0,
+    to: createdGamePageSize,
+  });
 
   function getUserCreatedGames() {
     const createdById = {
@@ -29,13 +42,14 @@ export default function SavedCreatedGames({ userId }) {
         .then((response) => response.json())
         .then((jsonResponse) => {
           setSavedCreatedGames(jsonResponse);
-          console.log(jsonResponse);
+          setMyGamesForPagination(jsonResponse.slice(myGamesPagination.from, myGamesPagination.to))
           setLoadingCreated(false);
-        });
+        })
     } catch (err) {
       console.log(err);
     }
   }
+
 
   //Delete user created game =================================
   function handleCreatedGameDelete(event) {
@@ -53,7 +67,7 @@ export default function SavedCreatedGames({ userId }) {
       body: JSON.stringify(deleteCreatedData),
     })
       .then((response) => response.json())
-      .then((jsonResposne) => console.log(jsonResposne))
+      .then((jsonResponse) => console.log(jsonResponse))
       .then(() => {
         getUserCreatedGames();
       });
@@ -83,8 +97,6 @@ export default function SavedCreatedGames({ userId }) {
     }
   }
 
-  console.log(gameToEditId, "gameToEditId");
-
   function handleEditUserCreatedGame(event) {
     const gameId = event.target.parentNode.parentNode.id;
     setGameToEditId(gameId);
@@ -94,15 +106,22 @@ export default function SavedCreatedGames({ userId }) {
 
   //Get user created games with effect hook
   useEffect(() => {
-    getUserCreatedGames();
+    getUserCreatedGames()
   }, []);
+
+  useEffect(()=>{
+    setMyGamesPagination({...myGamesPagination, count: savedCreatedGames.length})
+    setMyGamesForPagination(savedCreatedGames.slice(myGamesPagination.from, myGamesPagination.to))
+  }, [savedCreatedGames, myGamesPagination.from, myGamesPagination.to])
 
   if (loadingCreated) {
     return <p>Loading...</p>;
-  } else if (savedCreatedGames.length === 0) {
+  } else if (myGamesForPagination.length === 0) {
     return <p>You do not have any created games to show</p>;
   } else {
-    return savedCreatedGames.map((game) => {
+    return(
+      <div className={style.savedCreatedOuterContainer}>
+        {myGamesForPagination.map((game) => {
       return (
         <div className={style.gameItem} key={game._id} id={game._id}>
           <h5>{game.gameName}</h5>
@@ -146,6 +165,19 @@ export default function SavedCreatedGames({ userId }) {
           </div>
         </div>
       );
-    });
+    })}
+    <div className={style.paginationContainer}>
+    <MyGamesPagination
+      myGamesPagination={myGamesPagination}
+      setMyGamesPagination={setMyGamesPagination}
+      createdGamePageSize={createdGamePageSize}
+      currentGamesPage={currentGamesPage}
+      setCurrentGamesPage={setCurrentGamesPage}
+    />
+    </div>
+    
+
+      </div>
+    ) 
   }
 }

@@ -1,4 +1,3 @@
-/* import * as React from "react"; */
 import Pagination from "@mui/material/Pagination";
 import { ThemeProvider, createTheme } from "@mui/material";
 import { useEffect, useState } from "react";

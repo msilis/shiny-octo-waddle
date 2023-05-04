@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from "react";
 import style from "./savedGames.module.css";
 import SavedCreatedGames from "./savedCreatedGames";
+import MySavedGamesPagination from "../Pagination/mySavedGamesPagination";
+
+const savedGamePageSize = 3;
 
 export default function SavedGames({ userId }) {
   //State for saved games
   const [savedGames, setSavedGames] = useState([]);
   const [loadingSaved, setLoadingSaved] = useState(false);
+  //State for pagination
+  const [currentMyGamesPage, setCurrentMyGamesPage] = useState(1);
+  const [mySavedGamesForPagination, setMySavedGamesForPagination] = useState(
+    []
+  );
+  const [savedGamesPagination, setSavedGamesPagination] = useState({
+    count: 0,
+    from: 0,
+    to: savedGamePageSize,
+  });
 
   //Function to fetch saved games
 
@@ -25,6 +38,7 @@ export default function SavedGames({ userId }) {
       })
         .then((response) => response.json())
         .then((jsonResponse) => {
+          setMySavedGamesForPagination(jsonResponse);
           setSavedGames(jsonResponse);
           setLoadingSaved(false);
         });
@@ -38,6 +52,15 @@ export default function SavedGames({ userId }) {
     getSavedGames();
   }, []);
 
+  useEffect(() => {
+    setSavedGamesPagination({
+      ...savedGamesPagination,
+      count: savedGames.length,
+    });
+    setMySavedGamesForPagination(
+      savedGames.slice(savedGamesPagination.from, savedGamesPagination.to)
+    );
+  }, [savedGamesPagination.from, savedGamesPagination.to, savedGames]);
 
   function handleSavedGameDelete(event) {
     const gameToDelete = event.target.parentNode.parentNode.id;
@@ -58,8 +81,6 @@ export default function SavedGames({ userId }) {
       });
   }
 
-  
-
   //Conditionally render game display depending on fetch state and saved games array
 
   function displaySavedGames() {
@@ -68,8 +89,7 @@ export default function SavedGames({ userId }) {
     } else if (savedGames.length === 0) {
       return <p>You do not have any saved games to show</p>;
     } else {
-      return (
-      savedGames.map((game) => (
+      return mySavedGamesForPagination.map((game) => (
         <div className={style.gameItem} key={game._id} id={game._id}>
           <h5>{game.gameName}</h5>
           <p>{game.gameText}</p>
@@ -81,16 +101,26 @@ export default function SavedGames({ userId }) {
             <span>Delete</span>
           </div>
         </div>
-      ))
-    )}
+      ));
+    }
   }
-
 
   return (
     <div className={style.savedGamesDisplayContainer}>
       <h4 className={style.savedGamesHeading}>Your saved games:</h4>
       <div className={style.savedGamesDisplay}>
         {displaySavedGames()}
+        <div className={style.savedGamesPagination}>
+          <MySavedGamesPagination
+            currentMyGamesPage={currentMyGamesPage}
+            setCurrentMyGamesPage={setCurrentMyGamesPage}
+            savedGamesPagination={savedGamesPagination}
+            setSavedGamesPagination={setSavedGamesPagination}
+            mySavedGamesForPagination={mySavedGamesForPagination}
+            setMySavedGamesForPagination={setMySavedGamesForPagination}
+            savedGamePageSize={savedGamePageSize}
+          />
+        </div>
       </div>
       <h4 className={style.savedGamesHeading}>Your Created Games:</h4>
       <div className={style.savedGamesDisplay}>

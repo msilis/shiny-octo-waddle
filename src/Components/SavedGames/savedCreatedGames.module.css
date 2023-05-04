@@ -80,4 +80,11 @@
     transform: translateY(5px);
   }
 
+  /* Pagination styling */
+
+  .paginationContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
   

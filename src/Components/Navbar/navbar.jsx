@@ -1,19 +1,26 @@
+//This is the main navigation bar that sits under the banner. Depends on 'react-router-dom' and 'react'.
+
 import { Link, useNavigate } from "react-router-dom";
 import style from "./navbar.module.css";
 import { useState } from "react";
 
 export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
+
+  //State for hamburger menu. True is hamburger open, false is closed
   const [hamburgerActive, setHamburgerActive] = useState(false);
+
+  //Used for redirecting on navigation clicks
   const navigate = useNavigate();
 
+  //This function sets the state of the hamburger menu, toggling it visible or hidden
   function toggleHamburger() {
     setHamburgerActive(!hamburgerActive);
   }
 
-  //Secondary Navigatin Functionality
+  //Secondary Navigation Functionality
 
   function handleMyGamesClick() {
-    setMainDisplay("seeProfile");
+    setMainDisplay("myGames");
     setHamburgerActive(false);
   }
 
@@ -35,7 +42,13 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
   function handleLogoutClick() {
     setLoggedIn(false);
     sessionStorage.removeItem("loggedIn");
-    navigate("/login");
+    navigate("/");
+    setHamburgerActive(false)
+  }
+
+  function handleProfileClick() {
+    setMainDisplay("seeProfile");
+    setHamburgerActive(false);
   }
 
   return (
@@ -93,7 +106,11 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
               <li className={style.navListItem}>Ideas</li>
             </Link>
           ) : (
-            <Link to="/login" className={style.navLink} onClick={()=> setHamburgerActive(false)}>
+            <Link
+              to="/login"
+              className={style.navLink}
+              onClick={() => setHamburgerActive(false)}
+            >
               <li className={style.navListItem}>Log In</li>
             </Link>
           )}
@@ -154,6 +171,18 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
             <li className={style.navListItem}>Vote</li>
           </Link>
           <Link
+            to="/dashboard"
+            className={`${style.navLink} ${
+              loggedIn
+                ? style.loggedInNavigation
+                : style.loggedInNavigationHidden
+            }`}
+            onClick={handleProfileClick}
+          >
+            <li className={style.navListItem}>Profile</li>
+          </Link>
+          <Link
+            to="/"
             className={`${style.navLink} ${
               loggedIn
                 ? style.loggedInNavigation

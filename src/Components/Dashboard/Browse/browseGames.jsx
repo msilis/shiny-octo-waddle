@@ -1,3 +1,5 @@
+// This is the Browse games component. It depends on 'react' and 'react-select'.
+
 import { useEffect, useState } from "react";
 import style from "./browseGames.module.css";
 import BrowsePagination from "../../Pagination/browsePagination";
@@ -16,10 +18,13 @@ export default function BrowseGames() {
 
   //Array of all games from database
   const [allGames, setAllGames] = useState([]);
+  //Set the array of games for pagination to work
   const [paginationGames, setPaginationGames] = useState([]);
+  //While page is loading, this state is used to show conditional messages
   const [loadingGames, setLoadingGames] = useState(false);
   //State for Select options and filter
   const [browseTags, setBrowseTags] = useState([]);
+  //This is the state of the react-select componenet
   const [selectedTag, setSelectedTag] = useState([]);
 
   function getAllGames() {
@@ -58,7 +63,6 @@ export default function BrowseGames() {
             flattenedGameTechArray.indexOf(technique) === index
         );
         setBrowseTags(filteredGameTechArray);
-        console.log(browseTags);
       });
   }
 
@@ -67,19 +71,17 @@ export default function BrowseGames() {
     return { value: tag, label: tag, key: index };
   });
 
-  console.log(paginationGames);
-
   //=================== Select functionality
 
   function handleTagChange(e) {
-    console.log(e)
+    console.log(e);
     setSelectedTag(e.value);
   }
 
-    //Clear filter
-    function handleFilterClear() {
-      setSelectedTag([]);
-    }
+  //Clear filter
+  function handleFilterClear() {
+    setSelectedTag([]);
+  }
 
   useEffect(() => {
     getAllGames().then(() => {
@@ -103,10 +105,7 @@ export default function BrowseGames() {
       ...browsePagination,
       count: filteredTagGames.length,
     });
-    console.log(filteredTagGames);
   }, [selectedTag, browsePagination.from, browsePagination.to, allGames]);
-
-
 
   function displayAllGames() {
     if (loadingGames) {
@@ -139,10 +138,11 @@ export default function BrowseGames() {
           className={style.browseInput}
           onChange={handleTagChange}
           placeholder={"Choose a topic"}
-          value={selectedTag.length === 0 ? null : selectedTag.value }
-          
+          value={selectedTag.length === 0 ? null : selectedTag.value}
         />
-        <button onClick={handleFilterClear} className={style.clearButton}>Clear</button>
+        <button onClick={handleFilterClear} className={style.clearButton}>
+          Clear
+        </button>
       </div>
       <div className={style.browseGamesDisplay}>
         {displayAllGames()}

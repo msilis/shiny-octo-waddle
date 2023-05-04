@@ -62,6 +62,13 @@
     .browsePaginationVisible {
       width: 12rem;
     }
+
+    .filterContainer {
+      display: flex;
+      flex-direction: column;
+    }
+
+    
   }
 
 
