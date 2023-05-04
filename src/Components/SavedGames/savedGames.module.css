@@ -37,3 +37,11 @@
 .deleteSavedGameButton:active {
   transform: translateY(5px);
 }
+
+/* Pagination styling */
+
+.savedGamesPagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}

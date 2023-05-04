@@ -51,8 +51,6 @@ export default function DashboardMain({
     return { value: tag, label: tag, key: index };
   });
 
-  console.log(tagOptions)
-
   //Handle Go button click ====================================================================
   function handleGoClick() {
     const tagSearchData = {
