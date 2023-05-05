@@ -66,13 +66,14 @@
   
   .reviewPieceList {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     gap: 1rem;
   }
   .reviewPieceItem {
     display: flex;
     color: black;
-    width: 10rem;
+    width: 9rem;
     height: 4rem;
     font-weight: bolder;
     justify-content: center;
