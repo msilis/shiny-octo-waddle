@@ -26,6 +26,8 @@ export default function BrowseGames() {
   const [browseTags, setBrowseTags] = useState([]);
   //This is the state of the react-select componenet
   const [selectedTag, setSelectedTag] = useState([]);
+  //State for div click
+  const [showMoreInfo, setShowMoreInfo] = useState("");
 
   function getAllGames() {
     //Get all games from database
@@ -64,6 +66,16 @@ export default function BrowseGames() {
         );
         setBrowseTags(filteredGameTechArray);
       });
+  }
+
+  function handleGameItemClick(e) {
+    console.log(e.target.parentNode.id);
+    setShowMoreInfo(e.target.parentNode.id);
+  }
+
+  //=================== Close info 
+  function handleInfoClose(){
+    setShowMoreInfo("");
   }
 
   //=================== Options for Browse Select
@@ -115,10 +127,38 @@ export default function BrowseGames() {
         <div className={style.gameItem} key={game._id} id={game._id}>
           <h5>{game.gameName}</h5>
           <p>{game.gameText}</p>
+          <button
+            className={style.moreInfoButton}
+            onClick={handleGameItemClick}
+          >
+            More Info
+          </button>
+          <div
+            className={
+              showMoreInfo === game._id
+                ? style.gameExtraInfoDisplay
+                : style.gameExtraInfo
+            }
+            data-id={game._id}
+          >
+            <h5>Game Focus:</h5>
+            <ul>
+              {game.gameTechnique.map((focus, index) => (
+                <li key={index}>
+                  {focus[0].toUpperCase() + focus.substring(1)}
+                </li>
+              ))}
+            </ul>
+            <button className={style.closeInfoButton} onClick={handleInfoClose}>
+              X
+            </button>
+          </div>
         </div>
       ));
     }
   }
+
+  console.log(showMoreInfo);
 
   const browsePaginationDisplay = loadingGames
     ? `${style.browsePaginationHidden}`
