@@ -77,6 +77,7 @@ export default function AddGame({ setAddGame, userId, username }) {
 
   //Handle tag input ================================================================================
   function handleTagChange(e) {
+    const tagValues = e.map((tag) => tag.value)
     setAddGameTechniques(e);
   }
 
@@ -87,12 +88,17 @@ export default function AddGame({ setAddGame, userId, username }) {
   });
   //Handle adding a piece to game ====================================================================
   function handlePieceChange(e) {
+    const pieceValues = e.map((piece)=> piece.value)
+    console.log(pieceValues)
     setAddPieces(e);
   }
 
   //Handle adding game to user's games ===============================================================
   function handleAddGame() {
     //TODO check empty inputs
+    
+  
+
     const newGameData = {
       gameName: gameName.current?.value,
       gameText: gameText.current?.value,

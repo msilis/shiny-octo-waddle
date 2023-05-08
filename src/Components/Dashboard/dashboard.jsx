@@ -48,6 +48,7 @@ export default function Dashboard({
           setMainDisplay={setMainDisplay}
         />
       </div>
+      <div className={style.dashboardMainDisplay}>
       {mainDisplay === "addGame" && (
         <AddGame userId={userId} setAddGame={setAddGame} username={username} />
       )}
@@ -73,6 +74,7 @@ export default function Dashboard({
           setEmail={setEmail}
         />
       )}
+      </div>
     </div>
   );
 }
