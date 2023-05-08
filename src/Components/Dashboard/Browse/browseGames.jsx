@@ -69,7 +69,6 @@ export default function BrowseGames() {
   }
 
   function handleGameItemClick(e) {
-    console.log(e.target.parentNode.id);
     setShowMoreInfo(e.target.parentNode.id);
   }
 
@@ -128,7 +127,7 @@ export default function BrowseGames() {
           <h5>{game.gameName}</h5>
           <p>{game.gameText}</p>
           <button
-            className={style.moreInfoButton}
+            className={showMoreInfo === game._id ? style.moreInfoButtonHidden : style.moreInfoButton}
             onClick={handleGameItemClick}
           >
             More Info

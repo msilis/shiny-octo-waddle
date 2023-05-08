@@ -73,6 +73,10 @@
   border-radius: 5px 0px 5px 0px;
 }
 
+.moreInfoButtonHidden {
+  display: none;
+}
+
 .gameExtraInfo {
   display: none;
 }
@@ -89,7 +93,7 @@
   padding: 0.1rem;
   text-align: center;
   transition: 0.3s;
-  border-radius: 5px 0px 5px 0px;
+  border-radius: 100%;
   font-size: .75rem;
 }
 

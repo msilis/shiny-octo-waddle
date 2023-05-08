@@ -1,38 +1,39 @@
 .addGameContainer {
-    display: flex;
-    flex-direction: column;
-    gap: .25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .gameNameInput {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1rem;
-    font-weight: lighter;
-    border-radius: 3px;
-    border: none;
-    text-indent: 5px;
-    height: 2.25rem;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  font-weight: lighter;
+  border-radius: 3px;
+  border: none;
+  text-indent: 5px;
+  height: 2.25rem;
+  width: 90%;
 }
 
 .gameDescriptionInput {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1rem;
-    font-weight: lighter;
-    resize: none;
-    border-radius: 3px;
-    border: none;
-    text-indent: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  font-weight: lighter;
+  resize: none;
+  border-radius: 3px;
+  border: none;
+  text-indent: 5px;
+  width: 90%;
 }
 
 .addGameSelectInput {
-    color: black;
-    font-family: Arial, Helvetica, sans-serif;
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 90%;
 }
 
-
-
 .addGameViewButton {
-    display: flex;
+  display: flex;
   justify-content: center;
   width: 6rem;
   color: white;
@@ -44,25 +45,25 @@
 }
 
 .addGameViewButton:hover {
-    cursor: pointer;
-    outline: 2px solid white;
+  cursor: pointer;
+  outline: 2px solid white;
 }
 
 .addGameViewButton:active {
-    transform: translateY(5px);
-    box-shadow: 2px 2px 2px black;
+  transform: translateY(5px);
+  box-shadow: 2px 2px 2px black;
 }
 
 /* ============================================
 |||||||||||| Small Screen ||||||||||||||||||||| 
 ===============================================*/
 
-@media only screen and (width < 500px){
-    .gameNameInput {
-        width: 308px;
-    }
+@media only screen and (width < 500px) {
+  .gameNameInput {
+    width: 308px;
+  }
 
-    .gameDescriptionInput {
-        width: 308px;
-    }
+  .gameDescriptionInput {
+    width: 308px;
+  }
 }
