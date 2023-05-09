@@ -116,7 +116,7 @@ export default function SavedCreatedGames({ userId }) {
 
   if (loadingCreated) {
     return <p>Loading...</p>;
-  } else if (myGamesForPagination.length === 0) {
+  } else if (savedCreatedGames.length === 0) {
     return <p>You do not have any created games to show</p>;
   } else {
     return(

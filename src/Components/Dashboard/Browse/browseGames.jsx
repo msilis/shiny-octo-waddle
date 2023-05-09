@@ -28,6 +28,8 @@ export default function BrowseGames() {
   const [selectedTag, setSelectedTag] = useState([]);
   //State for div click
   const [showMoreInfo, setShowMoreInfo] = useState("");
+  //State for current pagination page
+  const [currentPage, setCurrentPage] = useState(1);
 
   function getAllGames() {
     //Get all games from database
@@ -87,6 +89,10 @@ export default function BrowseGames() {
   function handleTagChange(e) {
     console.log(e);
     setSelectedTag(e.value);
+    //Reset pagination to work with filtered array
+    setBrowsePagination({...browsePagination, from: 0, to: 5})
+    //Take pagination back to page 1
+    setCurrentPage(()=> 1)
   }
 
   //Clear filter
@@ -112,10 +118,15 @@ export default function BrowseGames() {
     setPaginationGames(
       filteredTagGames.slice(browsePagination.from, browsePagination.to)
     );
+    
     setBrowsePagination({
       ...browsePagination,
       count: filteredTagGames.length,
     });
+    console.log(filteredTagGames, "filteredTagGames")
+    console.log(paginationGames, "paginationGames")
+    console.log(browsePagination, "browsePagination")
+    console.log(currentPage)
   }, [selectedTag, browsePagination.from, browsePagination.to, allGames]);
 
   function displayAllGames() {
@@ -149,7 +160,7 @@ export default function BrowseGames() {
               ))}
             </ul>
             <button className={style.closeInfoButton} onClick={handleInfoClose}>
-              X
+              x
             </button>
           </div>
         </div>
@@ -157,7 +168,6 @@ export default function BrowseGames() {
     }
   }
 
-  console.log(showMoreInfo);
 
   const browsePaginationDisplay = loadingGames
     ? `${style.browsePaginationHidden}`
@@ -189,6 +199,8 @@ export default function BrowseGames() {
           <BrowsePagination
             browsePagination={browsePagination}
             setBrowsePagination={setBrowsePagination}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
           />
         </div>
       </div>
