@@ -24,18 +24,18 @@ export default function AddGame({ setAddGame, userId, username }) {
   // Functions to pass to useEffect ==============================================================================
 
   function fetchPieces() {
-    
-      fetch("http://localhost:8080/getPieces")
-        .then((response) => response.json())
-        .then((data) => {
-          let sortedPieces = data.map((item) => {
-            return item.pieceName;
-          });
-          //Include option to add various pieces to game
-          sortedPieces.push("Various")
-          sortedPieces.sort()
-          setListOfPieces(sortedPieces);
-        }).catch((err)=> console.log(err));
+    fetch("http://localhost:8080/getPieces")
+      .then((response) => response.json())
+      .then((data) => {
+        let sortedPieces = data.map((item) => {
+          return item.pieceName;
+        });
+        //Include option to add various pieces to game
+        sortedPieces.push("Various");
+        sortedPieces.sort();
+        setListOfPieces(sortedPieces);
+      })
+      .catch((err) => console.log(err));
   }
 
   function fetchGameTechniques() {
@@ -53,7 +53,7 @@ export default function AddGame({ setAddGame, userId, username }) {
           const filteredGameTechniqueArray = flattedGameTechniqueArray.filter(
             (tag, index) => flattedGameTechniqueArray.indexOf(tag) === index
           );
-          filteredGameTechniqueArray.sort()
+          filteredGameTechniqueArray.sort();
           setGameTechniques(filteredGameTechniqueArray);
         });
     } catch (err) {
@@ -77,7 +77,7 @@ export default function AddGame({ setAddGame, userId, username }) {
 
   //Handle tag input ================================================================================
   function handleTagChange(e) {
-    const tagValues = e.map((tag) => tag.value)
+    const tagValues = e.map((tag) => tag.value);
     setAddGameTechniques(e);
   }
 
@@ -88,26 +88,32 @@ export default function AddGame({ setAddGame, userId, username }) {
   });
   //Handle adding a piece to game ====================================================================
   function handlePieceChange(e) {
-    const pieceValues = e.map((piece)=> piece.value)
-    console.log(pieceValues)
+    const pieceValues = e.map((piece) => piece.value);
+    console.log(pieceValues);
     setAddPieces(e);
   }
+
+  //Map values of pieces and techniques to correctly send to database
+  const tagValues = addGameTechniques.map((tag) => tag.value);
+  const pieceValues = addPieces.map((piece) => piece.value);
+  console.log(tagValues);
+  console.log(pieceValues);
+  console.log(username, "username")
 
   //Handle adding game to user's games ===============================================================
   function handleAddGame() {
     //TODO check empty inputs
-    
-  
 
     const newGameData = {
       gameName: gameName.current?.value,
       gameText: gameText.current?.value,
-      gameTechnique: addGameTechniques,
-      gamePieces: addPieces,
+      gameTechnique: tagValues,
+      gamePieces: pieceValues,
       saveUser: userId,
-      username: username
+      username: username,
     };
     try {
+      console.log(newGameData);
       fetch("http://localhost:8080/addGame", {
         method: "POST",
         headers: {
@@ -117,7 +123,6 @@ export default function AddGame({ setAddGame, userId, username }) {
       }).then((response) => {
         if (response.status === 201) {
           alert("Game added sucessfully");
-          console.log("From inside the if check");
           gameName.current.value = "";
           gameText.current.value = "";
           setAddGameTechniques([]);
@@ -129,12 +134,12 @@ export default function AddGame({ setAddGame, userId, username }) {
     }
   }
 
-  function handleAddVoteGame(){
+  function handleAddVoteGame() {
     const newVoteGameData = {
       gameName: gameName.current?.value,
       gameText: gameText.current?.value,
-      gameTechnique: addGameTechniques,
-      gamePieces: addPieces,
+      gameTechnique: tagValues,
+      gamePieces: pieceValues,
       saveUser: userId,
       username: username,
       yesVote: 0,
@@ -144,14 +149,14 @@ export default function AddGame({ setAddGame, userId, username }) {
       fetch("http://localhost:8080/addGameForVote", {
         method: "POST",
         headers: {
-          "content-type": "application/json"
+          "content-type": "application/json",
         },
-        body: JSON.stringify(newVoteGameData)
-      }).then((response)=>{
-        console.log(response, "Game submitted for voting")
-      })
-    }catch(err){
-      console.log(err)
+        body: JSON.stringify(newVoteGameData),
+      }).then((response) => {
+        console.log(response, "Game submitted for voting");
+      });
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -182,7 +187,11 @@ export default function AddGame({ setAddGame, userId, username }) {
       ref={container}
     >
       <h3>Add a game!</h3>
-      <input placeholder="Game Name" ref={gameName} className={style.gameNameInput}/>
+      <input
+        placeholder="Game Name"
+        ref={gameName}
+        className={style.gameNameInput}
+      />
       <textarea
         placeholder="Game Description"
         ref={gameText}

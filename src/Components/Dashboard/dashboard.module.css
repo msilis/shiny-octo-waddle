@@ -1,25 +1,21 @@
 .dashboardContainer {
   display: flex;
   padding: 1rem;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   margin-bottom: 4rem;
   color: white;
-  background-color: #6C464F;
+  background-color: #6c464f;
   margin-left: auto;
   margin-right: auto;
   border-radius: 30px 0px 30px 0px;
   box-shadow: 8px 8px 8px black;
-  transition: .5s;
-  
-  
+  transition: 0.5s;
 }
 
 .dashboardMainDisplay {
-
- margin-left: auto;
- margin-right: auto;
- width: 80%;
- 
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }
 
 /* Logout button */
@@ -43,8 +39,6 @@
   transform: translateY(5px);
   box-shadow: 2px 2px 2px black;
 }
-
-
 
 /* =========================================
 ||||||||\\Animate container on load|||||||||
@@ -72,15 +66,18 @@
 }
 /* =============== Bigger Screen ================= */
 
-@media only screen and (width >= 1160px){
+@media only screen and (width >= 1160px) {
   .dashboardContainer {
     width: 50%;
   }
 }
 
 /* =============== Small Screen ================== */
-.dashboardContainer {
-  margin-top: 1rem;
-  box-shadow: 4px 4px 4px black;
 
+@media only screen and (width < 414px) {
+  .dashboardContainer {
+    margin-top: 1rem;
+    box-shadow: 4px 4px 4px black;
+    width: 85vw;
+  }
 }
