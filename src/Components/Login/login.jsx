@@ -59,6 +59,7 @@ export default function Login({
               firstName: data.firstName,
               lastName: data.lastName,
               email: data.email,
+              username: data.username,
               userId: data.userId,
             };
             sessionStorage.setItem("user", JSON.stringify(userInfo));

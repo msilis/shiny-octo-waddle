@@ -92,6 +92,11 @@
   display: none;
 }
 
+.noVoteText {
+  font-weight: 800;
+  font-style: italic;
+}
+
 
 /* ============================
 |||||||||| Small Screen |||||||
@@ -101,7 +106,7 @@
     .gameItem {
       display: flex;
       flex-direction: column;
-      width: 275px;
+      width: 78vw;
     }
 
     .votedTextVisible {

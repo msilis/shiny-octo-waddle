@@ -43,6 +43,7 @@ function App() {
       setFirstName(parsedUserInfo.firstName);
       setLastName(parsedUserInfo.lastName);
       setEmail(parsedUserInfo.email);
+      setUsername(parsedUserInfo.username);
       setUserId(parsedUserInfo.userId);
     }
   }, []);

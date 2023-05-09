@@ -23,7 +23,7 @@ export default function Vote({ userId }) {
     loadingVote,
     setLoadingVote,
     votingGames,
-    setVotingGames, 
+    setVotingGames,
     handleYesVote,
     handleNoVote,
     voteError,
@@ -33,6 +33,9 @@ export default function Vote({ userId }) {
     gamesForPagination,
     setGamesForPagination,
   };
+
+console.log(gamesForPagination)
+console.log(votingGames)
 
   //Vote error overlay
   const voteErrorOverlay = voteError
@@ -174,7 +177,7 @@ export default function Vote({ userId }) {
   }, []);
 
   //Conditionally show pagination
-  const paginationDisplay = loadingVote
+  const paginationDisplay = loadingVote || votingGames.length === 0
     ? `${style.paginationDisplayHidden}`
     : `${style.paginationDisplay}`;
 
@@ -201,16 +204,18 @@ export default function Vote({ userId }) {
       <div className={style.voteGamesDisplay}>
         <VoteGamesDisplay voteProps={voteProps} />
       </div>
-      <div className={paginationDisplay}>
-        <VoteGamePagination
-          votingGames={votingGames}
-          setVotingGames={setVotingGames}
-          setVoteTotal={setVoteTotal}
-          voteTotal={voteTotal}
-          setLoadingVote={setLoadingVote}
-          gamesForPagination={gamesForPagination}
-          setGamesForPagination={setGamesForPagination}
-        />
+       <div className={paginationDisplay}>
+        
+          <VoteGamePagination
+            votingGames={votingGames}
+            setVotingGames={setVotingGames}
+            setVoteTotal={setVoteTotal}
+            voteTotal={voteTotal}
+            setLoadingVote={setLoadingVote}
+            gamesForPagination={gamesForPagination}
+            setGamesForPagination={setGamesForPagination}
+          />
+        
       </div>
     </div>
   );

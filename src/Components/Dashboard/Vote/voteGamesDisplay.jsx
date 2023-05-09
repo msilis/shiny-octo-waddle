@@ -7,14 +7,14 @@ export default function VoteGamesDisplay({ voteProps }) {
   if (voteProps.loadingVote) {
     return <p>Loading...</p>;
   } else if (voteProps.votingGames.length === 0) {
-    return <p>There are no games to vote on now</p>;
+    return <p className={style.noVoteText}>There are no games to vote on now...</p>;
   } else {
     return voteProps.gamesForPagination.map((voteGame, index) => {
       const voteStyle = voteProps.userVotedGames.includes(voteGame._id)
         ? `${style.votedTextVisible}`
         : `${style.votedTextHidden}`;
       return (
-        <div className={style.gameItem} key={index} id={voteGame._id}>
+        <div className={style.gameItem} key={voteGame._id} id={voteGame._id}>
           <h4>{`${voteGame.gameName} created by ${
             voteGame.username ? voteGame.username : "Anonymous"
           }`}</h4>
