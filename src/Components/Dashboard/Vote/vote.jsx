@@ -100,12 +100,17 @@ console.log(votingGames)
         if (response.status === 409) {
           setVoteError(true);
           throw new Error("You have already vote for this game");
-        } else {
+        } else if (response.status === 202){
+          console.log(votingGames, "voting games")
+          setVoteSuccess(true);
+          getUserVotedGames();
+        }else {
           return response.json();
         }
       })
       .then(() => {
         getOnlyVotes().then(() => {
+          setVoteSuccess(false);
           getUserVotedGames();
         });
       })
@@ -172,9 +177,8 @@ console.log(votingGames)
 
   //Call function at page load to get games to be voted on
   useEffect(() => {
-    /* getVoteGames(); */
     getUserVotedGames();
-  }, []);
+  }, [voteSuccess]);
 
   //Conditionally show pagination
   const paginationDisplay = loadingVote || votingGames.length === 0
@@ -193,7 +197,6 @@ console.log(votingGames)
           </button>
         </div>
       </div>
-      <div className={voteSuccessOverlay}></div>
       <div className={style.voteText}>
         <h2>Vote</h2>
         <p className={style.voteSectionText}>
@@ -214,6 +217,7 @@ console.log(votingGames)
             setLoadingVote={setLoadingVote}
             gamesForPagination={gamesForPagination}
             setGamesForPagination={setGamesForPagination}
+            voteSuccess={voteSuccess}
           />
         
       </div>

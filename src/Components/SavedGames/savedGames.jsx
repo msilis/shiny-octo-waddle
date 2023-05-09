@@ -1,3 +1,5 @@
+//This component is used to display the games a user has saved from the ideas tab
+
 import React, { useEffect, useState } from "react";
 import style from "./savedGames.module.css";
 import SavedCreatedGames from "./savedCreatedGames";

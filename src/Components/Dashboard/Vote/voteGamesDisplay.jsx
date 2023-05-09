@@ -22,7 +22,7 @@ export default function VoteGamesDisplay({ voteProps }) {
           <h5>Game focus:</h5>
           <div className={style.gameTechniqueContainer}>
             {voteGame.gameTechnique.map((item) => {
-              return <p key={item.key}>{item.label}</p>;
+              return <p key={item.key}>{item}</p>;
             })}
           </div>
           <div className={style.voteCountDisplay}>

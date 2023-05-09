@@ -2,13 +2,15 @@ import Pagination from "@mui/material/Pagination";
 import { ThemeProvider } from "@mui/material";
 import { theme } from "../Pagination/gamePagination";
 import { browsePageSize } from "../Dashboard/Browse/browseGames";
-import { useState } from "react";
+
 
 export default function BrowsePagination({
   browsePagination,
   setBrowsePagination,
+  currentPage,
+  setCurrentPage
 }) {
-  const [currentPage, setCurrentPage] = useState(1);
+  
   //Pagination page change
   function handlePageChange(event, page) {
     const from = (page - 1) * browsePageSize;
