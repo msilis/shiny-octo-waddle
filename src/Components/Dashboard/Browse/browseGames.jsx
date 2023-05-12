@@ -123,10 +123,6 @@ export default function BrowseGames() {
       ...browsePagination,
       count: filteredTagGames.length,
     });
-    console.log(filteredTagGames, "filteredTagGames")
-    console.log(paginationGames, "paginationGames")
-    console.log(browsePagination, "browsePagination")
-    console.log(currentPage)
   }, [selectedTag, browsePagination.from, browsePagination.to, allGames]);
 
   function displayAllGames() {

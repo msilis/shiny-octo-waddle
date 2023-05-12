@@ -11,7 +11,6 @@ export default function SavedCreatedGames({ userId }) {
   //State for user-created saved games
   const [savedCreatedGames, setSavedCreatedGames] = useState([]);
   const [loadingCreated, setLoadingCreated] = useState(false);
-  const [ loadingSaved, setLoadingSaved ] = useState(false);
   const [gameToEditId, setGameToEditId] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [gameToEdit, setGameToEdit] = useState("");
@@ -19,7 +18,6 @@ export default function SavedCreatedGames({ userId }) {
   const [addGamePieces, setAddGamePieces] = useState([]);
   //State for pagination
   const [currentGamesPage, setCurrentGamesPage] = useState(1);
-  const [myGamesForPagination, setMyGamesForPagination] = useState([]); 
   const [myGamesPagination, setMyGamesPagination] = useState({
     count: 0,
     from: 0,
@@ -27,34 +25,35 @@ export default function SavedCreatedGames({ userId }) {
   });
 
   function getUserCreatedGames() {
-    const createdById = {
-      userId: userId,
-    };
-    try {
-      setLoadingCreated(true);
-      fetch("http://localhost:8080/getUserCreatedGames", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(createdById),
-      })
-        .then((response) => response.json())
-        .then((jsonResponse) => {
-          setSavedCreatedGames(jsonResponse);
-          setMyGamesForPagination(jsonResponse.slice(myGamesPagination.from, myGamesPagination.to))
-          setLoadingCreated(false);
+    return new Promise((resolve, reject) => {
+      try {
+        const createdById = {
+          userId: userId,
+        };
+        setLoadingCreated(true);
+        fetch("http://localhost:8080/getUserCreatedGames", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(createdById),
         })
-    } catch (err) {
-      console.log(err);
-    }
+          .then((response) => response.json())
+          .then((jsonResponse) => {
+            setSavedCreatedGames(jsonResponse);
+            setLoadingCreated(false);
+            resolve(jsonResponse);
+          });
+      } catch (err) {
+        console.log(err);
+        reject(err);
+      }
+    });
   }
 
-
-  //Delete user created game =================================
+  //DELETE user created game =========================================
   function handleCreatedGameDelete(event) {
     const gameId = event.target.parentNode.parentNode.id;
-    console.log(gameId);
     const deleteCreatedData = {
       gameToDelete: gameId,
     };
@@ -69,11 +68,19 @@ export default function SavedCreatedGames({ userId }) {
       .then((response) => response.json())
       .then((jsonResponse) => console.log(jsonResponse))
       .then(() => {
-        getUserCreatedGames();
+        getUserCreatedGames().then((games) => {
+          setMyGamesPagination({ ...myGamesPagination, count: games.length });
+        });
+        if (
+          currentGamesPage >
+          Math.ceil(currentGamesPage.count / createdGamePageSize)
+        ) {
+          setCurrentGamesPage(currentGamesPage - 1);
+        }
       });
   }
 
-  //Edit user created game =========================================
+  //EDIT user created game =========================================
 
   //API Call for data
   //Call API and get game details
@@ -96,7 +103,7 @@ export default function SavedCreatedGames({ userId }) {
       console.log(err);
     }
   }
-
+  //Edit User Game ===========================================
   function handleEditUserCreatedGame(event) {
     const gameId = event.target.parentNode.parentNode.id;
     setGameToEditId(gameId);
@@ -104,80 +111,99 @@ export default function SavedCreatedGames({ userId }) {
     getUserGameToEdit(gameId);
   }
 
-  //Get user created games with effect hook
+  //Get user created games with effect hook ================
   useEffect(() => {
-    getUserCreatedGames()
+    getUserCreatedGames();
   }, []);
 
-  useEffect(()=>{
-    setMyGamesPagination({...myGamesPagination, count: savedCreatedGames.length})
-    setMyGamesForPagination(savedCreatedGames.slice(myGamesPagination.from, myGamesPagination.to))
-  }, [savedCreatedGames, myGamesPagination.from, myGamesPagination.to])
+  useEffect(() => {
+    if (
+      myGamesPagination.from != 0 &&
+      myGamesPagination.from >= savedCreatedGames.length
+    ) {
+      setCurrentGamesPage(currentGamesPage - 1);
+      setMyGamesPagination({
+        from: myGamesPagination.from - 3,
+        to: myGamesPagination.to - 3,
+        count: savedCreatedGames.length,
+      });
+    } else {
+      setMyGamesPagination((prevPagination) => ({
+        ...prevPagination,
+        count: savedCreatedGames.length,
+      }));
+    }
+  }, [
+    savedCreatedGames.length,
+    myGamesPagination.from,
+    myGamesPagination.to,
+    myGamesPagination.count,
+  ]);
 
   if (loadingCreated) {
     return <p>Loading...</p>;
   } else if (savedCreatedGames.length === 0) {
     return <p>You do not have any created games to show</p>;
   } else {
-    return(
+    return (
       <div className={style.savedCreatedOuterContainer}>
-        {myGamesForPagination.map((game) => {
-      return (
-        <div className={style.gameItem} key={game._id} id={game._id}>
-          <h5>{game.gameName}</h5>
-          <p>{game.gameText}</p>
-          <h5>Game focus:</h5>
-          <div className={style.gameTechniqueContainer}>
-            {game.gameTechnique.map((item) => {
-              return <p key={item.key}>{item.label}</p>;
-            })}
-          </div>
-          <div className={style.buttonContainer}>
-            <button
-              className={style.deleteSavedGameButton}
-              onClick={handleCreatedGameDelete}
-            >
-              Delete
-            </button>
-            <button
-              className={style.editSavedGameButton}
-              onClick={handleEditUserCreatedGame}
-            >
-              Edit
-            </button>
-          </div>
-          <div className={style.modalContainer}>
-            {showModal && gameToEdit && (
-              <EditModal
-                gameToEditId={gameToEditId}
-                setGameToEditId={setGameToEditId}
-                showModal={showModal}
-                setShowModal={setShowModal}
-                gameToEdit={gameToEdit}
-                setGameToEdit={setGameToEdit}
-                addGameTechniques={addGameTechniques}
-                setAddGameTechniques={setAddGameTechniques}
-                addGamePieces={addGamePieces}
-                setAddGamePieces={setAddGamePieces}
-                getUserCreatedGames={getUserCreatedGames}
-              />
-            )}
-          </div>
+        {savedCreatedGames
+          .slice(myGamesPagination.from, myGamesPagination.to)
+          .map((game) => {
+            return (
+              <div className={style.gameItem} key={game._id} id={game._id}>
+                <h5>{game.gameName}</h5>
+                <p>{game.gameText}</p>
+                <h5>Game focus:</h5>
+                <div className={style.gameTechniqueContainer}>
+                  {game.gameTechnique.map((item, index) => {
+                    return <p key={index}>{item.label}</p>;
+                  })}
+                </div>
+                <div className={style.buttonContainer}>
+                  <button
+                    className={style.deleteSavedGameButton}
+                    onClick={handleCreatedGameDelete}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    className={style.editSavedGameButton}
+                    onClick={handleEditUserCreatedGame}
+                  >
+                    Edit
+                  </button>
+                </div>
+                <div className={style.modalContainer}>
+                  {showModal && gameToEdit && (
+                    <EditModal
+                      gameToEditId={gameToEditId}
+                      setGameToEditId={setGameToEditId}
+                      showModal={showModal}
+                      setShowModal={setShowModal}
+                      gameToEdit={gameToEdit}
+                      setGameToEdit={setGameToEdit}
+                      addGameTechniques={addGameTechniques}
+                      setAddGameTechniques={setAddGameTechniques}
+                      addGamePieces={addGamePieces}
+                      setAddGamePieces={setAddGamePieces}
+                      getUserCreatedGames={getUserCreatedGames}
+                    />
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        <div className={style.paginationContainer}>
+          <MyGamesPagination
+            myGamesPagination={myGamesPagination}
+            setMyGamesPagination={setMyGamesPagination}
+            createdGamePageSize={createdGamePageSize}
+            currentGamesPage={currentGamesPage}
+            setCurrentGamesPage={setCurrentGamesPage}
+          />
         </div>
-      );
-    })}
-    <div className={style.paginationContainer}>
-    <MyGamesPagination
-      myGamesPagination={myGamesPagination}
-      setMyGamesPagination={setMyGamesPagination}
-      createdGamePageSize={createdGamePageSize}
-      currentGamesPage={currentGamesPage}
-      setCurrentGamesPage={setCurrentGamesPage}
-    />
-    </div>
-    
-
       </div>
-    ) 
+    );
   }
 }
