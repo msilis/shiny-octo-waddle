@@ -1,6 +1,6 @@
 //This component is used to display the games a user has saved from the ideas tab
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import style from "./savedGames.module.css";
 import SavedCreatedGames from "./savedCreatedGames";
 import MySavedGamesPagination from "../Pagination/mySavedGamesPagination";
@@ -13,9 +13,6 @@ export default function SavedGames({ userId }) {
   const [loadingSaved, setLoadingSaved] = useState(false);
   //State for pagination
   const [currentMyGamesPage, setCurrentMyGamesPage] = useState(1);
-  const [mySavedGamesForPagination, setMySavedGamesForPagination] = useState(
-    []
-  );
   const [savedGamesPagination, setSavedGamesPagination] = useState({
     count: 0,
     from: 0,
@@ -25,28 +22,40 @@ export default function SavedGames({ userId }) {
   //Function to fetch saved games
 
   function getSavedGames() {
-    try {
-      const savedGameInfo = {
-        saveUser: userId,
-      };
-      console.log(savedGameInfo);
-      setLoadingSaved(true);
-      fetch("http://localhost:8080/getSavedGames", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(savedGameInfo),
-      })
-        .then((response) => response.json())
-        .then((jsonResponse) => {
-          setMySavedGamesForPagination(jsonResponse);
-          setSavedGames(jsonResponse);
-          setLoadingSaved(false);
-        });
-    } catch (err) {
-      console.log(err);
-    }
+    return new Promise((resolve, reject) => {
+      try {
+        const savedGameInfo = {
+          saveUser: userId,
+        };
+        setLoadingSaved(true);
+        fetch("http://localhost:8080/getSavedGames", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(savedGameInfo),
+        })
+          .then((response) => response.json())
+          .then((jsonResponse) => {
+            setSavedGames(jsonResponse);
+            console.log(savedGames.length, "from inside getSavedGames");
+            setSavedGamesPagination({
+              ...savedGamesPagination,
+              from: (currentMyGamesPage - 1) * savedGamePageSize,
+              to:
+                (currentMyGamesPage - 1) * savedGamePageSize +
+                savedGamePageSize,
+              count: savedGames.length,
+            });
+
+            setLoadingSaved(false);
+            resolve(jsonResponse);
+          });
+      } catch (err) {
+        console.log(err);
+        reject(err);
+      }
+    });
   }
 
   // Get user's saved games
@@ -55,32 +64,61 @@ export default function SavedGames({ userId }) {
   }, []);
 
   useEffect(() => {
-    setSavedGamesPagination({
-      ...savedGamesPagination,
-      count: savedGames.length,
-    });
-    setMySavedGamesForPagination(
-      savedGames.slice(savedGamesPagination.from, savedGamesPagination.to)
-    );
-  }, [savedGamesPagination.from, savedGamesPagination.to, savedGames]);
+    if (
+      savedGamesPagination.from != 0 &&
+      savedGamesPagination.from >= savedGames.length
+    ) {
+      setCurrentMyGamesPage(currentMyGamesPage - 1);
+      setSavedGamesPagination({
+        from: savedGamesPagination.from - 3,
+        to: savedGamesPagination.to - 3,
+        count: savedGames.length,
+      });
+    } else {
+      setSavedGamesPagination({
+        ...savedGamesPagination,
+        count: savedGames.length,
+      });
+    }
+  }, [
+    savedGamesPagination.from,
+    savedGamesPagination.to,
+    savedGamesPagination.count,
+    savedGames.length,
+  ]);
 
-  function handleSavedGameDelete(event) {
+  //DELETE a saved game
+
+  async function handleSavedGameDelete(event) {
     const gameToDelete = event.target.parentNode.parentNode.id;
     const deleteGameData = {
       gameToDelete: gameToDelete,
     };
-    fetch("http://localhost:8080/deleteSavedGame", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(deleteGameData),
-    })
-      .then((response) => response.json())
-      .then((jsonResponse) => console.log(jsonResponse))
-      .then(() => {
-        getSavedGames();
+    try {
+      const response = await fetch("http://localhost:8080/deleteSavedGame", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(deleteGameData),
       });
+      const jsonResponse = await response.json();
+
+      getSavedGames().then((games) => {
+        setSavedGamesPagination({
+          ...savedGamesPagination,
+          count: games.length,
+        });
+        if (
+          currentMyGamesPage >
+          Math.ceil(savedGamesPagination.count / savedGamePageSize)
+        ) {
+          setCurrentMyGamesPage(currentMyGamesPage - 1);
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   //Conditionally render game display depending on fetch state and saved games array
@@ -91,19 +129,21 @@ export default function SavedGames({ userId }) {
     } else if (savedGames.length === 0) {
       return <p>You do not have any saved games to show</p>;
     } else {
-      return mySavedGamesForPagination.map((game) => (
-        <div className={style.gameItem} key={game._id} id={game._id}>
-          <h5>{game.gameName}</h5>
-          <p>{game.gameText}</p>
+      return savedGames
+        .slice(savedGamesPagination.from, savedGamesPagination.to)
+        .map((game) => (
+          <div className={style.gameItem} key={game._id} id={game._id}>
+            <h5>{game.gameName}</h5>
+            <p>{game.gameText}</p>
 
-          <div
-            className={style.deleteSavedGameButton}
-            onClick={handleSavedGameDelete}
-          >
-            <span>Delete</span>
+            <div
+              className={style.deleteSavedGameButton}
+              onClick={handleSavedGameDelete}
+            >
+              <span>Delete</span>
+            </div>
           </div>
-        </div>
-      ));
+        ));
     }
   }
 
@@ -118,8 +158,6 @@ export default function SavedGames({ userId }) {
             setCurrentMyGamesPage={setCurrentMyGamesPage}
             savedGamesPagination={savedGamesPagination}
             setSavedGamesPagination={setSavedGamesPagination}
-            mySavedGamesForPagination={mySavedGamesForPagination}
-            setMySavedGamesForPagination={setMySavedGamesForPagination}
             savedGamePageSize={savedGamePageSize}
           />
         </div>

@@ -5,7 +5,6 @@ import { theme } from "../Pagination/gamePagination";
 export default function MySavedGamesPagination({
   currentMyGamesPage,
   setCurrentMyGamesPage,
-  mySavedGamesForPagination,
   setSavedGamesPagination,
   savedGamesPagination,
   savedGamePageSize,
