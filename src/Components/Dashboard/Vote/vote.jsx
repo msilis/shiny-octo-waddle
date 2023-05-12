@@ -34,9 +34,6 @@ export default function Vote({ userId }) {
     setGamesForPagination,
   };
 
-console.log(gamesForPagination)
-console.log(votingGames)
-
   //Vote error overlay
   const voteErrorOverlay = voteError
     ? `${style.voteErrorVisible}`
@@ -100,11 +97,11 @@ console.log(votingGames)
         if (response.status === 409) {
           setVoteError(true);
           throw new Error("You have already vote for this game");
-        } else if (response.status === 202){
-          console.log(votingGames, "voting games")
+        } else if (response.status === 202) {
+          console.log(votingGames, "voting games");
           setVoteSuccess(true);
           getUserVotedGames();
-        }else {
+        } else {
           return response.json();
         }
       })
@@ -158,7 +155,6 @@ console.log(votingGames)
     const idToCheck = {
       userId: userId,
     };
-    console.log(idToCheck);
     fetch("http://localhost:8080/getUserVotes", {
       method: "POST",
       headers: {
@@ -181,9 +177,10 @@ console.log(votingGames)
   }, [voteSuccess]);
 
   //Conditionally show pagination
-  const paginationDisplay = loadingVote || votingGames.length === 0
-    ? `${style.paginationDisplayHidden}`
-    : `${style.paginationDisplay}`;
+  const paginationDisplay =
+    loadingVote || votingGames.length === 0
+      ? `${style.paginationDisplayHidden}`
+      : `${style.paginationDisplay}`;
 
   console.log();
 
@@ -207,19 +204,17 @@ console.log(votingGames)
       <div className={style.voteGamesDisplay}>
         <VoteGamesDisplay voteProps={voteProps} />
       </div>
-       <div className={paginationDisplay}>
-        
-          <VoteGamePagination
-            votingGames={votingGames}
-            setVotingGames={setVotingGames}
-            setVoteTotal={setVoteTotal}
-            voteTotal={voteTotal}
-            setLoadingVote={setLoadingVote}
-            gamesForPagination={gamesForPagination}
-            setGamesForPagination={setGamesForPagination}
-            voteSuccess={voteSuccess}
-          />
-        
+      <div className={paginationDisplay}>
+        <VoteGamePagination
+          votingGames={votingGames}
+          setVotingGames={setVotingGames}
+          setVoteTotal={setVoteTotal}
+          voteTotal={voteTotal}
+          setLoadingVote={setLoadingVote}
+          gamesForPagination={gamesForPagination}
+          setGamesForPagination={setGamesForPagination}
+          voteSuccess={voteSuccess}
+        />
       </div>
     </div>
   );

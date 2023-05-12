@@ -38,7 +38,6 @@ export default function SavedGames({ userId }) {
           .then((response) => response.json())
           .then((jsonResponse) => {
             setSavedGames(jsonResponse);
-            console.log(savedGames.length, "from inside getSavedGames");
             setSavedGamesPagination({
               ...savedGamesPagination,
               from: (currentMyGamesPage - 1) * savedGamePageSize,
