@@ -157,7 +157,9 @@ export default function SavedCreatedGames({ userId }) {
                 <h5>Game focus:</h5>
                 <div className={style.gameTechniqueContainer}>
                   {game.gameTechnique.map((item, index) => {
-                    return <p key={index}>{item.label}</p>;
+                   //! TODO This does not seem right, for this savedCreatedGames
+                   //! should return an array of objects, not a regular array
+                    return <p key={index}>{item.label || item}</p>;
                   })}
                 </div>
                 <div className={style.buttonContainer}>

@@ -96,9 +96,6 @@ export default function AddGame({ setAddGame, userId, username }) {
   //Map values of pieces and techniques to correctly send to database
   const tagValues = addGameTechniques.map((tag) => tag.value);
   const pieceValues = addPieces.map((piece) => piece.value);
-  console.log(tagValues);
-  console.log(pieceValues);
-  console.log(username, "username")
 
   //Handle adding game to user's games ===============================================================
   function handleAddGame() {
@@ -107,8 +104,8 @@ export default function AddGame({ setAddGame, userId, username }) {
     const newGameData = {
       gameName: gameName.current?.value,
       gameText: gameText.current?.value,
-      gameTechnique: tagValues,
-      gamePieces: pieceValues,
+      gameTechnique: addGameTechniques,
+      gamePieces: addPieces,
       saveUser: userId,
       username: username,
     };
@@ -138,8 +135,8 @@ export default function AddGame({ setAddGame, userId, username }) {
     const newVoteGameData = {
       gameName: gameName.current?.value,
       gameText: gameText.current?.value,
-      gameTechnique: tagValues,
-      gamePieces: pieceValues,
+      gameTechnique: addGameTechniques,
+      gamePieces: addPieces,
       saveUser: userId,
       username: username,
       yesVote: 0,

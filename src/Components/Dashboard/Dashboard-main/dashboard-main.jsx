@@ -79,7 +79,6 @@ export default function DashboardMain({
           credentials: "include",
         })
           .then((response) => {
-            console.log(response);
             if (response.status === 401) {
               setError(true);
               throw new Error("There was an error with the server");
@@ -101,9 +100,6 @@ export default function DashboardMain({
   //Save game functionality ===================================================================
 
   function handleGameSave() {
-    console.log(randomGame.gameName);
-    console.log(randomGame.gameText);
-    console.log(userId);
     const saveGameData = {
       gameName: randomGame.gameName,
       gameText: randomGame.gameText,
@@ -118,7 +114,6 @@ export default function DashboardMain({
       body: JSON.stringify(saveGameData),
     })
       .then((response) => {
-        console.log(response);
         if (response.status === 201) {
           setSavedGame(true);
         }
