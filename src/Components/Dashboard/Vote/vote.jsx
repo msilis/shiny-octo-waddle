@@ -182,8 +182,6 @@ export default function Vote({ userId }) {
       ? `${style.paginationDisplayHidden}`
       : `${style.paginationDisplay}`;
 
-  console.log();
-
   return (
     <div className={style.voteContainer}>
       <div className={voteErrorOverlay}>

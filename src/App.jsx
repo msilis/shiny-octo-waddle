@@ -27,7 +27,6 @@ function App() {
 
   //Main display
   const [mainDisplay, setMainDisplay] = useState("dashboard");
-  //JWT Token
 
   const suspenseLoading = (
     <div className="loadingMessage">

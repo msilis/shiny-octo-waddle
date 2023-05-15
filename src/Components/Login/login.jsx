@@ -41,13 +41,12 @@ export default function Login({
           .then((response) => {
             if (response.status === 401) {
               alert("Incorrect Username or Password!");
+               throw new Error("Incorrect username or password.")
             } else {
               return response.json();
             }
           })
           .then((data) => {
-            console.log(data)
-            console.log(data.firstName);
             setLoggedIn(true);
             setFirstName(data.firstName);
             setLastName(data.lastName);
@@ -109,7 +108,7 @@ export default function Login({
   }, [])
 
   /* ======================================
-  |||||||||||||||||||||||||||||||||||||||||
+  ||||||||||||||||Return|||||||||||||||||||
   ========================================= */
 
   return (
@@ -128,6 +127,7 @@ export default function Login({
           placeholder="Username"
           ref={loginUsername}
           className={style.loginInput}
+          data-testid="usernameInput"
         ></input>
         <input
           placeholder="Password"
@@ -135,8 +135,9 @@ export default function Login({
           className={style.loginInput}
           type="password"
           onKeyDown={handleEnterKey}
+          data-testid="passwordInput"
         ></input>
-        <div className={style.loginButton} onClick={handleLoginSubmit}>
+        <div className={style.loginButton} onClick={handleLoginSubmit} data-testid="loginButton">
           <span>Log In</span>
         </div>
       </div>
