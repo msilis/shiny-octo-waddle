@@ -3,6 +3,8 @@ import classnames from "classnames";
 import { useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 
+//Exports for testing
+
 export default function Login({
   setFirstName,
   setLastName,
@@ -10,7 +12,7 @@ export default function Login({
   loggedIn,
   setLoggedIn,
   setUserId,
-  setUsername
+  setUsername,
 }) {
   //Refs for inputs
   const loginUsername = useRef();
@@ -41,7 +43,7 @@ export default function Login({
           .then((response) => {
             if (response.status === 401) {
               alert("Incorrect Username or Password!");
-               throw new Error("Incorrect username or password.")
+              throw new Error("Incorrect username or password.");
             } else {
               return response.json();
             }
@@ -79,10 +81,10 @@ export default function Login({
 
   //If already logged in, redirect to dashboard
 
-  function checkLoggedIn(){
-    const isLoggedIn = sessionStorage.getItem("loggedIn")
-    if(isLoggedIn){
-      console.log(sessionStorage.getItem("loggedIn"))
+  function checkLoggedIn() {
+    const isLoggedIn = sessionStorage.getItem("loggedIn");
+    if (isLoggedIn) {
+      console.log(sessionStorage.getItem("loggedIn"));
       navigate("/dashboard");
     }
   }
@@ -95,17 +97,18 @@ export default function Login({
       handleLoginSubmit();
     }
   }
+  // Handle Logout
 
-  function handleLogout() {
+  const handleLogoutInternal = () => {
     setLoggedIn(false);
     console.log("Logged out");
     sessionStorage.removeItem("loggedIn");
-  }
+  };
 
-  useEffect(()=>{
-    console.log("effect ran")
-    checkLoggedIn()
-  }, [])
+  useEffect(() => {
+    console.log("effect ran");
+    checkLoggedIn();
+  }, []);
 
   /* ======================================
   ||||||||||||||||Return|||||||||||||||||||
@@ -137,13 +140,17 @@ export default function Login({
           onKeyDown={handleEnterKey}
           data-testid="passwordInput"
         ></input>
-        <div className={style.loginButton} onClick={handleLoginSubmit} data-testid="loginButton">
+        <div
+          className={style.loginButton}
+          onClick={handleLoginSubmit}
+          data-testid="loginButton"
+        >
           <span>Log In</span>
         </div>
       </div>
       <div
         className={loggedIn ? style.loginButton : style.userLoggedIn}
-        onClick={handleLogout}
+        onClick={handleLogoutInternal}
       >
         <span>Log out</span>
       </div>
