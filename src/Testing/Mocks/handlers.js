@@ -10,4 +10,7 @@ export const handlers = [
       return res(ctx.status(200));
     }
   }),
+  rest.post("http://localhost:8080/saveGame", (req, res, ctx) => {
+    return res(ctx.status(201));
+  })
 ];
