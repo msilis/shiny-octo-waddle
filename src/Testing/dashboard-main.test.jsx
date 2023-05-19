@@ -1,7 +1,7 @@
 import { it, vi, expect, describe } from "vitest";
 
 describe("Dashboard-Main", ()=>{
-    it("Should return 201 error if game is saved sucessfully", async ()=>{
+    it("Should return 201 code if game is saved sucessfully", async ()=>{
         const gameData = {
             "gameName": "Test Game",
             "gameText": "Test text",
