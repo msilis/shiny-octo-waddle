@@ -26,16 +26,6 @@ const handleAddGame = (
     username: username,
   };
 
-  console.log(
-    gameName,
-    gameText,
-    addGameTechniques,
-    addPieces,
-    userId,
-    username,
-    addGameTechniques.length,
-    addPieces.length
-  );
   //TODO should check empty inputs here with if statement
   try {
     if (
@@ -209,16 +199,6 @@ export default function AddGame({ setAddGame, userId, username }) {
   //If user selects yes, add game to vote list. If user selects no, add game only to profile.
 
   const handleYesClick = () => {
-    console.log(
-      gameName,
-      gameText,
-      addGameTechniques,
-      addPieces,
-      userId,
-      username,
-      setAddGameTechniques,
-      setAddPieces
-    );
 
     const currentGameName = gameName.current?.value;
     const currentGameText = gameText.current?.value;
@@ -270,11 +250,13 @@ export default function AddGame({ setAddGame, userId, username }) {
       <h3>Add a game!</h3>
       <input
         placeholder="Game Name"
+        label="Game Name"
         ref={gameName}
         className={style.gameNameInput}
       />
       <textarea
         placeholder="Game Description"
+        label="Game Description"
         ref={gameText}
         rows="6"
         cols="75"
