@@ -1,114 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, forwardRef } from "react";
 import Select from "react-select";
 import style from "./addGame.module.css";
 import AddGameModal from "./addGameModal/addGameModal";
+import { handleAddGame, handleAddVoteGame } from "./addGameUtils.jsx/addGameUtils";
 
-//Refs and state
 
-//Add Game function - no vote
-
-const handleAddGame = (
-  gameName,
-  gameText,
-  addGameTechniques,
-  addPieces,
-  userId,
-  username,
-  setAddGameTechniques,
-  setAddPieces
-) => {
-  const newGameData = {
-    gameName: gameName,
-    gameText: gameText,
-    gameTechnique: addGameTechniques,
-    gamePieces: addPieces,
-    saveUser: userId,
-    username: username,
-  };
-
-  //TODO should check empty inputs here with if statement
-  try {
-    if (
-      gameName === "" ||
-      gameText === "" ||
-      addPieces.length === 0 ||
-      addGameTechniques.length === 0
-    ) {
-      console.log("You need to check your inputs.");
-    } else {
-      fetch("http://localhost:8080/addGame", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(newGameData),
-      }).then((response) => {
-        if (response.status === 201) {
-          alert("Game added sucessfully");
-          /* gameName.current.value = "";
-          gameText.current.value = ""; */
-          setAddGameTechniques([]);
-          setAddPieces([]);
-        }
-      });
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-//Add game function - to be voted on
-
-const handleAddVoteGame = (
-  gameName,
-  gameText,
-  addGameTechniques,
-  addPieces,
-  userId,
-  username,
-) => {
-  const newVoteGameData = {
-    gameName: gameName,
-    gameText: gameText,
-    gameTechnique: addGameTechniques,
-    gamePieces: addPieces,
-    saveUser: userId,
-    username: username,
-    yesVote: 0,
-    noVote: 0,
-  };
-  try {
-    if (
-      gameName === "" ||
-      gameText === "" ||
-      addPieces.length === 0 ||
-      addGameTechniques.length === 0
-    ) {
-      console.log("You need to check your inputs.");
-    } else {
-      fetch("http://localhost:8080/addGameForVote", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(newVoteGameData),
-      }).then((response) => {
-        console.log(response, "Game submitted for voting");
-      });
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-export default function AddGame({ setAddGame, userId, username }) {
+const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
   //Refs ***********************
   const gameName = useRef();
   const gameText = useRef();
   const container = useRef();
-  const piecesRef = useRef();
   //State **********************
-  const [addGameTags, setAddGameTags] = useState([]);
   const [listOfPieces, setListOfPieces] = useState([]);
   const [addPieces, setAddPieces] = useState([]);
   const [gameTechniques, setGameTechniques] = useState([]);
@@ -199,21 +101,20 @@ export default function AddGame({ setAddGame, userId, username }) {
   //If user selects yes, add game to vote list. If user selects no, add game only to profile.
 
   const handleYesClick = () => {
-
-    const currentGameName = gameName.current?.value;
-    const currentGameText = gameText.current?.value;
     
     handleAddGame(
-      currentGameName,
-      currentGameText,
+      gameName,
+      gameText,
       addGameTechniques,
       addPieces,
       userId,
-      username
+      username,
+      setAddGameTechniques,
+      setAddPieces
     );
     handleAddVoteGame(
-      currentGameName,
-      currentGameText,
+      gameName,
+      gameText,
       addGameTechniques,
       addPieces,
       userId,
@@ -222,13 +123,17 @@ export default function AddGame({ setAddGame, userId, username }) {
   }
 
   const handleNoClick = () => {
+    
+
     handleAddGame(
       gameName,
       gameText,
       addGameTechniques,
       addPieces,
       userId,
-      username
+      username,
+      setAddGameTechniques,
+      setAddPieces
     );
   }
 
@@ -277,7 +182,6 @@ export default function AddGame({ setAddGame, userId, username }) {
         options={pieceOptions}
         defaultValue={[pieceOptions[2]]}
         isMulti={true}
-        ref={piecesRef}
         className={style.addGameSelectInput}
         isSearchable={true}
         isClearable={true}
@@ -300,25 +204,27 @@ export default function AddGame({ setAddGame, userId, username }) {
             setAddPieces
           )
         }
-        data-id="addGameButton"
+        data-testid="addGameButton"
       >
         Add
       </div>
       <div className={style.addGameViewButton} onClick={handleCancelClick}>
         Cancel
       </div>
-      <div className={style.addGameModal}>
+      <div className={style.addGameModal} data-testid="modal">
         {showAddGameModal && (
           <AddGameModal
             showAddGameModal={showAddGameModal}
             setShowAddGameModal={setShowAddGameModal}
             handleNoClick={handleNoClick}
             handleYesClick={handleYesClick}
+            
           />
         )}
       </div>
     </div>
   );
-}
+});
 
-export { handleAddGame, handleAddVoteGame };
+export default AddGame;
+
