@@ -49,6 +49,8 @@ export default function EditModal({
           let sortedPieces = data.map((item) => {
             return item.pieceName;
           });
+          sortedPieces.push("Various");
+          sortedPieces.sort();
           setListOfPieces(sortedPieces);
           setLoadingPieces(false);
         });
