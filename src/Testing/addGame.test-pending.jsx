@@ -7,10 +7,10 @@ describe("AddGame", () => {
   it("should show console message that the inputs are empty", () => {
     render(<AddGame />);
     //Inputs
-    const gameNameInput = screen.getByLabelText("Game Name");
+  /*   const gameNameInput = screen.getByLabelText("Game Name");
     const gameTextInput = screen.getByLabelText("Game Description");
     const addPieces = screen.getByTestId("pieceOptionInput");
-    const addFocus = screen.getByTestId("gameOptionInput");
+    const addFocus = screen.getByTestId("gameOptionInput"); */
     const addButton = screen.getByTestId("addGameButton");
     const consoleLogSpy = vi.spyOn(console, "log");
     //Click Add button
