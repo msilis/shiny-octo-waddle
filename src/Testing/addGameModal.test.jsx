@@ -11,21 +11,44 @@ describe("AddGameModal", () => {
     mockHandleCancelClick(false);
     mockHandleCancelClick.mock.calls[1] === false;
 
+    //Mock yes function
+    const mockHandleYesClick = vi.fn();
+    mockHandleCancelClick(true);
+    mockHandleYesClick.mock.calls[1] === true;
+
+    //Mock no function
+    const mockHandleNoClick = vi.fn();
+    mockHandleNoClick(true);
+    mockHandleNoClick.mock.calls[1] === true;
+
     //Render Modal
-    render(<AddGameModal
+    render(
+      <AddGameModal
         showAddGameModal={true}
         setShowAddGameModal={vi.fn()}
-        handleYesClick={vi.fn()}
+        handleYesClick={mockHandleYesClick}
         handleNoClick={vi.fn()}
-        handleCancelClick={mockHandleCancelClick} />);
+        handleCancelClick={mockHandleCancelClick}
+      />
+    );
 
     //Get cancel button
     const cancelButton = screen.getByTestId("cancelButton");
 
-    //Click button
+    //Click button cancel
     fireEvent.click(cancelButton);
 
-    expect(cancelButton).toBeTruthy();
     expect(mockHandleCancelClick).toHaveBeenCalledWith(false);
+
+    //Click yes
+    const yesButton = screen.getByTestId("yesButton");
+
+    fireEvent.click(yesButton);
+    expect(mockHandleYesClick).toHaveBeenCalledWith(true);
+
+    //Click no
+    const noButton = screen.getByTestId("noButton")
+    fireEvent.click(noButton);
+    expect(mockHandleNoClick).toHaveBeenCalledWith(true);
   });
 });
