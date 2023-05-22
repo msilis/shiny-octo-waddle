@@ -34,11 +34,11 @@ export default function AddGameModal({
           (If you select 'no', the game will only be added to your profile.)
         </p>
         <div className={style.buttonContainer}>
-          <button className={style.yesButton} onClick={handleYesButtonClick}>Yes</button>
-          <button className={style.cancelButton} onClick={handleNoButtonClick}>
+          <button className={style.yesButton} onClick={handleYesButtonClick} data-testid="yesButton">Yes</button>
+          <button className={style.cancelButton} onClick={handleNoButtonClick} data-testid="noButton">
             No
           </button>
-          <button className={style.cancelButton} onClick={handleCancelClick}>
+          <button className={style.cancelButton} onClick={handleCancelClick} data-testid="cancelButton">
             Cancel
           </button>
         </div>
