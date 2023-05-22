@@ -22,7 +22,6 @@ const handleAddGame = (
       username: username,
     };
   
-    //TODO should check empty inputs here with if statement
     try {
       if (
         gameName === "" ||
