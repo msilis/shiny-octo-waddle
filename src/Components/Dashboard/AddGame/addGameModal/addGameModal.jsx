@@ -16,12 +16,12 @@ export default function AddGameModal({
 
   function handleNoButtonClick() {
     setShowAddGameModal(false);
-    handleNoClick();
+    handleNoClick(true);
   }
 
   function handleYesButtonClick() {
     setShowAddGameModal(false);
-    handleYesClick();
+    handleYesClick(true);
   }
 
   return (
