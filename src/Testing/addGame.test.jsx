@@ -15,7 +15,7 @@ afterEach(cleanup);
   }));
 
   it("should show modal when add game button is clicked", () => {
-    render(<AddGame setAddGame={()=>{}} userId="123" username="test"/>);
+    render(<AddGame/>);
     const addButton = screen.getByTestId("addGameButton");
 
     userEvent.click(addButton);

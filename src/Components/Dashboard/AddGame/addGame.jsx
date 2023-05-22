@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState, forwardRef } from "react";
 import Select from "react-select";
 import style from "./addGame.module.css";
 import AddGameModal from "./addGameModal/addGameModal";
-import { handleAddGame, handleAddVoteGame } from "./addGameUtils.jsx/addGameUtils";
-
+import {
+  handleAddGame,
+  handleAddVoteGame,
+} from "./addGameUtils.jsx/addGameUtils";
 
 const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
   //Refs ***********************
@@ -17,9 +19,14 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
   const [addGameTechniques, setAddGameTechniques] = useState([]);
   const [showAddGameModal, setShowAddGameModal] = useState(false);
 
-  //Cancel Button click
-  function handleCancelClick(event) {
+  //Clear Button click ============================================================================================
+  function handleClearClick(event) {
     setAddGame(false);
+    gameName.current.value = "";
+    gameText.current.value = "";
+    setAddGameTechniques([]);
+    setAddPieces([]);
+
   }
 
   // Functions to pass to useEffect ==============================================================================
@@ -101,41 +108,56 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
   //If user selects yes, add game to vote list. If user selects no, add game only to profile.
 
   const handleYesClick = () => {
-    
-    handleAddGame(
-      gameName,
-      gameText,
-      addGameTechniques,
-      addPieces,
-      userId,
-      username,
-      setAddGameTechniques,
-      setAddPieces
-    );
-    handleAddVoteGame(
-      gameName,
-      gameText,
-      addGameTechniques,
-      addPieces,
-      userId,
-      username
-    );
-  }
+    if (
+      gameName === "" ||
+      gameText === "" ||
+      addPieces.length === 0 ||
+      addGameTechniques.length === 0
+    ) {
+      console.log("You need to check your inputs.");
+    } else {
+      handleAddGame(
+        gameName,
+        gameText,
+        addGameTechniques,
+        addPieces,
+        userId,
+        username,
+        setAddGameTechniques,
+        setAddPieces
+      );
+      handleAddVoteGame(
+        gameName,
+        gameText,
+        addGameTechniques,
+        addPieces,
+        userId,
+        username
+      );
+    }
+  };
 
   const handleNoClick = () => {
-    
-
-    handleAddGame(
-      gameName,
-      gameText,
-      addGameTechniques,
-      addPieces,
-      userId,
-      username,
-      setAddGameTechniques,
-      setAddPieces
-    );
-  }
+    if (
+      gameName === "" ||
+      gameText === "" ||
+      addPieces.length === 0 ||
+      addGameTechniques.length === 0
+    ) {
+      console.log("You need to check your inputs.");
+    } else {
+      handleAddGame(
+        gameName,
+        gameText,
+        addGameTechniques,
+        addPieces,
+        userId,
+        username,
+        setAddGameTechniques,
+        setAddPieces
+      );
+    }
+  };
 
   //Show modal and ask if user wants game added to vote list
 
@@ -208,8 +230,8 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
       >
         Add
       </div>
-      <div className={style.addGameViewButton} onClick={handleCancelClick}>
-        Cancel
+      <div className={style.addGameViewButton} onClick={handleClearClick}>
+        Clear
       </div>
       <div className={style.addGameModal} data-testid="modal">
         {showAddGameModal && (
@@ -218,7 +240,6 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
             setShowAddGameModal={setShowAddGameModal}
             handleNoClick={handleNoClick}
             handleYesClick={handleYesClick}
-            
           />
         )}
       </div>
@@ -227,4 +248,3 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
 });
 
 export default AddGame;
-
