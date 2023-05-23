@@ -43,14 +43,6 @@ export default function Vote({ userId }) {
     setVoteError(false);
   }
 
-  //Vote sucess overlay
-  const voteSuccessOverlay = voteSuccess
-    ? `${style.voteSuccessVisible}`
-    : `${style.voteSuccessHidden}`;
-
-  function handleOkSuccessClick() {
-    setVoteSuccess(false);
-  }
 
   //Fetch vote count to be able to update only count, not whole component
   function getOnlyVotes() {
