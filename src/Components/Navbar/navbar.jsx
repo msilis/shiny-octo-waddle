@@ -84,6 +84,7 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
             to="/"
             className={style.navLink}
             onClick={() => setHamburgerActive(false)}
+            data-testid="homeClick"
           >
             <li className={style.navListItem}>Home</li>
           </Link>
@@ -91,6 +92,7 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
             to="about"
             className={style.navLink}
             onClick={() => setHamburgerActive(false)}
+            data-testid="aboutClick"
           >
             <li className={style.navListItem}>About</li>
           </Link>
@@ -102,6 +104,7 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
                 setMainDisplay("dashboard");
                 setHamburgerActive(false);
               }}
+              data-testid="dashboardClick"
             >
               <li className={style.navListItem}>Ideas</li>
             </Link>
@@ -110,6 +113,7 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
               to="/login"
               className={style.navLink}
               onClick={() => setHamburgerActive(false)}
+              data-testid="loginClick"
             >
               <li className={style.navListItem}>Log In</li>
             </Link>
@@ -119,6 +123,7 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
             to="register"
             className={style.navLink}
             onClick={() => setHamburgerActive(false)}
+            data-testid="registerClick"
           >
             <li className={style.navListItem}>Register</li>
           </Link>
@@ -126,6 +131,7 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
             to="/dashboard"
             className={style.navLink}
             onClick={handleMyGamesClick}
+            data-testid="myGamesClick"
           >
             <li
               className={`${style.navListItem} ${
@@ -145,6 +151,7 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
                 : style.loggedInNavigationHidden
             }`}
             onClick={handleBrowseClick}
+            data-testid="browseClick"
           >
             <li className={style.navListItem}>Browse</li>
           </Link>
@@ -156,6 +163,8 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
                 : style.loggedInNavigationHidden
             }`}
             onClick={handleAddGameClick}
+            data-testid="addGameClick"
+            
           >
             <li className={style.navListItem}>Add Game</li>
           </Link>
@@ -167,6 +176,7 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
                 : style.loggedInNavigationHidden
             }`}
             onClick={handleVoteClick}
+            data-testid="voteClick"
           >
             <li className={style.navListItem}>Vote</li>
           </Link>
@@ -178,6 +188,7 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
                 : style.loggedInNavigationHidden
             }`}
             onClick={handleProfileClick}
+            data-testid="profileClick"
           >
             <li className={style.navListItem}>Profile</li>
           </Link>
