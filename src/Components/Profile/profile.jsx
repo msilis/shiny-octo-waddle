@@ -17,8 +17,9 @@ export default function Profile({
   const emailEditInput = useRef();
   const [showProfile, setShowProfile] = useState(false);
 
+
+  //!TODO Place this function in a utility file
   function handleUpdateClick() {
-    console.log("Update clicked");
     console.log(lastNameEditInput.current?.value);
     const updateUserData = {
       userId: userId,

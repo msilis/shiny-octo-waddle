@@ -1,6 +1,7 @@
 import style from "./savedEditModal.module.css";
 import { React, useEffect, useRef, useState } from "react";
 import Select from "react-select";
+import { fetchPieces, fetchGameTechniques } from "./savedEditModal-utils";
 
 export default function EditModal({
   setGameToEditId,
@@ -37,57 +38,12 @@ export default function EditModal({
     setGameToEdit([]);
     setShowModal(false);
   }
-  console.log(gameToEdit, "Game to edit");
-
-  //Get techniques and pieces from database
-  function fetchPieces() {
-    try {
-      setLoadingPieces(true);
-      fetch("http://localhost:8080/getPieces")
-        .then((response) => response.json())
-        .then((data) => {
-          let sortedPieces = data.map((item) => {
-            return item.pieceName;
-          });
-          sortedPieces.push("Various");
-          sortedPieces.sort();
-          setListOfPieces(sortedPieces);
-          setLoadingPieces(false);
-        });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  function fetchGameTechniques() {
-    try {
-      setLoadingFocus(true);
-      fetch("http://localhost:8080/getGameTechniques", {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          const gameTechniqueArray = data.map((tag) => tag.gameTechnique);
-          const flattedGameTechniqueArray = gameTechniqueArray.flat(1);
-          const filteredGameTechniqueArray = flattedGameTechniqueArray.filter(
-            (tag, index) => flattedGameTechniqueArray.indexOf(tag) === index
-          );
-          setGameTechniques(filteredGameTechniqueArray);
-          setLoadingFocus(false);
-        });
-    } catch (err) {
-      console.log(err);
-    }
-  }
 
   // useEffect to get pieces and techniques for react-select
 
   useEffect(() => {
-    fetchPieces();
-    fetchGameTechniques();
+    fetchPieces(setListOfPieces, setLoadingPieces);
+    fetchGameTechniques(setGameTechniques, setLoadingFocus);
   }, []);
 
   /* =======  Options for react-select =========*/
@@ -116,9 +72,6 @@ export default function EditModal({
   const piecesOptions = listOfPieces.map((piece, index) => {
     return { value: piece, label: piece, key: index };
   });
-
-  console.log(addGameTechniques);
-  console.log(addGamePieces);
 
   // Save edited piece to database =====================================
   function handleSaveEditedGame() {
