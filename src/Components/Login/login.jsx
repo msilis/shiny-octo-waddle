@@ -2,6 +2,7 @@ import style from "./login.module.css";
 import classnames from "classnames";
 import { useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { handleLoginSubmit } from "./login-utils";
 
 //Exports for testing
 
@@ -22,63 +23,6 @@ export default function Login({
   //Get login status from sessionStorage
   const loginStatus = sessionStorage.getItem("loggedIn");
 
-  //Handle login button click =============================================================
-
-  function handleLoginSubmit() {
-    const loginData = {
-      userName: loginUsername.current?.value,
-      password: loginPassword.current?.value,
-    };
-    if (sessionStorage.getItem("loggedIn") === null) {
-      try {
-        fetch("http://localhost:8080/login", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(loginData),
-          mode: "cors",
-        })
-          .then((response) => {
-            if (response.status === 401) {
-              alert("Incorrect Username or Password!");
-              throw new Error("Incorrect username or password.");
-            } else {
-              return response.json();
-            }
-          })
-          .then((data) => {
-            setLoggedIn(true);
-            setFirstName(data.firstName);
-            setLastName(data.lastName);
-            setEmail(data.email);
-            setUserId(data.userId);
-            setUsername(data.username);
-            sessionStorage.setItem("loggedIn", true);
-            const userInfo = {
-              firstName: data.firstName,
-              lastName: data.lastName,
-              email: data.email,
-              username: data.username,
-              userId: data.userId,
-            };
-            sessionStorage.setItem("user", JSON.stringify(userInfo));
-            console.log("User logged in.");
-            //Redirect user after sucessful login
-            return navigate("/dashboard");
-          });
-        loginUsername.current.value = "";
-        loginPassword.current.value = "";
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      loginUsername.current.value = "";
-      loginPassword.current.value = "";
-    }
-  }
-
   //If already logged in, redirect to dashboard
 
   function checkLoggedIn() {
@@ -93,20 +37,27 @@ export default function Login({
 
   function handleEnterKey(event) {
     if (event.key === "Enter") {
-      console.log(event.key);
-      handleLoginSubmit();
+      handleLoginSubmit(
+        setFirstName,
+        setLastName,
+        setEmail,
+        loggedIn,
+        setLoggedIn,
+        setUserId,
+        setUsername,
+        loginUsername,
+        loginPassword
+      );
     }
   }
   // Handle Logout
 
   const handleLogoutInternal = () => {
     setLoggedIn(false);
-    console.log("Logged out");
     sessionStorage.removeItem("loggedIn");
   };
 
   useEffect(() => {
-    console.log("effect ran");
     checkLoggedIn();
   }, []);
 
@@ -142,7 +93,19 @@ export default function Login({
         ></input>
         <div
           className={style.loginButton}
-          onClick={handleLoginSubmit}
+          onClick={() =>
+            handleLoginSubmit(
+              setFirstName,
+              setLastName,
+              setEmail,
+              loggedIn,
+              setLoggedIn,
+              setUserId,
+              setUsername,
+              loginUsername,
+              loginPassword
+            )
+          }
           data-testid="loginButton"
         >
           <span>Log In</span>
