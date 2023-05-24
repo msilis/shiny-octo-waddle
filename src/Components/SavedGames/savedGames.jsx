@@ -4,6 +4,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import style from "./savedGames.module.css";
 import SavedCreatedGames from "./savedCreatedGames";
 import MySavedGamesPagination from "../Pagination/mySavedGamesPagination";
+import { getSavedGames, handleSavedGameDelete } from "./savedGames-utils";
 
 const savedGamePageSize = 3;
 
@@ -19,47 +20,18 @@ export default function SavedGames({ userId }) {
     to: savedGamePageSize,
   });
 
-  //Function to fetch saved games
-
-  function getSavedGames() {
-    return new Promise((resolve, reject) => {
-      try {
-        const savedGameInfo = {
-          saveUser: userId,
-        };
-        setLoadingSaved(true);
-        fetch("http://localhost:8080/getSavedGames", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(savedGameInfo),
-        })
-          .then((response) => response.json())
-          .then((jsonResponse) => {
-            setSavedGames(jsonResponse);
-            setSavedGamesPagination({
-              ...savedGamesPagination,
-              from: (currentMyGamesPage - 1) * savedGamePageSize,
-              to:
-                (currentMyGamesPage - 1) * savedGamePageSize +
-                savedGamePageSize,
-              count: savedGames.length,
-            });
-
-            setLoadingSaved(false);
-            resolve(jsonResponse);
-          });
-      } catch (err) {
-        console.log(err);
-        reject(err);
-      }
-    });
-  }
-
   // Get user's saved games
   useEffect(() => {
-    getSavedGames();
+    getSavedGames(
+      setSavedGames,
+      savedGames,
+      savedGamesPagination,
+      setSavedGamesPagination,
+      currentMyGamesPage,
+      savedGamePageSize,
+      setLoadingSaved,
+      userId
+    );
   }, []);
 
   useEffect(() => {
@@ -88,38 +60,6 @@ export default function SavedGames({ userId }) {
 
   //DELETE a saved game
 
-  async function handleSavedGameDelete(event) {
-    const gameToDelete = event.target.parentNode.parentNode.id;
-    const deleteGameData = {
-      gameToDelete: gameToDelete,
-    };
-    try {
-      const response = await fetch("http://localhost:8080/deleteSavedGame", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(deleteGameData),
-      });
-      const jsonResponse = await response.json();
-
-      getSavedGames().then((games) => {
-        setSavedGamesPagination({
-          ...savedGamesPagination,
-          count: games.length,
-        });
-        if (
-          currentMyGamesPage >
-          Math.ceil(savedGamesPagination.count / savedGamePageSize)
-        ) {
-          setCurrentMyGamesPage(currentMyGamesPage - 1);
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   //Conditionally render game display depending on fetch state and saved games array
 
   function displaySavedGames() {
@@ -137,7 +77,20 @@ export default function SavedGames({ userId }) {
 
             <div
               className={style.deleteSavedGameButton}
-              onClick={handleSavedGameDelete}
+              onClick={() =>
+                handleSavedGameDelete(
+                  setSavedGamesPagination,
+                  savedGamesPagination,
+                  currentMyGamesPage,
+                  setCurrentMyGamesPage,
+                  savedGamePageSize,
+                  game._id,
+                  setSavedGames,
+                  setLoadingSaved,
+                  savedGames,
+                  userId
+                )
+              }
             >
               <span>Delete</span>
             </div>
