@@ -17,7 +17,6 @@ export default function DashboardMain({
   const [savedGame, setSavedGame] = useState(false);
   const [loadRandomGame, setLoadRandomGame] = useState(false);
   const [error, setError] = useState(false);
-  //Redirect functionality
 
   //Call API to get tags on initial page load ==================================================
   useEffect(() => {
