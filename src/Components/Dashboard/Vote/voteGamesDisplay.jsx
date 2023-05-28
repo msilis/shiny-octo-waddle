@@ -7,7 +7,11 @@ export default function VoteGamesDisplay({ voteProps }) {
   if (voteProps.loadingVote) {
     return <p>Loading...</p>;
   } else if (voteProps.votingGames.length === 0) {
-    return <p className={style.noVoteText}>There are no games to vote on now...</p>;
+    console.log(voteProps.voteTotal);
+    console.log(voteProps.voteGames.length);
+    return (
+      <p className={style.noVoteText}>There are no games to vote on now...</p>
+    );
   } else {
     return voteProps.gamesForPagination.map((voteGame, index) => {
       const voteStyle = voteProps.userVotedGames.includes(voteGame._id)
@@ -26,18 +30,8 @@ export default function VoteGamesDisplay({ voteProps }) {
             })}
           </div>
           <div className={style.voteCountDisplay}>
-            <p>
-              Yes:{" "}
-              {voteProps.voteTotal.length === 0
-                ? "0"
-                : voteProps.voteTotal[index].yesVote}
-            </p>
-            <p>
-              No:{" "}
-              {voteProps.voteTotal.length === 0
-                ? "0"
-                : voteProps.voteTotal[index].noVote}
-            </p>
+            <p>Yes: {voteGame.yesVote}</p>
+            <p>No: {voteGame.noVote}</p>
           </div>
           <div className={voteStyle}>
             <p>I voted!</p>
@@ -56,7 +50,6 @@ export default function VoteGamesDisplay({ voteProps }) {
               No
             </button>
           </div>
-          
         </div>
       );
     });
