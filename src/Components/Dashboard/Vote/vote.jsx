@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import style from "./vote.module.css";
 import VoteGamesDisplay from "./voteGamesDisplay";
 import VoteGamePagination from "../../Pagination/gamePagination";
+import { getOnlyVotes } from "./vote-utils";
 
 export default function Vote({ userId }) {
   //Loading state
@@ -16,6 +17,11 @@ export default function Vote({ userId }) {
   //Vote sucess
   const [voteSuccess, setVoteSuccess] = useState(false);
   const [gamesForPagination, setGamesForPagination] = useState([]);
+
+  //Memo-ized Vote total
+  const memoVoteTotal = useMemo(() => voteTotal, [voteTotal]);
+
+  //Console log
 
   //props to send to VoteGamesDisplay componenet
 
@@ -43,32 +49,6 @@ export default function Vote({ userId }) {
     setVoteError(false);
   }
 
-
-  //Fetch vote count to be able to update only count, not whole component
-  function getOnlyVotes() {
-    return new Promise((resolve, reject) => {
-      fetch("http://localhost:8080/getVoteTotals", {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
-          "X-custon-cookie": "jwt",
-        },
-        credentials: "include",
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((jsonResponse) => setVoteTotal(jsonResponse))
-        .then(() => {
-          resolve();
-        })
-        .catch((err) => {
-          console.log(err);
-          reject();
-        });
-    });
-  }
-
   //Handle yes and no votes
   function handleYesVote(e) {
     const yesVoteData = {
@@ -89,8 +69,8 @@ export default function Vote({ userId }) {
         if (response.status === 409) {
           setVoteError(true);
           throw new Error("You have already vote for this game");
-        } else if (response.status === 202) {
-          console.log(votingGames, "voting games");
+        } else if (response.status === 201) {
+          console.log("getUserVotedGames");
           setVoteSuccess(true);
           getUserVotedGames();
         } else {
@@ -98,7 +78,9 @@ export default function Vote({ userId }) {
         }
       })
       .then(() => {
-        getOnlyVotes().then(() => {
+        console.log("getOnlyVotes");
+        getOnlyVotes(setVoteTotal).then(() => {
+          console.log(voteTotal);
           setVoteSuccess(false);
           getUserVotedGames();
         });
@@ -128,12 +110,15 @@ export default function Vote({ userId }) {
           setVoteError(true);
           throw new Error("You have already voted for this game");
         } else {
+          setVoteSuccess(true);
           return response.json();
         }
       })
       .then(() => {
-        getOnlyVotes().then(() => {
+        getOnlyVotes(setVoteTotal).then(() => {
+          console.log(voteTotal);
           getUserVotedGames();
+          setVoteSuccess(false);
         });
       })
       .catch((error) => {
@@ -166,7 +151,8 @@ export default function Vote({ userId }) {
   //Call function at page load to get games to be voted on
   useEffect(() => {
     getUserVotedGames();
-  }, [voteSuccess]);
+    getOnlyVotes(setVoteTotal);
+  }, []);
 
   //Conditionally show pagination
   const paginationDisplay =

@@ -9,6 +9,8 @@ import Select from "react-select";
 export const browsePageSize = 5;
 
 export default function BrowseGames() {
+  //State of Error
+  const [errorMessage, setErrorMessage] = useState("");
   //Pagination info
   const [browsePagination, setBrowsePagination] = useState({
     count: 0,
@@ -40,14 +42,23 @@ export default function BrowseGames() {
         "content-type": "application/json",
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 500) {
+          throw new Error("There was a server error.");
+        } else {
+          return response.json();
+        }
+      })
       .then((jsonResponse) => {
         setPaginationGames(
           jsonResponse.slice(browsePagination.from, browsePagination.to)
         );
         setAllGames(jsonResponse);
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(err);
+        setErrorMessage(err);
+      })
       .finally(() => setLoadingGames(false));
   }
 
@@ -74,8 +85,8 @@ export default function BrowseGames() {
     setShowMoreInfo(e.target.parentNode.id);
   }
 
-  //=================== Close info 
-  function handleInfoClose(){
+  //=================== Close info
+  function handleInfoClose() {
     setShowMoreInfo("");
   }
 
@@ -90,9 +101,9 @@ export default function BrowseGames() {
     console.log(e);
     setSelectedTag(e.value);
     //Reset pagination to work with filtered array
-    setBrowsePagination({...browsePagination, from: 0, to: 5})
+    setBrowsePagination({ ...browsePagination, from: 0, to: 5 });
     //Take pagination back to page 1
-    setCurrentPage(()=> 1)
+    setCurrentPage(() => 1);
   }
 
   //Clear filter
@@ -118,7 +129,7 @@ export default function BrowseGames() {
     setPaginationGames(
       filteredTagGames.slice(browsePagination.from, browsePagination.to)
     );
-    
+
     setBrowsePagination({
       ...browsePagination,
       count: filteredTagGames.length,
@@ -134,7 +145,11 @@ export default function BrowseGames() {
           <h5>{game.gameName}</h5>
           <p>{game.gameText}</p>
           <button
-            className={showMoreInfo === game._id ? style.moreInfoButtonHidden : style.moreInfoButton}
+            className={
+              showMoreInfo === game._id
+                ? style.moreInfoButtonHidden
+                : style.moreInfoButton
+            }
             onClick={handleGameItemClick}
           >
             More Info
@@ -164,10 +179,10 @@ export default function BrowseGames() {
     }
   }
 
-
-  const browsePaginationDisplay = loadingGames
-    ? `${style.browsePaginationHidden}`
-    : `${style.browsePaginationVisible}`;
+  const browsePaginationDisplay =
+    loadingGames || errorMessage
+      ? `${style.browsePaginationHidden}`
+      : `${style.browsePaginationVisible}`;
 
   /* ======================================================================================
 |||||||||||||||||||||||||||||||||| Return |||||||||||||||||||||||||||||||||||||||||||||||
@@ -190,7 +205,7 @@ export default function BrowseGames() {
         </button>
       </div>
       <div className={style.browseGamesDisplay}>
-        {displayAllGames()}
+        {errorMessage ? <p>There was a server error</p> : displayAllGames()}
         <div className={browsePaginationDisplay}>
           <BrowsePagination
             browsePagination={browsePagination}

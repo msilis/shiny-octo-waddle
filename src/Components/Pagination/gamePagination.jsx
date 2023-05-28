@@ -24,7 +24,6 @@ export default function VoteGamePagination({
   setVoteTotal,
   setLoadingVote,
   setGamesForPagination,
-  voteSuccess
 }) {
   const pageSize = 5;
   const [pagination, setPagination] = useState({
@@ -43,7 +42,9 @@ export default function VoteGamePagination({
       setGamesForPagination
     );
     setPagination({ ...pagination, count: votingGames.length });
-  }, [pagination.from, pagination.to, votingGames.length, voteSuccess]);
+  }, [pagination.from, pagination.to, votingGames.length]);
+
+  //Set vote totals based on pagination
 
   function handlePageChange(event, page) {
     const from = (page - 1) * pageSize;
