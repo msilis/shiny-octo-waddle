@@ -2,7 +2,11 @@ import style from "./dashboard-main.module.css";
 import { useState, useEffect } from "react";
 import classnames from "classnames";
 import Select from "react-select";
-import { handleGoClick, handleGameSave, getGameTags } from "./dashboard-main-utils";
+import {
+  handleGoClick,
+  handleGameSave,
+  getGameTags,
+} from "./dashboard-main-utils";
 
 export default function DashboardMain({
   firstName,
@@ -16,11 +20,11 @@ export default function DashboardMain({
   const [randomGame, setRandomGame] = useState([]);
   const [savedGame, setSavedGame] = useState(false);
   const [loadRandomGame, setLoadRandomGame] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
 
   //Call API to get tags on initial page load ==================================================
   useEffect(() => {
-    getGameTags(setTagArray)
+    getGameTags(setTagArray, setError);
   }, []);
 
   //Get options for tag dropdown ==============================================================
@@ -50,32 +54,38 @@ export default function DashboardMain({
         <h2>{greetText}</h2>
         <h3>Book One Techniques</h3>
         <div className={style.techniqueTagsContainer}>
-          <Select
-            className={style.selectInput}
-            options={tagOptions}
-            isSearchable={true}
-            onChange={(e) => {
-              console.log(e.value);
-              setSelectedTag(e.value);
-            }}
-          />
+          {error ? (
+            <p>There was a network error, please try this later.</p>
+          ) : (
+            <Select
+              className={style.selectInput}
+              options={tagOptions}
+              isSearchable={true}
+              onChange={(e) => {
+                console.log(e.value);
+                setSelectedTag(e.value);
+              }}
+            />
+          )}
         </div>
-        <div
-          className={style.goButton}
-          onClick={() =>
-            handleGoClick(
-              setLoadRandomGame,
-              setReviewPieces,
-              setError,
-              setRandomGame,
-              setResults,
-              setSavedGame,
-              selectedTag
-            )
-          }
-        >
-          <span>Go!</span>
-        </div>
+        {!error && (
+          <div
+            className={style.goButton}
+            onClick={() =>
+              handleGoClick(
+                setLoadRandomGame,
+                setReviewPieces,
+                setError,
+                setRandomGame,
+                setResults,
+                setSavedGame,
+                selectedTag
+              )
+            }
+          >
+            <span>Go!</span>
+          </div>
+        )}
 
         <div
           className={classnames(style.resultContainer, style.fadeContainer, {

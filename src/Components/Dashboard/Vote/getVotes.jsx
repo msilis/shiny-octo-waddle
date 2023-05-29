@@ -26,9 +26,13 @@ function getVoteGames(
         }
       })
       .then((jsonResponse) => {
-        setGamesForPagination(jsonResponse.slice(from, to));
-        setVotingGames(jsonResponse);
-        return;
+        if (jsonResponse.length === 0) {
+          throw Error("Server did not return any games.");
+        } else {
+          setGamesForPagination(jsonResponse.slice(from, to));
+          setVotingGames(jsonResponse);
+          return;
+        }
       })
       .then(() => {
         getOnlyVotes(setVoteTotal);
