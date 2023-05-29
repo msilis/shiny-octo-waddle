@@ -7,8 +7,6 @@ export default function VoteGamesDisplay({ voteProps }) {
   if (voteProps.loadingVote) {
     return <p>Loading...</p>;
   } else if (voteProps.votingGames.length === 0) {
-    console.log(voteProps.voteTotal);
-    console.log(voteProps.voteGames.length);
     return (
       <p className={style.noVoteText}>There are no games to vote on now...</p>
     );
