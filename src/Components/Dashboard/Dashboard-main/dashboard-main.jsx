@@ -55,7 +55,9 @@ export default function DashboardMain({
         <h3>Book One Techniques</h3>
         <div className={style.techniqueTagsContainer}>
           {error ? (
-            <p>There was a network error, please try this later.</p>
+            <p className="errorText">
+              There was a network error, please try this later.
+            </p>
           ) : (
             <Select
               className={style.selectInput}

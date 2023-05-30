@@ -62,8 +62,6 @@ export default function SavedGames({ userId }) {
     savedGames.length,
   ]);
 
-  console.log(savedGameError);
-
   //Conditionally render game display depending on fetch state and saved games array
 
   function displaySavedGames() {

@@ -43,7 +43,7 @@ export default function BrowseGames() {
       },
     })
       .then((response) => {
-        if (response.status === 500) {
+        if (response.status === 500 || !response.ok) {
           throw new Error("There was a server error.");
         } else {
           return response.json();
@@ -56,7 +56,7 @@ export default function BrowseGames() {
         setAllGames(jsonResponse);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
         setErrorMessage(err);
       })
       .finally(() => setLoadingGames(false));
@@ -69,7 +69,13 @@ export default function BrowseGames() {
         "content-type": "application/json",
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw Error("There was an error getting tags");
+        } else {
+          response.json();
+        }
+      })
       .then((jsonResponse) => {
         const gameTechArray = jsonResponse.map((tag) => tag.gameTechnique);
         const flattenedGameTechArray = gameTechArray.flat(1);
@@ -78,6 +84,9 @@ export default function BrowseGames() {
             flattenedGameTechArray.indexOf(technique) === index
         );
         setBrowseTags(filteredGameTechArray);
+      })
+      .catch((err) => {
+        console.log(err.message);
       });
   }
 
@@ -205,7 +214,11 @@ export default function BrowseGames() {
         </button>
       </div>
       <div className={style.browseGamesDisplay}>
-        {errorMessage ? <p>There was a server error</p> : displayAllGames()}
+        {errorMessage ? (
+          <p className="errorText">There was a server error</p>
+        ) : (
+          displayAllGames()
+        )}
         <div className={browsePaginationDisplay}>
           <BrowsePagination
             browsePagination={browsePagination}
