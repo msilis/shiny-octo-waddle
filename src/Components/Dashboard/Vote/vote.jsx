@@ -14,12 +14,10 @@ export default function Vote({ userId }) {
   //State for overlay
   //Vote Error
   const [voteError, setVoteError] = useState(false);
+  const [voteNetworkError, setVoteNetworkError] = useState(null);
   //Vote sucess
   const [voteSuccess, setVoteSuccess] = useState(false);
   const [gamesForPagination, setGamesForPagination] = useState([]);
-
-  //Memo-ized Vote total
-  const memoVoteTotal = useMemo(() => voteTotal, [voteTotal]);
 
   //Console log
 
@@ -78,7 +76,6 @@ export default function Vote({ userId }) {
         }
       })
       .then(() => {
-        console.log("getOnlyVotes");
         getOnlyVotes(setVoteTotal).then(() => {
           console.log(voteTotal);
           setVoteSuccess(false);
@@ -129,6 +126,7 @@ export default function Vote({ userId }) {
   //Get a list of games the user has voted on
 
   function getUserVotedGames() {
+    setVoteNetworkError(null);
     const idToCheck = {
       userId: userId,
     };
@@ -139,12 +137,24 @@ export default function Vote({ userId }) {
       },
       body: JSON.stringify(idToCheck),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(
+            "There was a network error and I could not get the games to vote on"
+          );
+        } else {
+          return response.json();
+        }
+      })
       .then((jsonResponse) => {
         let votedGames = jsonResponse.map((el) => {
           return el._id;
         });
         setUserVotedGames(votedGames);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setVoteNetworkError(err.message);
       });
   }
 
@@ -178,7 +188,13 @@ export default function Vote({ userId }) {
         </p>
       </div>
       <div className={style.voteGamesDisplay}>
-        <VoteGamesDisplay voteProps={voteProps} />
+        {voteNetworkError ? (
+          <p className="errorText">
+            There was an error getting the games to vote on.
+          </p>
+        ) : (
+          <VoteGamesDisplay voteProps={voteProps} />
+        )}
       </div>
       <div className={paginationDisplay}>
         <VoteGamePagination

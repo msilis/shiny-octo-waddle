@@ -112,9 +112,6 @@ const getGameTags = (setTagArray, setError) => {
       setTagArray(filteredArray);
     })
     .catch((err) => {
-      console.log(err.message);
-      console.log(voteProps.voteTotal);
-      console.log(voteProps.voteGames.length);
       setError(err);
     });
 };
