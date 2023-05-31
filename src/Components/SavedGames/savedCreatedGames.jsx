@@ -50,9 +50,6 @@ export default function SavedCreatedGames({ userId }) {
       });
   }
 
-  console.log(savedCreatedGameError);
-  console.log(savedCreatedGames.length);
-
   //DELETE user created game =========================================
   function handleCreatedGameDelete(event) {
     const gameId = event.target.parentNode.parentNode.id;

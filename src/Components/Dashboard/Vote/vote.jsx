@@ -3,6 +3,7 @@ import style from "./vote.module.css";
 import VoteGamesDisplay from "./voteGamesDisplay";
 import VoteGamePagination from "../../Pagination/gamePagination";
 import { getOnlyVotes } from "./vote-utils";
+import { toast } from "react-toastify";
 
 export default function Vote({ userId }) {
   //Loading state
@@ -38,15 +39,6 @@ export default function Vote({ userId }) {
     setGamesForPagination,
   };
 
-  //Vote error overlay
-  const voteErrorOverlay = voteError
-    ? `${style.voteErrorVisible}`
-    : `${style.voteErrorHidden}`;
-
-  function handleOkErrorClick() {
-    setVoteError(false);
-  }
-
   //Handle yes and no votes
   function handleYesVote(e) {
     const yesVoteData = {
@@ -65,13 +57,21 @@ export default function Vote({ userId }) {
     })
       .then((response) => {
         if (response.status === 409) {
-          setVoteError(true);
-          throw new Error("You have already vote for this game");
+          toast.error("You have already voted for this game.", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+          });
+          throw new Error("You have already voted for this game");
         } else if (response.status === 201) {
           console.log("getUserVotedGames");
           setVoteSuccess(true);
           getUserVotedGames();
-        } else {
           return response.json();
         }
       })
@@ -104,7 +104,16 @@ export default function Vote({ userId }) {
     })
       .then((response) => {
         if (response.status === 409) {
-          setVoteError(true);
+          toast.error("You have already voted for this game.", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+          });
           throw new Error("You have already voted for this game");
         } else {
           setVoteSuccess(true);
@@ -172,14 +181,6 @@ export default function Vote({ userId }) {
 
   return (
     <div className={style.voteContainer}>
-      <div className={voteErrorOverlay}>
-        <div className={style.overlayContainer}>
-          <h3>You have already voted for this game!</h3>
-          <button className={style.okButton} onClick={handleOkErrorClick}>
-            Ok
-          </button>
-        </div>
-      </div>
       <div className={style.voteText}>
         <h2>Vote</h2>
         <p className={style.voteSectionText}>
