@@ -45,8 +45,19 @@ export default function Login({
       })
         .then((response) => {
           if (response.status === 401) {
-            alert("Incorrect Username or Password!");
+            toast.error("Incorrect username or password.", {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: false,
+              progress: undefined,
+              theme: "light",
+            });
             throw new Error("Incorrect username or password.");
+          } else if (!response.ok) {
+            throw Error("Network error");
           } else {
             return response.json();
           }
@@ -74,16 +85,17 @@ export default function Login({
         .catch((err) => {
           console.log(err.message);
           /* setLoginError(err.message); */
-          toast.error("There was a network error. You are not logged in.", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: undefined,
-            theme: "light",
-          });
+          if (err.message === "Failed to fetch")
+            toast.error("There was a network error. You are not logged in.", {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: false,
+              progress: undefined,
+              theme: "light",
+            });
         });
       loginUsername.current.value = "";
       loginPassword.current.value = "";

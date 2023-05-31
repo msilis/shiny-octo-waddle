@@ -21,8 +21,6 @@ export default function SavedGames({ userId }) {
     to: savedGamePageSize,
   });
 
-  console.log(savedGames, "saved Games");
-
   // Get user's saved games
   useEffect(() => {
     getSavedGames(
@@ -111,13 +109,17 @@ export default function SavedGames({ userId }) {
           {displaySavedGames()}
 
           <div className={style.savedGamesPagination}>
-            <MySavedGamesPagination
-              currentMyGamesPage={currentMyGamesPage}
-              setCurrentMyGamesPage={setCurrentMyGamesPage}
-              savedGamesPagination={savedGamesPagination}
-              setSavedGamesPagination={setSavedGamesPagination}
-              savedGamePageSize={savedGamePageSize}
-            />
+            {savedGames.length === 0 ? (
+              ""
+            ) : (
+              <MySavedGamesPagination
+                currentMyGamesPage={currentMyGamesPage}
+                setCurrentMyGamesPage={setCurrentMyGamesPage}
+                savedGamesPagination={savedGamesPagination}
+                setSavedGamesPagination={setSavedGamesPagination}
+                savedGamePageSize={savedGamePageSize}
+              />
+            )}
           </div>
         </div>
       )}

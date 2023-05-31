@@ -1,6 +1,6 @@
 //Fetch vote count to be able to update only count, not whole component
 const getOnlyVotes = (setVoteTotal) => {
-  fetch("http://localhost:8080/getVoteTotals", {
+  return fetch("http://localhost:8080/getVoteTotals", {
     method: "GET",
     headers: {
       "content-type": "application/json",

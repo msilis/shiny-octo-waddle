@@ -23,27 +23,21 @@ const getSavedGames = (
     body: JSON.stringify(savedGameInfo),
   })
     .then((response) => {
-      console.log(response, "response from utility file");
       if (!response.ok) {
         throw Error("Could not fetch data from server.");
       }
       return response.json();
     })
     .then((jsonResponse) => {
-      if (jsonResponse.length === 0) {
-        throw Error("Server did not return any games.");
-      } else {
-        console.log(jsonResponse, "jsonResponse from savedGames-utils");
-        setSavedGames(jsonResponse);
-        setSavedGamesPagination({
-          ...savedGamesPagination,
-          from: (currentMyGamesPage - 1) * savedGamePageSize,
-          to: (currentMyGamesPage - 1) * savedGamePageSize + savedGamePageSize,
-          count: savedGames.length,
-        });
-        console.log(savedGames, "from utility file");
-        setLoadingSaved(false);
-      }
+      setSavedGames(jsonResponse);
+      setSavedGamesPagination({
+        ...savedGamesPagination,
+        from: (currentMyGamesPage - 1) * savedGamePageSize,
+        to: (currentMyGamesPage - 1) * savedGamePageSize + savedGamePageSize,
+        count: savedGames.length,
+      });
+
+      setLoadingSaved(false);
     })
     .catch((err) => {
       console.log(err.message);
@@ -54,7 +48,7 @@ const getSavedGames = (
 
 //Delete a saved game
 
-const handleSavedGameDelete = async (
+const handleSavedGameDelete = (
   setSavedGamesPagination,
   savedGamesPagination,
   currentMyGamesPage,
@@ -70,39 +64,41 @@ const handleSavedGameDelete = async (
   const deleteGameData = {
     gameToDelete: gameToDelete,
   };
-
-  const response = await fetch("http://localhost:8080/deleteSavedGame", {
+  //Make API call
+  fetch("http://localhost:8080/deleteSavedGame", {
     method: "POST",
     headers: {
       "content-type": "application/json",
     },
     body: JSON.stringify(deleteGameData),
-  });
-  const jsonResponse = await response.json();
-
-  getSavedGames(
-    setSavedGames,
-    savedGames,
-    savedGamesPagination,
-    setSavedGamesPagination,
-    currentMyGamesPage,
-    savedGamePageSize,
-    setLoadingSaved,
-    userId
-  )
-    .then((games) => {
-      if (!games.ok) {
+  })
+    .then((response) => response.JSON)
+    .then(() => {
+      getSavedGames(
+        setSavedGames,
+        savedGames,
+        savedGamesPagination,
+        setSavedGamesPagination,
+        currentMyGamesPage,
+        savedGamePageSize,
+        setLoadingSaved,
+        userId
+      );
+    })
+    .then((getSavedResponse) => {
+      if (!getSavedResponse.ok) {
         throw Error("Could not get games from server");
-      }
-      setSavedGamesPagination({
-        ...savedGamesPagination,
-        count: games.length,
-      });
-      if (
-        currentMyGamesPage >
-        Math.ceil(savedGamesPagination.count / savedGamePageSize)
-      ) {
-        setCurrentMyGamesPage(currentMyGamesPage - 1);
+      } else {
+        setSavedGamesPagination({
+          ...savedGamesPagination,
+          count: games.length,
+        });
+        if (
+          currentMyGamesPage >
+          Math.ceil(savedGamesPagination.count / savedGamePageSize)
+        ) {
+          setCurrentMyGamesPage(currentMyGamesPage - 1);
+        }
       }
     })
     .catch((err) => {

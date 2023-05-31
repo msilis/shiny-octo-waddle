@@ -1,5 +1,7 @@
 //Add Game - not for voting
 
+import { toast } from "react-toastify";
+
 const handleAddGame = (
   gameName,
   gameText,
@@ -31,7 +33,16 @@ const handleAddGame = (
       body: JSON.stringify(newGameData),
     }).then((response) => {
       if (response.status === 201) {
-        alert("Game added sucessfully");
+        toast.success("Game added successfully!", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         setAddGameTechniques([]);
         setAddPieces([]);
         gameName.current.value = "";
@@ -63,17 +74,15 @@ const handleAddVoteGame = (
     noVote: 0,
   };
   try {
-    
-      fetch("http://localhost:8080/addGameForVote", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(newVoteGameData),
-      }).then((response) => {
-        console.log(response, "Game submitted for voting");
-      });
-    
+    fetch("http://localhost:8080/addGameForVote", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newVoteGameData),
+    }).then((response) => {
+      console.log(response, "Game submitted for voting");
+    });
   } catch (err) {
     console.log(err);
   }
