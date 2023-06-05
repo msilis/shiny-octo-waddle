@@ -36,7 +36,7 @@ export default function BrowseGames() {
   function getAllGames() {
     //Get all games from database
     setLoadingGames(true);
-    return fetch("http://localhost:8080/gameSearch", {
+    return fetch("https://group-class-backend.onrender.com/gameSearch", {
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -63,7 +63,7 @@ export default function BrowseGames() {
   }
 
   function getTagsForBrowse() {
-    return fetch("http://localhost:8080/gameTechniques", {
+    return fetch("https://group-class-backend.onrender.com/gameTechniques", {
       method: "GET",
       headers: {
         "content-type": "application/json",

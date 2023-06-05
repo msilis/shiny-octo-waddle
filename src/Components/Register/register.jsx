@@ -67,7 +67,7 @@ export default function Register() {
       };
       try {
         console.log(newUserData);
-        fetch("http://localhost:8080/addUser", {
+        fetch("https://group-class-backend.onrender.com/addUser", {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -80,7 +80,7 @@ export default function Register() {
               "That username already exists, please pick a different username."
             );
           } else {
-            alert("User added sucessfully!")
+            alert("User added sucessfully!");
             //Reset field values if submission sucessful
             firstNameInput.current.value = "";
             lastNameInput.current.value = "";
@@ -96,20 +96,17 @@ export default function Register() {
             setPasswordCheck(false);
             setPasswordDoubleCheck(false);
             setCountryInput("0");
-            navigate("/login")
+            navigate("/login");
           }
         });
       } catch (err) {
         console.log(err);
       }
-      
     }
   }
 
   return (
-    <div
-      className={classnames(style.registerContainer, style.fadeContainer)}
-    >
+    <div className={classnames(style.registerContainer, style.fadeContainer)}>
       <h3 className={style.registerHeading}>Register</h3>
       <div className={style.inputContainer}>
         <input

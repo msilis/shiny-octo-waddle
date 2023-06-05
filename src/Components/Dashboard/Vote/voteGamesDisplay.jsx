@@ -1,8 +1,12 @@
-import GamePagination from "../../Pagination/gamePagination";
 import style from "./voteGamesDisplay.module.css";
 
 export default function VoteGamesDisplay({ voteProps }) {
   //conditional style for vote badge
+
+  const sliceGameVote = voteProps.voteTotal.slice(
+    voteProps.pagination.from,
+    voteProps.pagination.to
+  );
 
   if (voteProps.loadingVote) {
     return <p>Loading...</p>;
@@ -12,6 +16,17 @@ export default function VoteGamesDisplay({ voteProps }) {
     );
   } else {
     return voteProps.gamesForPagination.map((voteGame, index) => {
+      //Yes Vote count display
+      const yesDisplay =
+        sliceGameVote[index]?.yesVote !== undefined
+          ? sliceGameVote[index]?.yesVote
+          : "0";
+      //No Vote count display
+      const noDisplay =
+        sliceGameVote[index]?.noVote !== undefined
+          ? sliceGameVote[index]?.noVote
+          : "0";
+
       const voteStyle = voteProps.userVotedGames.includes(voteGame._id)
         ? `${style.votedTextVisible}`
         : `${style.votedTextHidden}`;
@@ -28,8 +43,8 @@ export default function VoteGamesDisplay({ voteProps }) {
             })}
           </div>
           <div className={style.voteCountDisplay}>
-            <p>Yes: {voteGame.yesVote}</p>
-            <p>No: {voteGame.noVote}</p>
+            <p>Yes: {sliceGameVote[index]?.yesVote || "0"}</p>
+            <p>No: {sliceGameVote[index]?.noVote || "0"}</p>
           </div>
           <div className={voteStyle}>
             <p>I voted!</p>

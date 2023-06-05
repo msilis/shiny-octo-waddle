@@ -25,7 +25,7 @@ const handleAddGame = (
   };
 
   try {
-    fetch("http://localhost:8080/addGame", {
+    fetch("https://group-class-backend.onrender.com/addGame", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -74,7 +74,7 @@ const handleAddVoteGame = (
     noVote: 0,
   };
   try {
-    fetch("http://localhost:8080/addGameForVote", {
+    fetch("https://group-class-backend.onrender.com/addGameForVote", {
       method: "POST",
       headers: {
         "content-type": "application/json",

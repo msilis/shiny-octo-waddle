@@ -16,7 +16,7 @@ const handleGoClick = (
       tagToSearch: selectedTag,
     };
     setLoadRandomGame(true);
-    fetch("http://localhost:8080/techniqueSearch", {
+    fetch("https://group-class-backend.onrender.com/techniqueSearch", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -29,7 +29,7 @@ const handleGoClick = (
         setReviewPieces(reviewArray);
       })
       .then(
-        fetch("http://localhost:8080/randomGame", {
+        fetch("https://group-class-backend.onrender.com/randomGame", {
           method: "GET",
           headers: {
             "content-type": "application/json",
@@ -65,7 +65,7 @@ const handleGameSave = (setSavedGame, randomGame, userId) => {
     saveUser: userId,
   };
 
-  fetch("http://localhost:8080/saveGame", {
+  fetch("https://group-class-backend.onrender.com/saveGame", {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -85,7 +85,7 @@ const handleGameSave = (setSavedGame, randomGame, userId) => {
 //Get tags
 
 const getGameTags = (setTagArray, setError) => {
-  fetch("http://localhost:8080/tags", {
+  fetch("https://group-class-backend.onrender.com/tags", {
     method: "GET",
     headers: {
       "content-type": "application/json",

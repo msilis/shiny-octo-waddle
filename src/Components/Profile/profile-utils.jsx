@@ -26,7 +26,7 @@ const handleUpdateClick = (
         : email,
   };
   try {
-    fetch("http://localhost:8080/updateUser", {
+    fetch("https://group-class-backend.onrender.com/updateUser", {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
