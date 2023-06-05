@@ -15,7 +15,7 @@ const getSavedGames = (
     saveUser: userId,
   };
   setLoadingSaved(true);
-  fetch("http://localhost:8080/getSavedGames", {
+  fetch("https://group-class-backend.onrender.com/getSavedGames", {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -65,7 +65,7 @@ const handleSavedGameDelete = (
     gameToDelete: gameToDelete,
   };
   //Make API call
-  fetch("http://localhost:8080/deleteSavedGame", {
+  fetch("https://group-class-backend.onrender.com/deleteSavedGame", {
     method: "POST",
     headers: {
       "content-type": "application/json",

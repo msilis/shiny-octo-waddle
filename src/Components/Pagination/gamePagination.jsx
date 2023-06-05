@@ -22,16 +22,15 @@ export default function VoteGamePagination({
   votingGames,
   setVotingGames,
   setVoteTotal,
+  voteTotal,
   setLoadingVote,
   setGamesForPagination,
+  paginationVote,
+  setPaginationVote,
+  pagination,
+  setPagination,
+  pageSize,
 }) {
-  const pageSize = 5;
-  const [pagination, setPagination] = useState({
-    count: 0,
-    from: 0,
-    to: pageSize,
-  });
-
   useEffect(() => {
     getVoteGames(
       setLoadingVote,
@@ -42,6 +41,7 @@ export default function VoteGamePagination({
       setGamesForPagination
     );
     setPagination({ ...pagination, count: votingGames.length });
+    setPaginationVote(voteTotal.slice(pagination.from, pagination.to));
   }, [pagination.from, pagination.to, votingGames.length]);
 
   //Set vote totals based on pagination

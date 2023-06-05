@@ -83,13 +83,16 @@ export default function EditModal({
       gameText: editedGameText.current?.value,
     };
     try {
-      fetch(`http://localhost:8080/editCreated/${gameToEditId}`, {
-        method: "PATCH",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(saveGameData),
-      })
+      fetch(
+        `https://group-class-backend.onrender.com/editCreated/${gameToEditId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(saveGameData),
+        }
+      )
         .then((response) => response.json())
         .then((data) => console.log(data))
         .then(() => getUserCreatedGames())

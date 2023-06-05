@@ -34,7 +34,7 @@ export default function Login({
       password: loginPassword.current?.value,
     };
     if (sessionStorage.getItem("loggedIn") === null) {
-      fetch("http://localhost:8080/login", {
+      fetch("https://group-class-backend.onrender.com/login", {
         method: "POST",
         headers: {
           "content-type": "application/json",

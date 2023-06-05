@@ -9,7 +9,7 @@ function getVoteGames(
   setGamesForPagination
 ) {
   setLoadingVote(true);
-  fetch("http://localhost:8080/gamesForVote", {
+  fetch("https://group-class-backend.onrender.com/gamesForVote", {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -26,7 +26,6 @@ function getVoteGames(
       }
     })
     .then((jsonResponse) => {
-      console.log("from jsonResponse block");
       if (jsonResponse.length === 0) {
         throw Error("Server did not return any games.");
       } else {
@@ -50,7 +49,7 @@ function getVoteGames(
 //Fetch vote count to be able to update only count, not whole component
 function getOnlyVotes(setVoteTotal) {
   return new Promise((resolve, reject) => {
-    fetch("http://localhost:8080/getVoteTotals", {
+    fetch("https://group-class-backend.onrender.com/getVoteTotals", {
       method: "GET",
       headers: {
         "content-type": "application/json",

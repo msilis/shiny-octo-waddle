@@ -31,7 +31,7 @@ export default function SavedCreatedGames({ userId }) {
     };
     setLoadingCreated(true);
     setSavedCreatedGameError(null);
-    fetch("http://localhost:8080/getUserCreatedGames", {
+    fetch("https://group-class-backend.onrender.com/getUserCreatedGames", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -57,7 +57,7 @@ export default function SavedCreatedGames({ userId }) {
       gameToDelete: gameId,
     };
 
-    fetch("http://localhost:8080/deleteCreated", {
+    fetch("https://group-class-backend.onrender.com/deleteCreated", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -85,12 +85,15 @@ export default function SavedCreatedGames({ userId }) {
   //Call API and get game details
   function getUserGameToEdit(gameId) {
     try {
-      fetch(`http://localhost:8080/getOneUserGame/${gameId}`, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
-        },
-      })
+      fetch(
+        `https://group-class-backend.onrender.com/getOneUserGame/${gameId}`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           console.log(data, "This is from the fetch call");

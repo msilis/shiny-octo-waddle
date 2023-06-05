@@ -1,6 +1,6 @@
 //Fetch vote count to be able to update only count, not whole component
 const getOnlyVotes = (setVoteTotal) => {
-  return fetch("http://localhost:8080/getVoteTotals", {
+  return fetch("https://group-class-backend.onrender.com/getVoteTotals", {
     method: "GET",
     headers: {
       "content-type": "application/json",
@@ -12,6 +12,7 @@ const getOnlyVotes = (setVoteTotal) => {
       if (!response.ok) {
         throw Error("There was an error getting votes from the server");
       }
+
       return response.json();
     })
     .then((jsonResponse) => {

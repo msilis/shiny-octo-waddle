@@ -11,6 +11,7 @@ export default function Vote({ userId }) {
   //State for games to be voted on
   const [votingGames, setVotingGames] = useState([]);
   const [voteTotal, setVoteTotal] = useState([]);
+  const [paginationVote, setPaginationVote] = useState([]);
   const [userVotedGames, setUserVotedGames] = useState([]);
   //State for overlay
   //Vote Error
@@ -20,7 +21,13 @@ export default function Vote({ userId }) {
   const [voteSuccess, setVoteSuccess] = useState(false);
   const [gamesForPagination, setGamesForPagination] = useState([]);
 
-  //Console log
+  //State and properties for pagination
+  const pageSize = 5;
+  const [pagination, setPagination] = useState({
+    count: 0,
+    from: 0,
+    to: pageSize,
+  });
 
   //props to send to VoteGamesDisplay componenet
 
@@ -37,8 +44,9 @@ export default function Vote({ userId }) {
     userVotedGames,
     gamesForPagination,
     setGamesForPagination,
+    paginationVote,
+    pagination,
   };
-
   //Handle yes and no votes
   function handleYesVote(e) {
     const yesVoteData = {
@@ -46,7 +54,7 @@ export default function Vote({ userId }) {
       updateVoteValue: 1,
       userId: userId,
     };
-    fetch("http://localhost:8080/trackVote", {
+    fetch("https://group-class-backend.onrender.com/trackVote", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -93,7 +101,7 @@ export default function Vote({ userId }) {
       updateVoteValue: 0,
       userId: userId,
     };
-    fetch("http://localhost:8080/trackVote", {
+    fetch("https://group-class-backend.onrender.com/trackVote", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -122,7 +130,6 @@ export default function Vote({ userId }) {
       })
       .then(() => {
         getOnlyVotes(setVoteTotal).then(() => {
-          console.log(voteTotal);
           getUserVotedGames();
           setVoteSuccess(false);
         });
@@ -139,7 +146,7 @@ export default function Vote({ userId }) {
     const idToCheck = {
       userId: userId,
     };
-    fetch("http://localhost:8080/getUserVotes", {
+    fetch("https://group-class-backend.onrender.com/getUserVotes", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -172,6 +179,10 @@ export default function Vote({ userId }) {
     getUserVotedGames();
     getOnlyVotes(setVoteTotal);
   }, []);
+
+  useEffect(() => {
+    setPaginationVote(voteTotal);
+  }, [voteTotal]);
 
   //Conditionally show pagination
   const paginationDisplay =
@@ -207,6 +218,11 @@ export default function Vote({ userId }) {
           gamesForPagination={gamesForPagination}
           setGamesForPagination={setGamesForPagination}
           voteSuccess={voteSuccess}
+          paginationVote={paginationVote}
+          setPaginationVote={setPaginationVote}
+          pagination={pagination}
+          setPagination={setPagination}
+          pageSize={pageSize}
         />
       </div>
     </div>
