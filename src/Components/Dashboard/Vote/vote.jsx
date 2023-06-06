@@ -77,7 +77,6 @@ export default function Vote({ userId }) {
           });
           throw new Error("You have already voted for this game");
         } else if (response.status === 201) {
-          console.log("getUserVotedGames");
           setVoteSuccess(true);
           getUserVotedGames();
           return response.json();
@@ -85,7 +84,6 @@ export default function Vote({ userId }) {
       })
       .then(() => {
         getOnlyVotes(setVoteTotal).then(() => {
-          console.log(voteTotal);
           setVoteSuccess(false);
           getUserVotedGames();
         });

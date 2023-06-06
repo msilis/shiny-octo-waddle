@@ -19,7 +19,6 @@ function getVoteGames(
   })
     .then((response) => {
       if (!response.ok) {
-        console.log("from response check");
         throw Error("There was a network error and I could not get votes");
       } else {
         return response.json();
