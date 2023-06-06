@@ -64,7 +64,6 @@ export default function DashboardMain({
               options={tagOptions}
               isSearchable={true}
               onChange={(e) => {
-                console.log(e.value);
                 setSelectedTag(e.value);
               }}
             />

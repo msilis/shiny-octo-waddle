@@ -78,13 +78,12 @@ export default function Login({
             userId: data.userId,
           };
           sessionStorage.setItem("user", JSON.stringify(userInfo));
-          console.log("User logged in.");
           //Redirect user after sucessful login
           return navigate("/dashboard");
         })
         .catch((err) => {
           console.log(err.message);
-          /* setLoginError(err.message); */
+
           if (err.message === "Failed to fetch")
             toast.error("There was a network error. You are not logged in.", {
               position: "top-center",
@@ -107,7 +106,6 @@ export default function Login({
   function checkLoggedIn() {
     const isLoggedIn = sessionStorage.getItem("loggedIn");
     if (isLoggedIn) {
-      console.log(sessionStorage.getItem("loggedIn"));
       navigate("/dashboard");
     }
   }
@@ -124,7 +122,7 @@ export default function Login({
 
   const handleLogoutInternal = () => {
     setLoggedIn(false);
-    console.log("Logged out");
+
     sessionStorage.removeItem("loggedIn");
   };
 

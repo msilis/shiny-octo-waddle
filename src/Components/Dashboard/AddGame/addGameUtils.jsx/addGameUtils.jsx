@@ -12,9 +12,6 @@ const handleAddGame = (
   setAddGameTechniques,
   setAddPieces
 ) => {
-  //console logs
-  console.log(gameName, gameText, "gameName and Text from addGame");
-
   const newGameData = {
     gameName: gameName.current?.value,
     gameText: gameText.current?.value,
@@ -81,7 +78,7 @@ const handleAddVoteGame = (
       },
       body: JSON.stringify(newVoteGameData),
     }).then((response) => {
-      console.log(response, "Game submitted for voting");
+      console.log(response);
     });
   } catch (err) {
     console.log(err);

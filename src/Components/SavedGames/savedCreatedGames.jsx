@@ -96,7 +96,6 @@ export default function SavedCreatedGames({ userId }) {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data, "This is from the fetch call");
           setAddGameTechniques(data.gameTechnique);
           setAddGamePieces(data.gamePieces);
           setGameToEdit(data);
