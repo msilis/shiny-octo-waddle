@@ -73,7 +73,7 @@ export default function BrowseGames() {
         if (!response.ok) {
           throw Error("There was an error getting tags");
         } else {
-          response.json();
+          return response.json();
         }
       })
       .then((jsonResponse) => {
