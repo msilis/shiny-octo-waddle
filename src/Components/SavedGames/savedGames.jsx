@@ -12,6 +12,7 @@ export default function SavedGames({ userId }) {
   //State for saved games
   const [savedGames, setSavedGames] = useState([]);
   const [loadingSaved, setLoadingSaved] = useState(false);
+  const [savedGameError, setSavedGameError] = useState(null);
   //State for pagination
   const [currentMyGamesPage, setCurrentMyGamesPage] = useState(1);
   const [savedGamesPagination, setSavedGamesPagination] = useState({
@@ -30,7 +31,8 @@ export default function SavedGames({ userId }) {
       currentMyGamesPage,
       savedGamePageSize,
       setLoadingSaved,
-      userId
+      userId,
+      setSavedGameError
     );
   }, []);
 
@@ -57,8 +59,6 @@ export default function SavedGames({ userId }) {
     savedGamesPagination.count,
     savedGames.length,
   ]);
-
-  //DELETE a saved game
 
   //Conditionally render game display depending on fetch state and saved games array
 
@@ -102,18 +102,27 @@ export default function SavedGames({ userId }) {
   return (
     <div className={style.savedGamesDisplayContainer}>
       <h4 className={style.savedGamesHeading}>Your saved games:</h4>
-      <div className={style.savedGamesDisplay}>
-        {displaySavedGames()}
-        <div className={style.savedGamesPagination}>
-          <MySavedGamesPagination
-            currentMyGamesPage={currentMyGamesPage}
-            setCurrentMyGamesPage={setCurrentMyGamesPage}
-            savedGamesPagination={savedGamesPagination}
-            setSavedGamesPagination={setSavedGamesPagination}
-            savedGamePageSize={savedGamePageSize}
-          />
+      {savedGameError ? (
+        <p>There was an error getting games</p>
+      ) : (
+        <div className={style.savedGamesDisplay}>
+          {displaySavedGames()}
+
+          <div className={style.savedGamesPagination}>
+            {savedGames.length === 0 ? (
+              ""
+            ) : (
+              <MySavedGamesPagination
+                currentMyGamesPage={currentMyGamesPage}
+                setCurrentMyGamesPage={setCurrentMyGamesPage}
+                savedGamesPagination={savedGamesPagination}
+                setSavedGamesPagination={setSavedGamesPagination}
+                savedGamePageSize={savedGamePageSize}
+              />
+            )}
+          </div>
         </div>
-      </div>
+      )}
       <h4 className={style.savedGamesHeading}>Your Created Games:</h4>
       <div className={style.savedGamesDisplay}>
         <SavedCreatedGames userId={userId} />

@@ -3,6 +3,7 @@ import style from "./vote.module.css";
 import VoteGamesDisplay from "./voteGamesDisplay";
 import VoteGamePagination from "../../Pagination/gamePagination";
 import { getOnlyVotes } from "./vote-utils";
+import { toast } from "react-toastify";
 
 export default function Vote({ userId }) {
   //Loading state
@@ -10,18 +11,23 @@ export default function Vote({ userId }) {
   //State for games to be voted on
   const [votingGames, setVotingGames] = useState([]);
   const [voteTotal, setVoteTotal] = useState([]);
+  const [paginationVote, setPaginationVote] = useState([]);
   const [userVotedGames, setUserVotedGames] = useState([]);
   //State for overlay
   //Vote Error
   const [voteError, setVoteError] = useState(false);
+  const [voteNetworkError, setVoteNetworkError] = useState(null);
   //Vote sucess
   const [voteSuccess, setVoteSuccess] = useState(false);
   const [gamesForPagination, setGamesForPagination] = useState([]);
 
-  //Memo-ized Vote total
-  const memoVoteTotal = useMemo(() => voteTotal, [voteTotal]);
-
-  //Console log
+  //State and properties for pagination
+  const pageSize = 5;
+  const [pagination, setPagination] = useState({
+    count: 0,
+    from: 0,
+    to: pageSize,
+  });
 
   //props to send to VoteGamesDisplay componenet
 
@@ -38,17 +44,9 @@ export default function Vote({ userId }) {
     userVotedGames,
     gamesForPagination,
     setGamesForPagination,
+    paginationVote,
+    pagination,
   };
-
-  //Vote error overlay
-  const voteErrorOverlay = voteError
-    ? `${style.voteErrorVisible}`
-    : `${style.voteErrorHidden}`;
-
-  function handleOkErrorClick() {
-    setVoteError(false);
-  }
-
   //Handle yes and no votes
   function handleYesVote(e) {
     const yesVoteData = {
@@ -56,7 +54,7 @@ export default function Vote({ userId }) {
       updateVoteValue: 1,
       userId: userId,
     };
-    fetch("http://localhost:8080/trackVote", {
+    fetch("https://group-class-backend.onrender.com/trackVote", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -67,20 +65,25 @@ export default function Vote({ userId }) {
     })
       .then((response) => {
         if (response.status === 409) {
-          setVoteError(true);
-          throw new Error("You have already vote for this game");
+          toast.error("You have already voted for this game.", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+          });
+          throw new Error("You have already voted for this game");
         } else if (response.status === 201) {
-          console.log("getUserVotedGames");
           setVoteSuccess(true);
           getUserVotedGames();
-        } else {
           return response.json();
         }
       })
       .then(() => {
-        console.log("getOnlyVotes");
         getOnlyVotes(setVoteTotal).then(() => {
-          console.log(voteTotal);
           setVoteSuccess(false);
           getUserVotedGames();
         });
@@ -96,7 +99,7 @@ export default function Vote({ userId }) {
       updateVoteValue: 0,
       userId: userId,
     };
-    fetch("http://localhost:8080/trackVote", {
+    fetch("https://group-class-backend.onrender.com/trackVote", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -107,7 +110,16 @@ export default function Vote({ userId }) {
     })
       .then((response) => {
         if (response.status === 409) {
-          setVoteError(true);
+          toast.error("You have already voted for this game.", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+          });
           throw new Error("You have already voted for this game");
         } else {
           setVoteSuccess(true);
@@ -116,7 +128,6 @@ export default function Vote({ userId }) {
       })
       .then(() => {
         getOnlyVotes(setVoteTotal).then(() => {
-          console.log(voteTotal);
           getUserVotedGames();
           setVoteSuccess(false);
         });
@@ -129,22 +140,35 @@ export default function Vote({ userId }) {
   //Get a list of games the user has voted on
 
   function getUserVotedGames() {
+    setVoteNetworkError(null);
     const idToCheck = {
       userId: userId,
     };
-    fetch("http://localhost:8080/getUserVotes", {
+    fetch("https://group-class-backend.onrender.com/getUserVotes", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
       body: JSON.stringify(idToCheck),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(
+            "There was a network error and I could not get the games to vote on"
+          );
+        } else {
+          return response.json();
+        }
+      })
       .then((jsonResponse) => {
         let votedGames = jsonResponse.map((el) => {
           return el._id;
         });
         setUserVotedGames(votedGames);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setVoteNetworkError(err.message);
       });
   }
 
@@ -154,6 +178,10 @@ export default function Vote({ userId }) {
     getOnlyVotes(setVoteTotal);
   }, []);
 
+  useEffect(() => {
+    setPaginationVote(voteTotal);
+  }, [voteTotal]);
+
   //Conditionally show pagination
   const paginationDisplay =
     loadingVote || votingGames.length === 0
@@ -162,14 +190,6 @@ export default function Vote({ userId }) {
 
   return (
     <div className={style.voteContainer}>
-      <div className={voteErrorOverlay}>
-        <div className={style.overlayContainer}>
-          <h3>You have already voted for this game!</h3>
-          <button className={style.okButton} onClick={handleOkErrorClick}>
-            Ok
-          </button>
-        </div>
-      </div>
       <div className={style.voteText}>
         <h2>Vote</h2>
         <p className={style.voteSectionText}>
@@ -178,7 +198,13 @@ export default function Vote({ userId }) {
         </p>
       </div>
       <div className={style.voteGamesDisplay}>
-        <VoteGamesDisplay voteProps={voteProps} />
+        {voteNetworkError ? (
+          <p className="errorText">
+            There was an error getting the games to vote on.
+          </p>
+        ) : (
+          <VoteGamesDisplay voteProps={voteProps} />
+        )}
       </div>
       <div className={paginationDisplay}>
         <VoteGamePagination
@@ -190,6 +216,11 @@ export default function Vote({ userId }) {
           gamesForPagination={gamesForPagination}
           setGamesForPagination={setGamesForPagination}
           voteSuccess={voteSuccess}
+          paginationVote={paginationVote}
+          setPaginationVote={setPaginationVote}
+          pagination={pagination}
+          setPagination={setPagination}
+          pageSize={pageSize}
         />
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { it, vi, expect, describe } from "vitest";
-import { cleanup } from "@testing-library/react"
+import { cleanup } from "@testing-library/react";
 
 describe("Dashboard-Main", () => {
   //Cleanup
@@ -12,13 +12,16 @@ describe("Dashboard-Main", () => {
       saveUser: "982j989d987d876",
     };
 
-    const gameResponse = await fetch("http://localhost:8080/saveGame", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(gameData),
-    }).then((response) => {
+    const gameResponse = await fetch(
+      "https://group-class-backend.onrender.com/saveGame",
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(gameData),
+      }
+    ).then((response) => {
       expect(response.status).toBe(201);
     });
   });
