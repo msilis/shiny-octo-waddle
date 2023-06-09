@@ -10,15 +10,18 @@ describe("Login", () => {
       password: "",
     };
 
-    const loginResponse = await fetch("http://localhost:8080/login", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(loginData),
-      mode: "cors",
-    }).then((response) => {
+    const loginResponse = await fetch(
+      "https://group-class-backend.onrender.com/login",
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(loginData),
+        mode: "cors",
+      }
+    ).then((response) => {
       expect(response.status).toBe(401);
     });
   });
@@ -27,15 +30,18 @@ describe("Login", () => {
       userName: "username",
       password: "pass",
     };
-    const correctLoginResponse = await fetch("http://localhost:8080/login", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(loginData),
-      mode: "cors",
-    }).then((response) => {
+    const correctLoginResponse = await fetch(
+      "https://group-class-backend.onrender.com/login",
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(loginData),
+        mode: "cors",
+      }
+    ).then((response) => {
       if (response.status === 200) {
         sessionStorage.setItem("loggedIn", true);
       }

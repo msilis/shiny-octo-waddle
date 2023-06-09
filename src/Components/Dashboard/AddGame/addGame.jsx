@@ -6,7 +6,10 @@ import {
   handleAddGame,
   handleAddVoteGame,
 } from "./addGameUtils.jsx/addGameUtils";
-import { fetchGameTechniques, fetchPieces } from "./addGameUtils.jsx/addGameNetwork";
+import {
+  fetchGameTechniques,
+  fetchPieces,
+} from "./addGameUtils.jsx/addGameNetwork";
 
 const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
   //Refs ***********************
@@ -27,9 +30,8 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
     gameText.current.value = "";
     setAddGameTechniques([]);
     setAddPieces([]);
-
   }
-  
+
   // useEffect to get info on page load ============================================================
   useEffect(() => {
     fetchPieces(setListOfPieces);
@@ -59,7 +61,6 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
   //Handle adding a piece to game ====================================================================
   function handlePieceChange(e) {
     const pieceValues = e.map((piece) => piece.value);
-    console.log(pieceValues);
     setAddPieces(e);
   }
 

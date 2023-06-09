@@ -16,6 +16,7 @@ export default function SavedCreatedGames({ userId }) {
   const [gameToEdit, setGameToEdit] = useState("");
   const [addGameTechniques, setAddGameTechniques] = useState([]);
   const [addGamePieces, setAddGamePieces] = useState([]);
+  const [savedCreatedGameError, setSavedCreatedGameError] = useState(null);
   //State for pagination
   const [currentGamesPage, setCurrentGamesPage] = useState(1);
   const [myGamesPagination, setMyGamesPagination] = useState({
@@ -25,30 +26,28 @@ export default function SavedCreatedGames({ userId }) {
   });
 
   function getUserCreatedGames() {
-    return new Promise((resolve, reject) => {
-      try {
-        const createdById = {
-          userId: userId,
-        };
-        setLoadingCreated(true);
-        fetch("http://localhost:8080/getUserCreatedGames", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(createdById),
-        })
-          .then((response) => response.json())
-          .then((jsonResponse) => {
-            setSavedCreatedGames(jsonResponse);
-            setLoadingCreated(false);
-            resolve(jsonResponse);
-          });
-      } catch (err) {
-        console.log(err);
-        reject(err);
-      }
-    });
+    const createdById = {
+      userId: userId,
+    };
+    setLoadingCreated(true);
+    setSavedCreatedGameError(null);
+    fetch("https://group-class-backend.onrender.com/getUserCreatedGames", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(createdById),
+    })
+      .then((response) => response.json())
+      .then((jsonResponse) => {
+        setSavedCreatedGames(jsonResponse);
+        setLoadingCreated(false);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setLoadingCreated(false);
+        setSavedCreatedGameError(err.message);
+      });
   }
 
   //DELETE user created game =========================================
@@ -58,7 +57,7 @@ export default function SavedCreatedGames({ userId }) {
       gameToDelete: gameId,
     };
 
-    fetch("http://localhost:8080/deleteCreated", {
+    fetch("https://group-class-backend.onrender.com/deleteCreated", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -86,15 +85,17 @@ export default function SavedCreatedGames({ userId }) {
   //Call API and get game details
   function getUserGameToEdit(gameId) {
     try {
-      fetch(`http://localhost:8080/getOneUserGame/${gameId}`, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
-        },
-      })
+      fetch(
+        `https://group-class-backend.onrender.com/getOneUserGame/${gameId}`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data, "This is from the fetch call");
           setAddGameTechniques(data.gameTechnique);
           setAddGamePieces(data.gamePieces);
           setGameToEdit(data);
@@ -142,68 +143,76 @@ export default function SavedCreatedGames({ userId }) {
 
   if (loadingCreated) {
     return <p>Loading...</p>;
-  } else if (savedCreatedGames.length === 0) {
+  } else if (savedCreatedGames.length === 0 && !savedCreatedGameError) {
     return <p>You do not have any created games to show</p>;
   } else {
     return (
       <div className={style.savedCreatedOuterContainer}>
-        {savedCreatedGames
-          .slice(myGamesPagination.from, myGamesPagination.to)
-          .map((game) => {
-            return (
-              <div className={style.gameItem} key={game._id} id={game._id}>
-                <h5>{game.gameName}</h5>
-                <p>{game.gameText}</p>
-                <h5>Game focus:</h5>
-                <div className={style.gameTechniqueContainer}>
-                  {game.gameTechnique.map((item, index) => {
-                   //! TODO This does not seem right, for this savedCreatedGames
-                   //! should return an array of objects, not a regular array
-                    return <p key={index}>{item.label || item}</p>;
-                  })}
+        {savedCreatedGameError ? (
+          <p>There was an error getting your created games</p>
+        ) : (
+          savedCreatedGames
+            .slice(myGamesPagination.from, myGamesPagination.to)
+            .map((game) => {
+              return (
+                <div className={style.gameItem} key={game._id} id={game._id}>
+                  <h5>{game.gameName}</h5>
+                  <p>{game.gameText}</p>
+                  <h5>Game focus:</h5>
+                  <div className={style.gameTechniqueContainer}>
+                    {game.gameTechnique.map((item, index) => {
+                      //! TODO This does not seem right, for this savedCreatedGames
+                      //! should return an array of objects, not a regular array
+                      return <p key={index}>{item.label || item}</p>;
+                    })}
+                  </div>
+                  <div className={style.buttonContainer}>
+                    <button
+                      className={style.deleteSavedGameButton}
+                      onClick={handleCreatedGameDelete}
+                    >
+                      Delete
+                    </button>
+                    <button
+                      className={style.editSavedGameButton}
+                      onClick={handleEditUserCreatedGame}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                  <div className={style.modalContainer}>
+                    {showModal && gameToEdit && (
+                      <EditModal
+                        gameToEditId={gameToEditId}
+                        setGameToEditId={setGameToEditId}
+                        showModal={showModal}
+                        setShowModal={setShowModal}
+                        gameToEdit={gameToEdit}
+                        setGameToEdit={setGameToEdit}
+                        addGameTechniques={addGameTechniques}
+                        setAddGameTechniques={setAddGameTechniques}
+                        addGamePieces={addGamePieces}
+                        setAddGamePieces={setAddGamePieces}
+                        getUserCreatedGames={getUserCreatedGames}
+                      />
+                    )}
+                  </div>
                 </div>
-                <div className={style.buttonContainer}>
-                  <button
-                    className={style.deleteSavedGameButton}
-                    onClick={handleCreatedGameDelete}
-                  >
-                    Delete
-                  </button>
-                  <button
-                    className={style.editSavedGameButton}
-                    onClick={handleEditUserCreatedGame}
-                  >
-                    Edit
-                  </button>
-                </div>
-                <div className={style.modalContainer}>
-                  {showModal && gameToEdit && (
-                    <EditModal
-                      gameToEditId={gameToEditId}
-                      setGameToEditId={setGameToEditId}
-                      showModal={showModal}
-                      setShowModal={setShowModal}
-                      gameToEdit={gameToEdit}
-                      setGameToEdit={setGameToEdit}
-                      addGameTechniques={addGameTechniques}
-                      setAddGameTechniques={setAddGameTechniques}
-                      addGamePieces={addGamePieces}
-                      setAddGamePieces={setAddGamePieces}
-                      getUserCreatedGames={getUserCreatedGames}
-                    />
-                  )}
-                </div>
-              </div>
-            );
-          })}
+              );
+            })
+        )}
         <div className={style.paginationContainer}>
-          <MyGamesPagination
-            myGamesPagination={myGamesPagination}
-            setMyGamesPagination={setMyGamesPagination}
-            createdGamePageSize={createdGamePageSize}
-            currentGamesPage={currentGamesPage}
-            setCurrentGamesPage={setCurrentGamesPage}
-          />
+          {savedCreatedGameError ? (
+            ""
+          ) : (
+            <MyGamesPagination
+              myGamesPagination={myGamesPagination}
+              setMyGamesPagination={setMyGamesPagination}
+              createdGamePageSize={createdGamePageSize}
+              currentGamesPage={currentGamesPage}
+              setCurrentGamesPage={setCurrentGamesPage}
+            />
+          )}
         </div>
       </div>
     );

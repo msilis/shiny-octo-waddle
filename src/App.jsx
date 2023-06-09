@@ -2,6 +2,8 @@ import "./App.css";
 import React, { useEffect, useState, lazy, Suspense } from "react";
 import { Header, Navbar, Footer, Profile, AddGame, Vote } from "./Components";
 import { Routes, Route, useLocation } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 //Lazy load components
 const Home = lazy(() => import("./Components/Home/home.jsx"));
 const About = lazy(() => import("./Components/About/about.jsx"));
@@ -116,7 +118,7 @@ function App() {
           setMainDisplay={setMainDisplay}
         />
       </div>
-
+      <ToastContainer />
       <div className="routesContainer">
         <Suspense fallback={suspenseLoading}>
           <PageRoutes />

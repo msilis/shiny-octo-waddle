@@ -10,13 +10,13 @@ const handleGoClick = (
   selectedTag
 ) => {
   if (selectedTag === "0") {
-    alert("You haven't selected a topic.")
+    alert("You haven't selected a topic.");
   } else {
     const tagSearchData = {
       tagToSearch: selectedTag,
     };
     setLoadRandomGame(true);
-    fetch("http://localhost:8080/techniqueSearch", {
+    fetch("https://group-class-backend.onrender.com/techniqueSearch", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -29,7 +29,7 @@ const handleGoClick = (
         setReviewPieces(reviewArray);
       })
       .then(
-        fetch("http://localhost:8080/randomGame", {
+        fetch("https://group-class-backend.onrender.com/randomGame", {
           method: "GET",
           headers: {
             "content-type": "application/json",
@@ -65,7 +65,7 @@ const handleGameSave = (setSavedGame, randomGame, userId) => {
     saveUser: userId,
   };
 
-  fetch("http://localhost:8080/saveGame", {
+  fetch("https://group-class-backend.onrender.com/saveGame", {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -77,35 +77,43 @@ const handleGameSave = (setSavedGame, randomGame, userId) => {
         setSavedGame(true);
       }
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 //Get tags
 
-const getGameTags = (setTagArray) => {
-  try {
-    fetch("http://localhost:8080/tags", {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-      },
+const getGameTags = (setTagArray, setError) => {
+  fetch("https://group-class-backend.onrender.com/tags", {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("There was an error with the server.");
+      }
+
+      setError(null);
+      return response.json();
     })
-      .then((response) => response.json())
-      .then((data) => {
-        //Map tags from each object to array
-        const dataArray = data.map((tag) => tag.techniqueTags);
+    .then((data) => {
+      //Map tags from each object to array
+      const dataArray = data.map((tag) => tag.techniqueTags);
 
-        //Flatten the multiple arrays returned by dataArray into single array
-        const flattenedArray = dataArray.flat(1);
-        const filteredArray = flattenedArray.filter(
-          (tag, index) => flattenedArray.indexOf(tag) === index
-        );
+      //Flatten the multiple arrays returned by dataArray into single array
+      const flattenedArray = dataArray.flat(1);
+      const filteredArray = flattenedArray.filter(
+        (tag, index) => flattenedArray.indexOf(tag) === index
+      );
 
-        setTagArray(filteredArray);
-      });
-  } catch (err) {
-    console.log(err);
-  }
+      setTagArray(filteredArray);
+    })
+    .catch((err) => {
+      setError(err);
+    });
 };
 
 export { handleGoClick, handleGameSave, getGameTags };
