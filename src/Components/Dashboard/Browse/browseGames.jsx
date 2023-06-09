@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import style from "./browseGames.module.css";
 import BrowsePagination from "../../Pagination/browsePagination";
 import Select from "react-select";
+import { getAllGames, getTagsForBrowse } from "./browse-utils";
 
 //Page size for pagination
 export const browsePageSize = 5;
@@ -33,62 +34,18 @@ export default function BrowseGames() {
   //State for current pagination page
   const [currentPage, setCurrentPage] = useState(1);
 
-  function getAllGames() {
-    //Get all games from database
-    setLoadingGames(true);
-    return fetch("https://group-class-backend.onrender.com/gameSearch", {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.status === 500 || !response.ok) {
-          throw new Error("There was a server error.");
-        } else {
-          return response.json();
-        }
-      })
-      .then((jsonResponse) => {
-        setPaginationGames(
-          jsonResponse.slice(browsePagination.from, browsePagination.to)
-        );
-        setAllGames(jsonResponse);
-      })
-      .catch((err) => {
-        console.log(err.message);
-        setErrorMessage(err);
-      })
-      .finally(() => setLoadingGames(false));
-  }
+  //props to pass to utility functions
+  const getAllGamesProps = {
+    setLoadingGames,
+    setPaginationGames,
+    setAllGames,
+    setErrorMessage,
+    browsePagination,
+  };
 
-  function getTagsForBrowse() {
-    return fetch("https://group-class-backend.onrender.com/gameTechniques", {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw Error("There was an error getting tags");
-        } else {
-          return response.json();
-        }
-      })
-      .then((jsonResponse) => {
-        const gameTechArray = jsonResponse.map((tag) => tag.gameTechnique);
-        const flattenedGameTechArray = gameTechArray.flat(1);
-        const filteredGameTechArray = flattenedGameTechArray.filter(
-          (technique, index) =>
-            flattenedGameTechArray.indexOf(technique) === index
-        );
-        setBrowseTags(filteredGameTechArray);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }
+  const browseTagProps = {
+    setBrowseTags,
+  };
 
   function handleGameItemClick(e) {
     setShowMoreInfo(e.target.parentNode.id);
@@ -120,10 +77,11 @@ export default function BrowseGames() {
   }
 
   useEffect(() => {
-    getAllGames().then(() => {
+    console.log(getAllGamesProps);
+    getAllGames(getAllGamesProps).then(() => {
       setBrowsePagination({ ...browsePagination, count: allGames.length });
     });
-    getTagsForBrowse();
+    getTagsForBrowse(browseTagProps);
   }, [browsePagination.from, browsePagination.to, allGames.length]);
 
   //Set filter for games
