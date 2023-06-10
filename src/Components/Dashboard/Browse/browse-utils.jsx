@@ -54,7 +54,7 @@ function getTagsForBrowse(browseTagProps) {
         (technique, index) =>
           flattenedGameTechArray.indexOf(technique) === index
       );
-      setBrowseTags(filteredGameTechArray);
+      browseTagProps.setBrowseTags(filteredGameTechArray);
     })
     .catch((err) => {
       console.log(err.message);
