@@ -2,8 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import style from "./vote.module.css";
 import VoteGamesDisplay from "./voteGamesDisplay";
 import VoteGamePagination from "../../Pagination/gamePagination";
-import { getOnlyVotes } from "./vote-utils";
-import { toast } from "react-toastify";
+import { getOnlyVotes, getUserVotedGames } from "./vote-utils";
 
 export default function Vote({ userId }) {
   //Loading state
@@ -13,7 +12,6 @@ export default function Vote({ userId }) {
   const [voteTotal, setVoteTotal] = useState([]);
   const [paginationVote, setPaginationVote] = useState([]);
   const [userVotedGames, setUserVotedGames] = useState([]);
-  //State for overlay
   //Vote Error
   const [voteError, setVoteError] = useState(false);
   const [voteNetworkError, setVoteNetworkError] = useState(null);
@@ -29,153 +27,33 @@ export default function Vote({ userId }) {
     to: pageSize,
   });
 
-  //props to send to VoteGamesDisplay componenet
+  //props for components
 
   const voteProps = {
     loadingVote,
     setLoadingVote,
     votingGames,
     setVotingGames,
-    handleYesVote,
-    handleNoVote,
     voteError,
     setVoteError,
     voteTotal,
+    setVoteTotal,
     userVotedGames,
+    setUserVotedGames,
     gamesForPagination,
     setGamesForPagination,
     paginationVote,
     pagination,
+    userId,
+    setVoteNetworkError,
+    voteNetworkError,
+    setVoteSuccess,
   };
-  //Handle yes and no votes
-  function handleYesVote(e) {
-    const yesVoteData = {
-      gameId: e.target.parentNode.parentNode.id,
-      updateVoteValue: 1,
-      userId: userId,
-    };
-    fetch("https://group-class-backend.onrender.com/trackVote", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "X-custom-cookie": "jwt",
-      },
-      credentials: "include",
-      body: JSON.stringify(yesVoteData),
-    })
-      .then((response) => {
-        if (response.status === 409) {
-          toast.error("You have already voted for this game.", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: undefined,
-            theme: "light",
-          });
-          throw new Error("You have already voted for this game");
-        } else if (response.status === 201) {
-          setVoteSuccess(true);
-          getUserVotedGames();
-          return response.json();
-        }
-      })
-      .then(() => {
-        getOnlyVotes(setVoteTotal).then(() => {
-          setVoteSuccess(false);
-          getUserVotedGames();
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  function handleNoVote(e) {
-    const noVoteData = {
-      gameId: e.target.parentNode.parentNode.id,
-      updateVoteValue: 0,
-      userId: userId,
-    };
-    fetch("https://group-class-backend.onrender.com/trackVote", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "X-custom-cookie": "jwt",
-      },
-      credentials: "include",
-      body: JSON.stringify(noVoteData),
-    })
-      .then((response) => {
-        if (response.status === 409) {
-          toast.error("You have already voted for this game.", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: undefined,
-            theme: "light",
-          });
-          throw new Error("You have already voted for this game");
-        } else {
-          setVoteSuccess(true);
-          return response.json();
-        }
-      })
-      .then(() => {
-        getOnlyVotes(setVoteTotal).then(() => {
-          getUserVotedGames();
-          setVoteSuccess(false);
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  //Get a list of games the user has voted on
-
-  function getUserVotedGames() {
-    setVoteNetworkError(null);
-    const idToCheck = {
-      userId: userId,
-    };
-    fetch("https://group-class-backend.onrender.com/getUserVotes", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(idToCheck),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(
-            "There was a network error and I could not get the games to vote on"
-          );
-        } else {
-          return response.json();
-        }
-      })
-      .then((jsonResponse) => {
-        let votedGames = jsonResponse.map((el) => {
-          return el._id;
-        });
-        setUserVotedGames(votedGames);
-      })
-      .catch((err) => {
-        console.log(err.message);
-        setVoteNetworkError(err.message);
-      });
-  }
 
   //Call function at page load to get games to be voted on
   useEffect(() => {
-    getUserVotedGames();
-    getOnlyVotes(setVoteTotal);
+    getUserVotedGames(voteProps);
+    getOnlyVotes(voteProps);
   }, []);
 
   useEffect(() => {

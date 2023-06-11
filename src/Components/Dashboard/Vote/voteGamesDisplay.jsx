@@ -1,4 +1,5 @@
 import style from "./voteGamesDisplay.module.css";
+import { handleYesVote, handleNoVote } from "./vote-utils";
 
 export default function VoteGamesDisplay({ voteProps }) {
   //conditional style for vote badge
@@ -52,13 +53,13 @@ export default function VoteGamesDisplay({ voteProps }) {
           <div className={style.voteButtonContainer}>
             <button
               className={style.voteYesButton}
-              onClick={voteProps.handleYesVote}
+              onClick={(e) => handleYesVote(e, voteProps)}
             >
               Yes
             </button>
             <button
               className={style.voteNoButton}
-              onClick={voteProps.handleNoVote}
+              onClick={(e) => handleNoVote(e, voteProps)}
             >
               No
             </button>

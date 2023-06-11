@@ -2,9 +2,7 @@ import style from "./login.module.css";
 import classnames from "classnames";
 import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
-
-//Exports for testing
+import { handleLoginSubmit } from "./login-utils";
 
 export default function Login({
   setFirstName,
@@ -25,81 +23,20 @@ export default function Login({
   //Get login status from sessionStorage
   const loginStatus = sessionStorage.getItem("loggedIn");
 
-  //Handle login button click =============================================================
+  //Login props
 
-  function handleLoginSubmit() {
-    setLoginError(null);
-    const loginData = {
-      userName: loginUsername.current?.value,
-      password: loginPassword.current?.value,
-    };
-    if (sessionStorage.getItem("loggedIn") === null) {
-      fetch("https://group-class-backend.onrender.com/login", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(loginData),
-        mode: "cors",
-      })
-        .then((response) => {
-          if (response.status === 401) {
-            toast.error("Incorrect username or password.", {
-              position: "top-center",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: false,
-              progress: undefined,
-              theme: "light",
-            });
-            throw new Error("Incorrect username or password.");
-          } else if (!response.ok) {
-            throw Error("Network error");
-          } else {
-            return response.json();
-          }
-        })
-        .then((data) => {
-          setLoggedIn(true);
-          setFirstName(data.firstName);
-          setLastName(data.lastName);
-          setEmail(data.email);
-          setUserId(data.userId);
-          setUsername(data.username);
-          sessionStorage.setItem("loggedIn", true);
-          const userInfo = {
-            firstName: data.firstName,
-            lastName: data.lastName,
-            email: data.email,
-            username: data.username,
-            userId: data.userId,
-          };
-          sessionStorage.setItem("user", JSON.stringify(userInfo));
-          //Redirect user after sucessful login
-          return navigate("/dashboard");
-        })
-        .catch((err) => {
-          console.log(err.message);
-
-          if (err.message === "Failed to fetch")
-            toast.error("There was a network error. You are not logged in.", {
-              position: "top-center",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: false,
-              progress: undefined,
-              theme: "light",
-            });
-        });
-      loginUsername.current.value = "";
-      loginPassword.current.value = "";
-    }
-  }
+  const loginProps = {
+    setLoginError,
+    loginError,
+    loginUsername,
+    loginPassword,
+    setLoggedIn,
+    setFirstName,
+    setLastName,
+    setEmail,
+    setUserId,
+    setUsername,
+  };
 
   //If already logged in, redirect to dashboard
 
@@ -115,7 +52,7 @@ export default function Login({
   function handleEnterKey(event) {
     if (event.key === "Enter") {
       console.log(event.key);
-      handleLoginSubmit();
+      handleLoginSubmit(loginProps);
     }
   }
   // Handle Logout
@@ -163,7 +100,7 @@ export default function Login({
         ></input>
         <div
           className={style.loginButton}
-          onClick={handleLoginSubmit}
+          onClick={() => handleLoginSubmit(loginProps)}
           data-testid="loginButton"
         >
           <span>Log In</span>
