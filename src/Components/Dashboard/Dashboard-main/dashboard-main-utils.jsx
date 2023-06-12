@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 //Go Button
 
 const handleGoClick = (
@@ -75,6 +77,16 @@ const handleGameSave = (setSavedGame, randomGame, userId) => {
     .then((response) => {
       if (response.status === 201) {
         setSavedGame(true);
+        toast.success("Game has been saved to 'My Games'", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     })
     .catch((err) => {
