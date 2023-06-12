@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { vi, it, expect, describe } from "vitest";
 import AddGame from "../Components/Dashboard/AddGame/addGame";
 import React from "react";
+import { ToastContainer } from "react-toastify";
 
 describe("AddGame", () => {
   //Clean up
@@ -27,23 +28,28 @@ describe("AddGame", () => {
     expect(modal).toBeTruthy();
   });
 
-  it("should hide modal wen cancel button is clicked", async () => {
+  it("should show toast when there are missing inputs", async () => {
     render(
       <>
         <AddGame />
+        <ToastContainer />
       </>
     );
-
-    //Buttons to show modal
+    //get button from screen
     const addButton = screen.getByTestId("addGameButton");
-
+    //fire click event
     userEvent.click(addButton);
-    //Cancel button
 
-    await waitFor(() => {
-      const cancelButton = screen.getByTestId("cancelButton");
+    const toastMatcher = (content, element) => {
+      return element.innerHTML.includes(content);
+    };
 
-      expect(cancelButton).toBeTruthy();
-    });
+    expect(
+      await screen.findByText(
+        "Make sure you have filled in all the fields!",
+        {},
+        { matcher: toastMatcher }
+      )
+    ).toBeTruthy();
   });
 });

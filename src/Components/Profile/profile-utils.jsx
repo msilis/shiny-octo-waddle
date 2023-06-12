@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 const handleUpdateClick = (
   firstNameEditInput,
   lastNameEditInput,
@@ -35,7 +37,21 @@ const handleUpdateClick = (
       credentials: "include",
       body: JSON.stringify(updateUserData),
     })
-      .then((result) => result.json())
+      .then((result) => {
+        if (result.status === 200) {
+          toast.success("Profile information updated!", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+        return result.json();
+      })
       .then((data) => {
         //Set state for updated values
         setFirstName(data.firstName);

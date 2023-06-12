@@ -4,6 +4,10 @@ import style from "./savedCreatedGames.module.css";
 import { React, useEffect, useState } from "react";
 import EditModal from "./SavedEditModal/savedEditModal";
 import MyGamesPagination from "../Pagination/MyGamesPagination";
+import {
+  getUserCreatedGames,
+  handleCreatedGameDelete,
+} from "./savedGames-utils";
 
 const createdGamePageSize = 3;
 
@@ -25,59 +29,19 @@ export default function SavedCreatedGames({ userId }) {
     to: createdGamePageSize,
   });
 
-  function getUserCreatedGames() {
-    const createdById = {
-      userId: userId,
-    };
-    setLoadingCreated(true);
-    setSavedCreatedGameError(null);
-    fetch("https://group-class-backend.onrender.com/getUserCreatedGames", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(createdById),
-    })
-      .then((response) => response.json())
-      .then((jsonResponse) => {
-        setSavedCreatedGames(jsonResponse);
-        setLoadingCreated(false);
-      })
-      .catch((err) => {
-        console.log(err.message);
-        setLoadingCreated(false);
-        setSavedCreatedGameError(err.message);
-      });
-  }
-
-  //DELETE user created game =========================================
-  function handleCreatedGameDelete(event) {
-    const gameId = event.target.parentNode.parentNode.id;
-    const deleteCreatedData = {
-      gameToDelete: gameId,
-    };
-
-    fetch("https://group-class-backend.onrender.com/deleteCreated", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(deleteCreatedData),
-    })
-      .then((response) => response.json())
-      .then((jsonResponse) => console.log(jsonResponse))
-      .then(() => {
-        getUserCreatedGames().then((games) => {
-          setMyGamesPagination({ ...myGamesPagination, count: games.length });
-        });
-        if (
-          currentGamesPage >
-          Math.ceil(currentGamesPage.count / createdGamePageSize)
-        ) {
-          setCurrentGamesPage(currentGamesPage - 1);
-        }
-      });
-  }
+  const createdGamesProps = {
+    setLoadingCreated,
+    setSavedCreatedGameError,
+    setSavedCreatedGames,
+    savedCreatedGames,
+    userId,
+    setMyGamesPagination,
+    setCurrentGamesPage,
+    currentGamesPage,
+    setMyGamesPagination,
+    myGamesPagination,
+    createdGamePageSize,
+  };
 
   //EDIT user created game =========================================
 
@@ -114,7 +78,7 @@ export default function SavedCreatedGames({ userId }) {
 
   //Get user created games with effect hook ================
   useEffect(() => {
-    getUserCreatedGames();
+    getUserCreatedGames(createdGamesProps);
   }, []);
 
   useEffect(() => {
@@ -161,15 +125,15 @@ export default function SavedCreatedGames({ userId }) {
                   <h5>Game focus:</h5>
                   <div className={style.gameTechniqueContainer}>
                     {game.gameTechnique.map((item, index) => {
-                      //! TODO This does not seem right, for this savedCreatedGames
-                      //! should return an array of objects, not a regular array
                       return <p key={index}>{item.label || item}</p>;
                     })}
                   </div>
                   <div className={style.buttonContainer}>
                     <button
                       className={style.deleteSavedGameButton}
-                      onClick={handleCreatedGameDelete}
+                      onClick={(e) =>
+                        handleCreatedGameDelete(e, createdGamesProps)
+                      }
                     >
                       Delete
                     </button>

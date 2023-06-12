@@ -106,4 +106,78 @@ const handleSavedGameDelete = (
     });
 };
 
-export { getSavedGames, handleSavedGameDelete };
+//Get user's created games from db ==================================
+function getUserCreatedGames(createdGamesProps) {
+  const createdById = {
+    userId: createdGamesProps.userId,
+  };
+
+  createdGamesProps.setLoadingCreated(true);
+  createdGamesProps.setSavedCreatedGameError(null);
+  fetch("https://group-class-backend.onrender.com/getUserCreatedGames", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(createdById),
+  })
+    .then((response) => response.json())
+    .then((jsonResponse) => {
+      createdGamesProps.setSavedCreatedGames(jsonResponse);
+      createdGamesProps.setLoadingCreated(false);
+    })
+    .catch((err) => {
+      console.log(err.message);
+      createdGamesProps.setLoadingCreated(false);
+      createdGamesProps.setSavedCreatedGameError(err.message);
+    });
+}
+
+//DELETE user created game =========================================
+function handleCreatedGameDelete(event, createdGamesProps) {
+  const gameId = event.target.parentNode.parentNode.id;
+  const deleteCreatedData = {
+    gameToDelete: gameId,
+  };
+
+  fetch("https://group-class-backend.onrender.com/deleteCreated", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(deleteCreatedData),
+  })
+    .then((response) => response.json())
+    .then((jsonResponse) => console.log(jsonResponse))
+    .then(() => {
+      return getUserCreatedGames(createdGamesProps);
+    })
+    .then(() => {
+      const gamesLength = createdGamesProps.savedCreatedGames.length;
+      createdGamesProps.setMyGamesPagination({
+        ...createdGamesProps.myGamesPagination,
+        count: gamesLength,
+      });
+      if (
+        createdGamesProps.currentGamesPage >
+        Math.ceil(
+          createdGamesProps.currentGamesPage.count /
+            createdGamesProps.createdGamePageSize
+        )
+      ) {
+        createdGamesProps.setCurrentGamesPage(
+          createdGamesProps.currentGamesPage - 1
+        );
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+export {
+  getSavedGames,
+  handleSavedGameDelete,
+  getUserCreatedGames,
+  handleCreatedGameDelete,
+};
