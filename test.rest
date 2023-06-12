@@ -15,3 +15,11 @@ Content-Type: application/json
 
 GET http://localhost:8080/tags
 Content-Content-Type: application/json
+
+###
+POST https://group-class-backend.onrender.com/getUserCreatedGames
+Content-Type: application/json
+
+{
+    "userId": "6409d2992852aeb8e5b8ae3c"
+}

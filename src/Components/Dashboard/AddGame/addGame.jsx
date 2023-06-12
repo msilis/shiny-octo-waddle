@@ -10,6 +10,7 @@ import {
   fetchGameTechniques,
   fetchPieces,
 } from "./addGameUtils.jsx/addGameNetwork";
+import { toast } from "react-toastify";
 
 const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
   //Refs ***********************
@@ -71,61 +72,61 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
   //If user selects yes, add game to vote list. If user selects no, add game only to profile.
 
   const handleYesClick = () => {
-    if (
-      gameName === "" ||
-      gameText === "" ||
-      addPieces.length === 0 ||
-      addGameTechniques.length === 0
-    ) {
-      console.log("You need to check your inputs.");
-    } else {
-      handleAddGame(
-        gameName,
-        gameText,
-        addGameTechniques,
-        addPieces,
-        userId,
-        username,
-        setAddGameTechniques,
-        setAddPieces
-      );
-      handleAddVoteGame(
-        gameName,
-        gameText,
-        addGameTechniques,
-        addPieces,
-        userId,
-        username
-      );
-    }
+    handleAddGame(
+      gameName,
+      gameText,
+      addGameTechniques,
+      addPieces,
+      userId,
+      username,
+      setAddGameTechniques,
+      setAddPieces
+    );
+    handleAddVoteGame(
+      gameName,
+      gameText,
+      addGameTechniques,
+      addPieces,
+      userId,
+      username
+    );
   };
 
   const handleNoClick = () => {
-    if (
-      gameName === "" ||
-      gameText === "" ||
-      addPieces.length === 0 ||
-      addGameTechniques.length === 0
-    ) {
-      console.log("You need to check your inputs.");
-    } else {
-      handleAddGame(
-        gameName,
-        gameText,
-        addGameTechniques,
-        addPieces,
-        userId,
-        username,
-        setAddGameTechniques,
-        setAddPieces
-      );
-    }
+    handleAddGame(
+      gameName,
+      gameText,
+      addGameTechniques,
+      addPieces,
+      userId,
+      username,
+      setAddGameTechniques,
+      setAddPieces
+    );
   };
 
   //Show modal and ask if user wants game added to vote list
 
   function handleShowModal() {
-    setShowAddGameModal(true);
+    if (
+      gameName === "" ||
+      gameText === "" ||
+      addPieces.length === 0 ||
+      addGameTechniques.length === 0
+    ) {
+      toast.error("Make sure you have filled in all the fields!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
+      setShowAddGameModal(true);
+    }
   }
   /* ==============================================================
 |||||||||||| Return |||||||||||||||||||||||||||||||||||||||||||||
