@@ -2,7 +2,7 @@ import style from "./login.module.css";
 import classnames from "classnames";
 import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { handleLoginSubmit } from "./login-utils";
+import { useLoginSubmit } from "./login-utils";
 
 export default function Login({
   setFirstName,
@@ -22,6 +22,7 @@ export default function Login({
   const [loginError, setLoginError] = useState(null);
   //Get login status from sessionStorage
   const loginStatus = sessionStorage.getItem("loggedIn");
+  const handleLoginSubmit = useLoginSubmit();
 
   //Login props
 
