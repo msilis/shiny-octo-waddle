@@ -1,9 +1,17 @@
 import "./App.css";
-import React, { useEffect, useState, lazy, Suspense } from "react";
+import React, {
+  useEffect,
+  useState,
+  lazy,
+  Suspense,
+  useContext,
+  createContext,
+} from "react";
 import { Header, Navbar, Footer, Profile, AddGame, Vote } from "./Components";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserIdContext } from "./userIdContext";
 //Lazy load components
 const Home = lazy(() => import("./Components/Home/home.jsx"));
 const About = lazy(() => import("./Components/About/about.jsx"));
@@ -105,27 +113,29 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <div className="headerContainer">
-        <Header />
+    <UserIdContext.Provider value={userId}>
+      <div className="App">
+        <div className="headerContainer">
+          <Header />
+        </div>
+        <div className="navbarContainer">
+          <Navbar
+            setLoggedIn={setLoggedIn}
+            loggedIn={loggedIn}
+            seeProfile={seeProfile}
+            setSeeProfile={setSeeProfile}
+            setMainDisplay={setMainDisplay}
+          />
+        </div>
+        <ToastContainer />
+        <div className="routesContainer">
+          <Suspense fallback={suspenseLoading}>
+            <PageRoutes />
+          </Suspense>
+        </div>
+        <Footer />
       </div>
-      <div className="navbarContainer">
-        <Navbar
-          setLoggedIn={setLoggedIn}
-          loggedIn={loggedIn}
-          seeProfile={seeProfile}
-          setSeeProfile={setSeeProfile}
-          setMainDisplay={setMainDisplay}
-        />
-      </div>
-      <ToastContainer />
-      <div className="routesContainer">
-        <Suspense fallback={suspenseLoading}>
-          <PageRoutes />
-        </Suspense>
-      </div>
-      <Footer />
-    </div>
+    </UserIdContext.Provider>
   );
 }
 
