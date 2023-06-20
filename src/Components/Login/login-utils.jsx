@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 
+//TODO Remove custom hook from handleLoginSubmit
 function useLoginSubmit() {
   //Bring in useNavigate for redirect
   const navigate = useNavigate();

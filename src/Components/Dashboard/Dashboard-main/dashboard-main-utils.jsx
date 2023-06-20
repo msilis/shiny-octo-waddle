@@ -1,4 +1,6 @@
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import { UserIdContext } from "../../../userIdContext";
 
 //Go Button
 
@@ -61,6 +63,10 @@ const handleGoClick = (
 
 //Save Game
 const handleGameSave = (setSavedGame, randomGame, userId) => {
+  //UserId
+  //! TODO, this isn't working correctly yet. Look at UserIdContext.Consumer
+  /* const userId = useContext(UserIdContext); */
+  //Game data
   const saveGameData = {
     gameName: randomGame.gameName,
     gameText: randomGame.gameText,
