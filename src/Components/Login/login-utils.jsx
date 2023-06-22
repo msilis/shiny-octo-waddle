@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import { showErrorToast } from "../../Utilities/toastError";
 
 //TODO Remove custom hook from handleLoginSubmit
 function useLoginSubmit() {
@@ -25,16 +26,8 @@ function useLoginSubmit() {
       })
         .then((response) => {
           if (response.status === 401) {
-            toast.error("Incorrect username or password.", {
-              position: "top-center",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: false,
-              progress: undefined,
-              theme: "light",
-            });
+            showErrorToast("Incorrect username or password.");
+            loginProps.setLoading(false);
             throw new Error("Incorrect username or password.");
           } else if (!response.ok) {
             throw Error("Network error");
@@ -66,16 +59,7 @@ function useLoginSubmit() {
           console.log(err.message);
 
           if (err.message === "Failed to fetch")
-            toast.error("There was a network error. You are not logged in.", {
-              position: "top-center",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: false,
-              progress: undefined,
-              theme: "light",
-            });
+            showErrorToast("There was a network error. You are not logged in.");
         });
       loginProps.loginUsername.current.value = "";
       loginProps.loginPassword.current.value = "";

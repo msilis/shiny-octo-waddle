@@ -43,7 +43,6 @@ export default function Login({
     setLoading,
   };
 
-  console.log(loading, "loading");
   //If already logged in, redirect to dashboard
 
   function checkLoggedIn() {
@@ -57,7 +56,6 @@ export default function Login({
 
   function handleEnterKey(event) {
     if (event.key === "Enter") {
-      console.log(event.key);
       handleLoginSubmit(loginProps);
     }
   }
@@ -70,7 +68,6 @@ export default function Login({
   };
 
   useEffect(() => {
-    console.log("effect ran");
     checkLoggedIn();
   }, []);
 
