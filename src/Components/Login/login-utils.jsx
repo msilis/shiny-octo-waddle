@@ -8,6 +8,7 @@ function useLoginSubmit() {
 
   const handleLoginSubmit = (loginProps) => {
     loginProps.setLoginError(null);
+    loginProps.setLoading(true);
     const loginData = {
       userName: loginProps.loginUsername.current?.value,
       password: loginProps.loginPassword.current?.value,
@@ -58,6 +59,7 @@ function useLoginSubmit() {
           };
           sessionStorage.setItem("user", JSON.stringify(userInfo));
           //Redirect user after sucessful login
+          loginProps.setLoading(false);
           return navigate("/dashboard");
         })
         .catch((err) => {

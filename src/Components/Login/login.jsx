@@ -3,6 +3,7 @@ import classnames from "classnames";
 import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useLoginSubmit } from "./login-utils";
+import Loading from "../Loading/loading";
 
 export default function Login({
   setFirstName,
@@ -20,6 +21,8 @@ export default function Login({
 
   //State for error handling
   const [loginError, setLoginError] = useState(null);
+  //Loading state
+  const [loading, setLoading] = useState(false);
   //Get login status from sessionStorage
   const loginStatus = sessionStorage.getItem("loggedIn");
   const handleLoginSubmit = useLoginSubmit();
@@ -37,8 +40,10 @@ export default function Login({
     setEmail,
     setUserId,
     setUsername,
+    setLoading,
   };
 
+  console.log(loading, "loading");
   //If already logged in, redirect to dashboard
 
   function checkLoggedIn() {
@@ -73,7 +78,9 @@ export default function Login({
   ||||||||||||||||Return|||||||||||||||||||
   ========================================= */
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <div className={classnames(style.loginContainer, style.fadeContainer)}>
       <h3 className={style.loginHeading}>
         {sessionStorage.getItem("loggedIn")
