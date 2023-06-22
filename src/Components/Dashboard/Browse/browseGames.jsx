@@ -77,7 +77,6 @@ export default function BrowseGames() {
   }
 
   useEffect(() => {
-    console.log(getAllGamesProps);
     getAllGames(getAllGamesProps).then(() => {
       setBrowsePagination({ ...browsePagination, count: allGames.length });
     });

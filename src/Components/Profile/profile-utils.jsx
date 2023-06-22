@@ -1,4 +1,5 @@
-import { toast } from "react-toastify";
+import { showGenericToast } from "../../Utilities/toastGeneric";
+import { showSuccessToast } from "../../Utilities/toastSuccess";
 
 const handleUpdateClick = (
   firstNameEditInput,
@@ -17,16 +18,7 @@ const handleUpdateClick = (
     lastNameEditInput.current?.value === "" &&
     emailEditInput.current?.value === ""
   ) {
-    toast("You haven't changed anything", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+    showGenericToast("You haven't changed anything");
   } else {
     const updateUserData = {
       userId: userId,
@@ -55,16 +47,7 @@ const handleUpdateClick = (
       })
         .then((result) => {
           if (result.status === 200) {
-            toast.success("Profile information updated!", {
-              position: "top-center",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
+            showSuccessToast("Profile information updated!");
           }
           return result.json();
         })

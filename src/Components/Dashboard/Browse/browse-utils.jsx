@@ -1,6 +1,5 @@
 // Get all games
 function getAllGames(getAllGamesProps) {
-  console.log(getAllGamesProps);
   //Get all games from database
   getAllGamesProps.setLoadingGames(true);
   return fetch("https://group-class-backend.onrender.com/gameSearch", {
