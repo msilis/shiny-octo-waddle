@@ -1,6 +1,5 @@
 //Add Game - not for voting
-
-import { toast } from "react-toastify";
+import { showSuccessToast } from "../../../../Utilities/toastSuccess";
 
 const handleAddGame = (
   gameName,
@@ -30,16 +29,7 @@ const handleAddGame = (
       body: JSON.stringify(newGameData),
     }).then((response) => {
       if (response.status === 201) {
-        toast.success("Game added successfully!", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        showSuccessToast("Game added successfully!");
         setAddGameTechniques([]);
         setAddPieces([]);
         gameName.current.value = "";
