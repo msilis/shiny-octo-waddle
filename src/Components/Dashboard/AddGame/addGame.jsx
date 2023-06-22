@@ -10,7 +10,7 @@ import {
   fetchGameTechniques,
   fetchPieces,
 } from "./addGameUtils.jsx/addGameNetwork";
-import { toast } from "react-toastify";
+import { showErrorToast } from "../../../Utilities/toastError";
 
 const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
   //Refs ***********************
@@ -114,16 +114,7 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
       addPieces.length === 0 ||
       addGameTechniques.length === 0
     ) {
-      toast.error("Make sure you have filled in all the fields!", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      showErrorToast("Make sure you have filled in all the fields!");
     } else {
       setShowAddGameModal(true);
     }

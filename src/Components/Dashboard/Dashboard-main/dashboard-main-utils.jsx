@@ -1,6 +1,4 @@
-import { toast } from "react-toastify";
-import { useContext } from "react";
-import { UserIdContext } from "../../../userIdContext";
+import { showSuccessToast } from "../../../Utilities/toastSuccess";
 
 //Go Button
 
@@ -83,16 +81,7 @@ const handleGameSave = (setSavedGame, randomGame, userId) => {
     .then((response) => {
       if (response.status === 201) {
         setSavedGame(true);
-        toast.success("Game has been saved to 'My Games'", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        showSuccessToast("Game has been saved to 'My Games'");
       }
     })
     .catch((err) => {
