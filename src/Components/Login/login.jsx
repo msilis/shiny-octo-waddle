@@ -2,7 +2,7 @@ import style from "./login.module.css";
 import classnames from "classnames";
 import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { useLoginSubmit } from "./login-utils";
+import { handleLoginSubmit } from "./login-utils";
 import Loading from "../Loading/loading";
 
 export default function Login({
@@ -25,7 +25,6 @@ export default function Login({
   const [loading, setLoading] = useState(false);
   //Get login status from sessionStorage
   const loginStatus = sessionStorage.getItem("loggedIn");
-  const handleLoginSubmit = useLoginSubmit();
 
   //Login props
 
@@ -56,7 +55,7 @@ export default function Login({
 
   function handleEnterKey(event) {
     if (event.key === "Enter") {
-      handleLoginSubmit(loginProps);
+      handleLoginSubmit(loginProps, navigate);
     }
   }
   // Handle Logout
@@ -105,7 +104,7 @@ export default function Login({
         ></input>
         <div
           className={style.loginButton}
-          onClick={() => handleLoginSubmit(loginProps)}
+          onClick={() => handleLoginSubmit(loginProps, navigate)}
           data-testid="loginButton"
         >
           <span>Log In</span>
