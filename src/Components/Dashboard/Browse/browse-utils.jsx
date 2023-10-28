@@ -1,3 +1,5 @@
+import { ERROR_MESSAGE } from "../../../Utilities/Config/ui-text";
+
 // Get all games
 function getAllGames(getAllGamesProps) {
   //Get all games from database
@@ -10,7 +12,7 @@ function getAllGames(getAllGamesProps) {
   })
     .then((response) => {
       if (response.status === 500 || !response.ok) {
-        throw new Error("There was a server error.");
+        throw new Error(ERROR_MESSAGE.serverError);
       } else {
         return response.json();
       }
@@ -41,7 +43,7 @@ function getTagsForBrowse(browseTagProps) {
   })
     .then((response) => {
       if (!response.ok) {
-        throw Error("There was an error getting tags");
+        throw Error(ERROR_MESSAGE.tagsError);
       } else {
         return response.json();
       }
