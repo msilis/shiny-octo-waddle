@@ -96,8 +96,8 @@ export default function DashboardMain({
             <div className={style.reviewHeading}>
               <h3 className={style.reviewHeadingText}>
                 {error
-                  ? "There was an error"
-                  : `Suggested review pieces for: ${selectedTag}`}
+                  ? `${PAGE_TEXT.genericError}`
+                  : `${PAGE_TEXT.reviewPieceText} ${selectedTag}`}
               </h3>
             </div>
             <div className={style.reviewPieceList}>
@@ -120,7 +120,7 @@ export default function DashboardMain({
           ) : (
             <div className={style.randomGameContainer}>
               <h3 className={style.reviewHeadingText}>
-                {error ? "There was an error" : randomGame.gameName}
+                {error ? `${PAGE_TEXT.genericError}` : randomGame.gameName}
               </h3>
               <p className={style.randomGameText}>{randomGame.gameText}</p>
               <div className={saveGameStyle} onClick={saveGameText}>
