@@ -7,6 +7,7 @@ import {
   handleGameSave,
   getGameTags,
 } from "./dashboard-main-utils";
+import { PAGE_TEXT } from "../../../Utilities/Config/ui-text";
 
 export default function DashboardMain({
   firstName,
@@ -55,9 +56,7 @@ export default function DashboardMain({
         <h3>Book One Techniques</h3>
         <div className={style.techniqueTagsContainer}>
           {error ? (
-            <p className="errorText">
-              There was a network error, please try this later.
-            </p>
+            <p className="errorText">{PAGE_TEXT.networkError}</p>
           ) : (
             <Select
               className={style.selectInput}
