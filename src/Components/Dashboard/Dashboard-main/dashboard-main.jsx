@@ -7,7 +7,7 @@ import {
   handleGameSave,
   getGameTags,
 } from "./dashboard-main-utils";
-import { PAGE_TEXT } from "../../../Utilities/Config/ui-text";
+import { ERROR_MESSAGE, PAGE_TEXT } from "../../../Utilities/Config/ui-text";
 
 export default function DashboardMain({
   firstName,
@@ -56,7 +56,7 @@ export default function DashboardMain({
         <h3>Book One Techniques</h3>
         <div className={style.techniqueTagsContainer}>
           {error ? (
-            <p className="errorText">{PAGE_TEXT.networkError}</p>
+            <p className="errorText">{ERROR_MESSAGE.networkError}</p>
           ) : (
             <Select
               className={style.selectInput}
@@ -96,7 +96,7 @@ export default function DashboardMain({
             <div className={style.reviewHeading}>
               <h3 className={style.reviewHeadingText}>
                 {error
-                  ? `${PAGE_TEXT.genericError}`
+                  ? `${ERROR_MESSAGE.genericError}`
                   : `${PAGE_TEXT.reviewPieceText} ${selectedTag}`}
               </h3>
             </div>
@@ -120,7 +120,7 @@ export default function DashboardMain({
           ) : (
             <div className={style.randomGameContainer}>
               <h3 className={style.reviewHeadingText}>
-                {error ? `${PAGE_TEXT.genericError}` : randomGame.gameName}
+                {error ? `${ERROR_MESSAGE.genericError}` : randomGame.gameName}
               </h3>
               <p className={style.randomGameText}>{randomGame.gameText}</p>
               <div className={saveGameStyle} onClick={saveGameText}>

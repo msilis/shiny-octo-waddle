@@ -1,6 +1,5 @@
 export const TOAST_TEXT = {
   gameAddSuccess: "Game added successfully",
-  emptyFieldsError: "Make sure you have filled in all the fields!",
 };
 
 export const MODAL_TEXT = {
@@ -10,7 +9,12 @@ export const MODAL_TEXT = {
 };
 
 export const PAGE_TEXT = {
+  reviewPieceText: "Suggested review pieces for: ",
+};
+
+export const ERROR_MESSAGE = {
+  emptyFieldsError: "Make sure you have filled in all the fields!",
   networkError: "There was a network error, please try this later.",
   genericError: "There was an error",
-  reviewPieceText: "Suggested review pieces for: ",
+  serverError: "There was an error with the server, please try this later.",
 };
