@@ -1,4 +1,5 @@
 //Add Game - not for voting
+import { TOAST_TEXT } from "../../../../Utilities/Config/ui-text";
 import { showSuccessToast } from "../../../../Utilities/toastSuccess";
 
 const handleAddGame = (
@@ -29,7 +30,7 @@ const handleAddGame = (
       body: JSON.stringify(newGameData),
     }).then((response) => {
       if (response.status === 201) {
-        showSuccessToast("Game added successfully!");
+        showSuccessToast(TOAST_TEXT.gameAddSuccess);
         setAddGameTechniques([]);
         setAddPieces([]);
         gameName.current.value = "";
