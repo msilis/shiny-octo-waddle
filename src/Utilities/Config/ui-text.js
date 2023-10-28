@@ -8,3 +8,9 @@ export const MODAL_TEXT = {
   addGameVoteAdditional:
     "If you select 'no', the game will only be added to your profile.",
 };
+
+export const PAGE_TEXT = {
+  networkError: "There was a network error, please try this later.",
+  genericError: "There was an error",
+  reviewPieceText: "Suggested review pieces for: ",
+};
