@@ -7,7 +7,11 @@ import {
   handleGameSave,
   getGameTags,
 } from "./dashboard-main-utils";
-import { ERROR_MESSAGE, PAGE_TEXT } from "../../../Utilities/Config/ui-text";
+import {
+  BUTTON_TEXT,
+  ERROR_MESSAGE,
+  PAGE_TEXT,
+} from "../../../Utilities/Config/ui-text";
 
 export default function DashboardMain({
   firstName,
@@ -83,7 +87,7 @@ export default function DashboardMain({
               )
             }
           >
-            <span>Go!</span>
+            <span>{BUTTON_TEXT.goButton}</span>
           </div>
         )}
 
@@ -102,7 +106,7 @@ export default function DashboardMain({
             </div>
             <div className={style.reviewPieceList}>
               {loadRandomGame ? (
-                <>Loading...</>
+                <>{PAGE_TEXT.loadingText}</>
               ) : (
                 reviewPieces.map((piece) => (
                   <div
@@ -124,7 +128,11 @@ export default function DashboardMain({
               </h3>
               <p className={style.randomGameText}>{randomGame.gameText}</p>
               <div className={saveGameStyle} onClick={saveGameText}>
-                <span>{savedGame ? "Game saved" : "Save Game"}</span>
+                <span>
+                  {savedGame
+                    ? `${BUTTON_TEXT.gameSaved}`
+                    : `${BUTTON_TEXT.saveGame}`}
+                </span>
               </div>
             </div>
           )}
