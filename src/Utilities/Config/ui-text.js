@@ -11,6 +11,7 @@ export const MODAL_TEXT = {
 
 export const PAGE_TEXT = {
   reviewPieceText: "Suggested review pieces for: ",
+  loadingText: "Loading...",
 };
 
 export const ERROR_MESSAGE = {
@@ -19,4 +20,10 @@ export const ERROR_MESSAGE = {
   genericError: "There was an error",
   serverError: "There was an error with the server, please try this later.",
   tagsError: "There was an error getting tags",
+};
+
+export const BUTTON_TEXT = {
+  goButton: "Go",
+  saveGame: "Save Game",
+  gameSaved: "Game Saved",
 };
