@@ -26,4 +26,11 @@ export const BUTTON_TEXT = {
   goButton: "Go",
   saveGame: "Save Game",
   gameSaved: "Game Saved",
+  ideasButton: "Ideas",
+  myGamesButton: "My Games",
+  browseButton: "Browse",
+  addGameButton: "Add Game",
+  voteButton: "Vote",
+  profileButton: "Profile",
+  logOutButton: "Log Out",
 };

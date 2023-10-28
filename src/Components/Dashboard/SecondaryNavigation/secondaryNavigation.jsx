@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
 import style from "./secondaryNavigation.module.css";
+import { BUTTON_TEXT } from "../../../Utilities/Config/ui-text";
 
 export default function SecondaryNavigation({ setLoggedIn, setMainDisplay }) {
   //Import useNavigate to handle page redirect
@@ -38,7 +39,7 @@ export default function SecondaryNavigation({ setLoggedIn, setMainDisplay }) {
   }
 
   //Handle Profile click
-  function handleProfileCLick(){
+  function handleProfileCLick() {
     setMainDisplay("seeProfile");
   }
 
@@ -46,26 +47,26 @@ export default function SecondaryNavigation({ setLoggedIn, setMainDisplay }) {
     <div className={style.sidebarContainer}>
       <div className={style.sidebarButtonContainer}>
         <div className={style.sidebarButton} onClick={handleDashboardClick}>
-          <span>Ideas</span>
+          <span>{BUTTON_TEXT.ideasButton}</span>
         </div>
         <div className={style.sidebarButton} onClick={handleMyGamesClick}>
-          <span>My Games</span>
+          <span>{BUTTON_TEXT.myGamesButton}</span>
         </div>
         <div className={style.sidebarButton} onClick={handleBrowseClick}>
-          <span>Browse</span>
+          <span>{BUTTON_TEXT.myGamesButton}</span>
         </div>
 
         <div className={style.sidebarButton} onClick={handleAddGame}>
-          <span>Add Game</span>
+          <span>{BUTTON_TEXT.addGameButton}</span>
         </div>
         <div className={style.sidebarButton} onClick={handleVoteClick}>
-          <span>Vote</span>
+          <span>{BUTTON_TEXT.voteButton}</span>
         </div>
         <div className={style.sidebarButton} onClick={handleProfileCLick}>
-          <span>Profile</span>
+          <span>{BUTTON_TEXT.profileButton}</span>
         </div>
         <div className={style.sidebarButton} onClick={handleLogoutClick}>
-          <span>Log out</span>
+          <span>{BUTTON_TEXT.logOutButton}</span>
         </div>
       </div>
     </div>
