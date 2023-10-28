@@ -1,5 +1,6 @@
 export const TOAST_TEXT = {
   gameAddSuccess: "Game added successfully",
+  emptyFieldsError: "Make sure you have filled in all the fields!",
 };
 
 export const MODAL_TEXT = {
