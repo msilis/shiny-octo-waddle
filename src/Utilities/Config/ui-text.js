@@ -1,5 +1,6 @@
 export const TOAST_TEXT = {
   gameAddSuccess: "Game added successfully",
+  gameSavedSuccess: "Game has been saved to 'My Games'",
 };
 
 export const MODAL_TEXT = {
