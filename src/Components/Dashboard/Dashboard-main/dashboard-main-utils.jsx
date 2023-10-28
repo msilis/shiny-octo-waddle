@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE } from "../../../Utilities/Config/ui-text";
+import { ERROR_MESSAGE, TOAST_TEXT } from "../../../Utilities/Config/ui-text";
 import { showSuccessToast } from "../../../Utilities/toastSuccess";
 
 //Go Button
@@ -82,7 +82,7 @@ const handleGameSave = (setSavedGame, randomGame, userId) => {
     .then((response) => {
       if (response.status === 201) {
         setSavedGame(true);
-        showSuccessToast("Game has been saved to 'My Games'");
+        showSuccessToast(TOAST_TEXT.gameSavedSuccess);
       }
     })
     .catch((err) => {
@@ -101,7 +101,7 @@ const getGameTags = (setTagArray, setError) => {
   })
     .then((response) => {
       if (!response.ok) {
-        throw new Error("There was an error with the server.");
+        throw new Error(ERROR_MESSAGE.serverError);
       }
 
       setError(null);
