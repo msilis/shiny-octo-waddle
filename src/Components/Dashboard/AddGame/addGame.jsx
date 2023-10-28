@@ -11,7 +11,7 @@ import {
   fetchPieces,
 } from "./addGameUtils.jsx/addGameNetwork";
 import { showErrorToast } from "../../../Utilities/toastError";
-import { TOAST_TEXT } from "../../../Utilities/Config/ui-text";
+import { ERROR_MESSAGE, TOAST_TEXT } from "../../../Utilities/Config/ui-text";
 
 const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
   //Refs ***********************
@@ -125,7 +125,7 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
       addPieces.length === 0 ||
       addGameTechniques.length === 0
     ) {
-      showErrorToast(TOAST_TEXT.emptyFieldsError);
+      showErrorToast(ERROR_MESSAGE.emptyFieldsError);
     } else {
       setShowAddGameModal(true);
     }

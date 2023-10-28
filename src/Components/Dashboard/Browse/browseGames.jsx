@@ -63,8 +63,8 @@ export default function BrowseGames() {
 
   //=================== Select functionality
 
-  function handleTagChange(e) {
-    setSelectedTag(e.value);
+  function handleTagChange(event) {
+    setSelectedTag(event.value);
     //Reset pagination to work with filtered array
     setBrowsePagination({ ...browsePagination, from: 0, to: 5 });
     //Take pagination back to page 1

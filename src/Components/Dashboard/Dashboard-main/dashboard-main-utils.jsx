@@ -1,3 +1,4 @@
+import { ERROR_MESSAGE } from "../../../Utilities/Config/ui-text";
 import { showSuccessToast } from "../../../Utilities/toastSuccess";
 
 //Go Button
@@ -42,7 +43,7 @@ const handleGoClick = (
           .then((response) => {
             if (response.status === 401) {
               setError(true);
-              throw new Error("There was an error with the server");
+              throw new Error(ERROR_MESSAGE.serverError);
             } else {
               return response.json();
             }
