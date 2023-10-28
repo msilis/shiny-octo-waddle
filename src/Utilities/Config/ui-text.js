@@ -18,4 +18,5 @@ export const ERROR_MESSAGE = {
   networkError: "There was a network error, please try this later.",
   genericError: "There was an error",
   serverError: "There was an error with the server, please try this later.",
+  tagsError: "There was an error getting tags",
 };
