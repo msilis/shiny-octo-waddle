@@ -11,6 +11,7 @@ import {
   fetchPieces,
 } from "./addGameUtils.jsx/addGameNetwork";
 import { showErrorToast } from "../../../Utilities/toastError";
+import { TOAST_TEXT } from "../../../Utilities/Config/ui-text";
 
 const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
   //Refs ***********************
@@ -65,9 +66,9 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
     setAddPieces(e);
   }
 
-  //Map values of pieces and techniques to correctly send to database
-  const tagValues = addGameTechniques.map((tag) => tag.value);
-  const pieceValues = addPieces.map((piece) => piece.value);
+  //   //Map values of pieces and techniques to correctly send to database
+  //   const tagValues = addGameTechniques.map((tag) => tag.value);
+  //   const pieceValues = addPieces.map((piece) => piece.value);
 
   //If user selects yes, add game to vote list. If user selects no, add game only to profile.
 
@@ -105,6 +106,16 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
     );
   };
 
+  const addGameProperties = {
+    namePlaceholder: "Game Name",
+    nameLabel: "Game Name",
+    descriptionPlaceholder: "Game Description",
+    descriptionLabel: "Game Description",
+    textRows: "6",
+    textCols: "75",
+    gameSelectPlaceholder: "Select Game Focus",
+    gameTechniqueSelectPlaceholder: "Select Game Focus",
+  };
   //Show modal and ask if user wants game added to vote list
 
   function handleShowModal() {
@@ -114,7 +125,7 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
       addPieces.length === 0 ||
       addGameTechniques.length === 0
     ) {
-      showErrorToast("Make sure you have filled in all the fields!");
+      showErrorToast(TOAST_TEXT.emptyFieldsError);
     } else {
       setShowAddGameModal(true);
     }
@@ -131,17 +142,17 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
     >
       <h3>Add a game!</h3>
       <input
-        placeholder="Game Name"
-        label="Game Name"
+        placeholder={addGameProperties.namePlaceholder}
+        label={addGameProperties.nameLabel}
         ref={gameName}
         className={style.gameNameInput}
       />
       <textarea
-        placeholder="Game Description"
-        label="Game Description"
+        placeholder={addGameProperties.descriptionPlaceholder}
+        label={addGameProperties.descriptionLabel}
         ref={gameText}
-        rows="6"
-        cols="75"
+        rows={addGameProperties.textRows}
+        cols={addGameProperties.textCols}
         className={style.gameDescriptionInput}
       />
       <Select
@@ -151,7 +162,7 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
         isSearchable={true}
         isClearable={true}
         onChange={handleTagChange}
-        placeholder="Select Game Focus"
+        placeholder={addGameProperties.gameSelectPlaceholder}
         value={addGameTechniques}
         data-id="gameOptionInput"
       />
@@ -164,7 +175,7 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
         isClearable={true}
         onChange={handlePieceChange}
         value={addPieces}
-        placeholder="Select Relevant Pieces"
+        placeholder={addGameProperties.gameTechniqueSelectPlaceholder}
         data-id="pieceOptionInput"
       />
       <div
