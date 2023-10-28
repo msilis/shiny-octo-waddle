@@ -1,3 +1,4 @@
+import { MODAL_TEXT } from "../../../../Utilities/Config/ui-text";
 import style from "./addGameModal.module.css";
 
 export default function AddGameModal({
@@ -27,18 +28,28 @@ export default function AddGameModal({
   return (
     <div className={modalDisplay}>
       <div className={style.addGameModalContainer}>
-        <h3 className={style.modalText}>
-          Do you want your game submitted for voting?
-        </h3>
-        <p>
-          (If you select 'no', the game will only be added to your profile.)
-        </p>
+        <h3 className={style.modalText}>{MODAL_TEXT.addGameVote}</h3>
+        <p>({MODAL_TEXT.addGameVoteAdditional})</p>
         <div className={style.buttonContainer}>
-          <button className={style.yesButton} onClick={handleYesButtonClick} data-testid="yesButton">Yes</button>
-          <button className={style.cancelButton} onClick={handleNoButtonClick} data-testid="noButton">
+          <button
+            className={style.yesButton}
+            onClick={handleYesButtonClick}
+            data-testid="yesButton"
+          >
+            Yes
+          </button>
+          <button
+            className={style.cancelButton}
+            onClick={handleNoButtonClick}
+            data-testid="noButton"
+          >
             No
           </button>
-          <button className={style.cancelButton} onClick={handleCancelClick} data-testid="cancelButton">
+          <button
+            className={style.cancelButton}
+            onClick={handleCancelClick}
+            data-testid="cancelButton"
+          >
             Cancel
           </button>
         </div>
