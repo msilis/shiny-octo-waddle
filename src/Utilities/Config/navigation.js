@@ -4,7 +4,7 @@ export const PAGE_NAVIGATION = {
   dashboard: "dashboard",
   addGame: "addGame",
   browse: "browse",
-  profile: "profile",
+  profile: "seeProfile",
 };
 
 export const ROUTE_PATHS = {
