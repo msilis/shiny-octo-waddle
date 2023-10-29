@@ -2,6 +2,7 @@ import { it, vi, expect, describe } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import Login from "../Components/Login/login";
 import { MemoryRouter } from "react-router";
+import { STORAGE_OPTIONS } from "../Utilities/Config/storage";
 
 describe("Login", () => {
   it("should return 401 error if empty fields are sent to server", async () => {
