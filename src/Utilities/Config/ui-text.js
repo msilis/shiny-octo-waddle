@@ -21,6 +21,9 @@ export const ERROR_MESSAGE = {
   serverError: "There was an error with the server, please try this later.",
   tagsError: "There was an error getting tags",
   four_oh_four: "404: There is nothing to see here!",
+  notLoggedIn: "There was a network error. You are not logged in.",
+  failedToFetch: "Failed to fetch",
+  incorrectLogin: "Incorrect username or password",
 };
 
 export const BUTTON_TEXT = {

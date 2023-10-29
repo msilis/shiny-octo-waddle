@@ -6,3 +6,7 @@ export const PAGE_NAVIGATION = {
   browse: "browse",
   profile: "profile",
 };
+
+export const ROUTE_PATHS = {
+  dashboard: "/dashboard",
+};
