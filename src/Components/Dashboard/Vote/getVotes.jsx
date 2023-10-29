@@ -1,5 +1,7 @@
 //Get all games to vote on from database
 
+import { ERROR_MESSAGE } from "../../../Utilities/Config/ui-text";
+
 function getVoteGames(
   setLoadingVote,
   setVotingGames,
@@ -13,20 +15,20 @@ function getVoteGames(
     method: "POST",
     headers: {
       "content-type": "application/json",
-      "X-custom-cookie": "jwt", //include cookie in header
+      "X-custom-cookie": "jwt",
     },
-    credentials: "include", //make sure endpoint knows to expect a cookie
+    credentials: "include",
   })
     .then((response) => {
       if (!response.ok) {
-        throw Error("There was a network error and I could not get votes");
+        throw Error(ERROR_MESSAGE.voteServerError);
       } else {
         return response.json();
       }
     })
     .then((jsonResponse) => {
       if (jsonResponse.length === 0) {
-        throw Error("Server did not return any games.");
+        throw Error(ERROR_MESSAGE.noGamesError);
       } else {
         setGamesForPagination(jsonResponse.slice(from, to));
         setVotingGames(jsonResponse);
@@ -38,7 +40,10 @@ function getVoteGames(
       setLoadingVote(false);
     })
     .catch((err) => {
-      if (err instanceof TypeError && err.message === "Failed to fetch") {
+      if (
+        err instanceof TypeError &&
+        err.message === ERROR_MESSAGE.failedToFetch
+      ) {
         console.log("Network error: ", err.message);
       }
       setLoadingVote(false);
@@ -58,7 +63,7 @@ function getOnlyVotes(setVoteTotal) {
     })
       .then((response) => {
         if (!response.ok) {
-          throw Error("There was an error getting votes from the server");
+          throw Error(ERROR_MESSAGE.voteServerError);
         }
         return response.json();
       })

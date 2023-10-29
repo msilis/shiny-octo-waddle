@@ -24,6 +24,8 @@ export const ERROR_MESSAGE = {
   notLoggedIn: "There was a network error. You are not logged in.",
   failedToFetch: "Failed to fetch",
   incorrectLogin: "Incorrect username or password",
+  voteServerError: "There was an error getting votes from the server",
+  noGamesError: "Server did not return any games",
 };
 
 export const BUTTON_TEXT = {
