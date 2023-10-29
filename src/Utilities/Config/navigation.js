@@ -9,4 +9,9 @@ export const PAGE_NAVIGATION = {
 
 export const ROUTE_PATHS = {
   dashboard: "/dashboard",
+  home: "/",
+  login: "/login",
+  about: "/about",
+  register: "/register",
+  fallback: "*",
 };
