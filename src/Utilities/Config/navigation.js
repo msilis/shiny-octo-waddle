@@ -15,3 +15,8 @@ export const ROUTE_PATHS = {
   register: "/register",
   fallback: "*",
 };
+
+export const URL_ENDPOINTS = {
+  getVoteTotal: "https://group-class-backend.onrender.com/getVoteTotals",
+  gamesForVote: "https://group-class-backend.onrender.com/gamesForVote",
+};
