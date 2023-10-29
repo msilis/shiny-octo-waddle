@@ -1,6 +1,10 @@
 import { useNavigate } from "react-router";
 import style from "./secondaryNavigation.module.css";
 import { BUTTON_TEXT } from "../../../Utilities/Config/ui-text";
+import {
+  PAGE_NAVIGATION,
+  ROUTE_PATHS,
+} from "../../../Utilities/Config/navigation";
 
 export default function SecondaryNavigation({ setLoggedIn, setMainDisplay }) {
   //Import useNavigate to handle page redirect
@@ -10,37 +14,37 @@ export default function SecondaryNavigation({ setLoggedIn, setMainDisplay }) {
   function handleLogoutClick() {
     setLoggedIn(false);
     sessionStorage.removeItem("loggedIn");
-    navigate("/login");
+    navigate(ROUTE_PATHS.login);
   }
 
   //Handle 'My Games' button click
   function handleMyGamesClick() {
-    setMainDisplay("myGames");
+    setMainDisplay(PAGE_NAVIGATION.myGames);
   }
 
   //Handle Add Game click
   function handleAddGame() {
-    setMainDisplay("addGame");
+    setMainDisplay(PAGE_NAVIGATION.addGame);
   }
 
   //Handle Vote button click
   function handleVoteClick() {
-    setMainDisplay("vote");
+    setMainDisplay(PAGE_NAVIGATION.vote);
   }
 
   //Dashboard click
   function handleDashboardClick() {
-    setMainDisplay("dashboard");
+    setMainDisplay(PAGE_NAVIGATION.dashboard);
   }
 
   //Browse click
   function handleBrowseClick() {
-    setMainDisplay("browse");
+    setMainDisplay(PAGE_NAVIGATION.browse);
   }
 
   //Handle Profile click
   function handleProfileCLick() {
-    setMainDisplay("seeProfile");
+    setMainDisplay(PAGE_NAVIGATION.profile);
   }
 
   return (
