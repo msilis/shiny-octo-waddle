@@ -19,4 +19,6 @@ export const ROUTE_PATHS = {
 export const URL_ENDPOINTS = {
   getVoteTotal: "https://group-class-backend.onrender.com/getVoteTotals",
   gamesForVote: "https://group-class-backend.onrender.com/gamesForVote",
+  addGame: "https://group-class-backend.onrender.com/addGame",
+  addGameForVote: "https://group-class-backend.onrender.com/addGameForVote",
 };

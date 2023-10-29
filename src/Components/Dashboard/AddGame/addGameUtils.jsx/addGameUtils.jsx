@@ -1,4 +1,5 @@
 //Add Game - not for voting
+import { URL_ENDPOINTS } from "../../../../Utilities/Config/navigation";
 import { TOAST_TEXT } from "../../../../Utilities/Config/ui-text";
 import { showSuccessToast } from "../../../../Utilities/toastSuccess";
 
@@ -22,7 +23,7 @@ const handleAddGame = (
   };
 
   try {
-    fetch("https://group-class-backend.onrender.com/addGame", {
+    fetch(URL_ENDPOINTS.addGame, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -62,7 +63,7 @@ const handleAddVoteGame = (
     noVote: 0,
   };
   try {
-    fetch("https://group-class-backend.onrender.com/addGameForVote", {
+    fetch(URL_ENDPOINTS.addGameForVote, {
       method: "POST",
       headers: {
         "content-type": "application/json",
