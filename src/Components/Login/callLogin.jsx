@@ -1,3 +1,5 @@
+import { ROUTE_PATHS } from "../../Utilities/Config/navigation";
+import { ERROR_MESSAGE } from "../../Utilities/Config/ui-text";
 import { showErrorToast } from "../../Utilities/toastError";
 
 export function callLogin(loginProps, navigate) {
@@ -16,9 +18,9 @@ export function callLogin(loginProps, navigate) {
   })
     .then((response) => {
       if (response.status === 401) {
-        showErrorToast("Incorrect username or password.");
+        showErrorToast(ERROR_MESSAGE.incorrectLogin);
         loginProps.setLoading(false);
-        throw new Error("Incorrect username or password.");
+        throw new Error(ERROR_MESSAGE.incorrectLogin);
       } else if (!response.ok) {
         throw Error("Network error");
       } else {
@@ -43,11 +45,11 @@ export function callLogin(loginProps, navigate) {
       sessionStorage.setItem("user", JSON.stringify(userInfo));
       //Redirect user after sucessful login
       loginProps.setLoading(false);
-      return navigate("/dashboard");
+      return navigate(ROUTE_PATHS.navigation);
     })
     .catch((err) => {
       console.log(err.message);
       if (err.message === "Failed to fetch")
-        showErrorToast("There was a network error. You are not logged in.");
+        showErrorToast(ERROR_MESSAGE.notLoggedIn);
     });
 }
