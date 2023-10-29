@@ -13,7 +13,7 @@ export default function SecondaryNavigation({ setLoggedIn, setMainDisplay }) {
   //handle logout button functionality
   function handleLogoutClick() {
     setLoggedIn(false);
-    sessionStorage.removeItem(STORAGE.loggedIn);
+    sessionStorage.removeItem(STORAGE_OPTIONS.loggedIn);
     navigate(ROUTE_PATHS.login);
   }
 

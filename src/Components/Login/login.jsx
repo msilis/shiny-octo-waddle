@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { handleLoginSubmit } from "./login-utils";
 import Loading from "../Loading/loading";
+import { STORAGE_OPTIONS } from "../../Utilities/Config/storage";
 
 export default function Login({
   setFirstName,
@@ -24,7 +25,7 @@ export default function Login({
   //Loading state
   const [loading, setLoading] = useState(false);
   //Get login status from sessionStorage
-  const loginStatus = sessionStorage.getItem(STORAGE.loggedIn);
+  const loginStatus = sessionStorage.getItem(STORAGE_OPTIONS.loggedIn);
 
   //Login props
 
@@ -45,7 +46,7 @@ export default function Login({
   //If already logged in, redirect to dashboard
 
   function checkLoggedIn() {
-    const isLoggedIn = sessionStorage.getItem(STORAGE.loggedIn);
+    const isLoggedIn = sessionStorage.getItem(STORAGE_OPTIONS.loggedIn);
     if (isLoggedIn) {
       navigate("/dashboard");
     }
@@ -63,7 +64,7 @@ export default function Login({
   const handleLogoutInternal = () => {
     setLoggedIn(false);
 
-    sessionStorage.removeItem(STORAGE.loggedIn);
+    sessionStorage.removeItem(STORAGE_OPTIONS.loggedIn);
   };
 
   useEffect(() => {
@@ -79,7 +80,7 @@ export default function Login({
   ) : (
     <div className={classnames(style.loginContainer, style.fadeContainer)}>
       <h3 className={style.loginHeading}>
-        {sessionStorage.getItem(STORAGE.loggedIn)
+        {sessionStorage.getItem(STORAGE_OPTIONS.loggedIn)
           ? "User already logged in"
           : "Log In"}
       </h3>

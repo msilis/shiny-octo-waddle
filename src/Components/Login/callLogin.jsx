@@ -34,7 +34,7 @@ export function callLogin(loginProps, navigate) {
       loginProps.setEmail(data.email);
       loginProps.setUserId(data.userId);
       loginProps.setUsername(data.username);
-      sessionStorage.setItem(STORAGE.loggedIn, true);
+      sessionStorage.setItem(STORAGE_OPTIONS.loggedIn, true);
       const userInfo = {
         firstName: data.firstName,
         lastName: data.lastName,
@@ -42,7 +42,7 @@ export function callLogin(loginProps, navigate) {
         username: data.username,
         userId: data.userId,
       };
-      sessionStorage.setItem(STORAGE.user, JSON.stringify(userInfo));
+      sessionStorage.setItem(STORAGE_OPTIONS.user, JSON.stringify(userInfo));
       //Redirect user after sucessful login
       loginProps.setLoading(false);
       return navigate(ROUTE_PATHS.navigation);
