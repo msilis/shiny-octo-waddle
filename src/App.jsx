@@ -12,7 +12,8 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserIdContext } from "./userIdContext";
-import { ERROR_MESSAGE } from "./Utilities/Config/ui-text";
+import { ERROR_MESSAGE, PAGE_TEXT } from "./Utilities/Config/ui-text";
+import { ROUTE_PATHS } from "./Utilities/Config/navigation";
 //Lazy load components
 const Home = lazy(() => import("./Components/Home/home.jsx"));
 const About = lazy(() => import("./Components/About/about.jsx"));
@@ -41,7 +42,7 @@ function App() {
 
   const suspenseLoading = (
     <div className="loadingMessage">
-      <h3 className="loadingText">Loading...</h3>
+      <h3 className="loadingText">{PAGE_TEXT.loadingText}</h3>
     </div>
   );
 
@@ -63,10 +64,10 @@ function App() {
   function PageRoutes() {
     return (
       <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/about" element={<About />}></Route>
+        <Route path={ROUTE_PATHS.home} element={<Home />}></Route>
+        <Route path={ROUTE_PATHS.about} element={<About />}></Route>
         <Route
-          path="/login"
+          path={ROUTE_PATHS.login}
           element={
             <Login
               setLoggedIn={setLoggedIn}
@@ -80,7 +81,7 @@ function App() {
           }
         ></Route>
         <Route
-          path="/dashboard"
+          path={ROUTE_PATHS.dashboard}
           element={
             <Protected loggedIn={loggedIn}>
               <Dashboard
@@ -102,9 +103,9 @@ function App() {
             </Protected>
           }
         ></Route>
-        <Route path="/register" element={<Register />}></Route>
+        <Route path={ROUTE_PATHS.register} element={<Register />}></Route>
         <Route
-          path="*"
+          path={ROUTE_PATHS.fallback}
           element={
             <h3 className="errorMessage">{ERROR_MESSAGE.four_oh_four}</h3>
           }
