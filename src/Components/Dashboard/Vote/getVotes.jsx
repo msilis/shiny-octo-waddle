@@ -1,6 +1,7 @@
 //Get all games to vote on from database
 
 import { ERROR_MESSAGE } from "../../../Utilities/Config/ui-text";
+import { URL_ENDPOINTS } from "../../../Utilities/Config/navigation.js";
 
 function getVoteGames(
   setLoadingVote,
@@ -11,7 +12,7 @@ function getVoteGames(
   setGamesForPagination
 ) {
   setLoadingVote(true);
-  fetch("https://group-class-backend.onrender.com/gamesForVote", {
+  fetch(URL_ENDPOINTS.gamesForVote, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -53,7 +54,7 @@ function getVoteGames(
 //Fetch vote count to be able to update only count, not whole component
 function getOnlyVotes(setVoteTotal) {
   return new Promise((resolve, reject) => {
-    fetch("https://group-class-backend.onrender.com/getVoteTotals", {
+    fetch(URL_ENDPOINTS.getVoteTotal, {
       method: "GET",
       headers: {
         "content-type": "application/json",
