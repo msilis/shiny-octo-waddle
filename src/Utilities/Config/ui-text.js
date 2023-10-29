@@ -20,6 +20,7 @@ export const ERROR_MESSAGE = {
   genericError: "There was an error",
   serverError: "There was an error with the server, please try this later.",
   tagsError: "There was an error getting tags",
+  four_oh_four: "404: There is nothing to see here!",
 };
 
 export const BUTTON_TEXT = {

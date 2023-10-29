@@ -12,6 +12,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserIdContext } from "./userIdContext";
+import { ERROR_MESSAGE } from "./Utilities/Config/ui-text";
 //Lazy load components
 const Home = lazy(() => import("./Components/Home/home.jsx"));
 const About = lazy(() => import("./Components/About/about.jsx"));
@@ -105,7 +106,7 @@ function App() {
         <Route
           path="*"
           element={
-            <h3 className="errorMessage">404: There is nothing to see here!</h3>
+            <h3 className="errorMessage">{ERROR_MESSAGE.four_oh_four}</h3>
           }
         ></Route>
       </Routes>
