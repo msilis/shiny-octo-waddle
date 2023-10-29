@@ -10,6 +10,7 @@ import {
 } from "../../Components";
 import { useEffect, useState } from "react";
 import MyGames from "../MyGames/myGames";
+import { PAGE_NAVIGATION } from "../../Utilities/Config/navigation";
 
 export default function Dashboard({
   loggedIn,
@@ -49,31 +50,35 @@ export default function Dashboard({
         />
       </div>
       <div className={style.dashboardMainDisplay}>
-      {mainDisplay === "addGame" && (
-        <AddGame userId={userId} setAddGame={setAddGame} username={username} />
-      )}
-      {mainDisplay === "myGames" && <MyGames userId={userId} />}
-      {mainDisplay === "vote" && <Vote userId={userId} />}
-      {mainDisplay === "dashboard" && (
-        <DashboardMain
-          firstName={firstName}
-          userId={userId}
-          tagArray={tagArray}
-          setTagArray={setTagArray}
-        />
-      )}
-      {mainDisplay === "browse" && <BrowseGames />}
-      {mainDisplay === "seeProfile" && (
-        <Profile
-          firstName={firstName}
-          lastName={lastName}
-          email={email}
-          userId={userId}
-          setFirstName={setFirstName}
-          setLastName={setLastName}
-          setEmail={setEmail}
-        />
-      )}
+        {mainDisplay === PAGE_NAVIGATION.addGame && (
+          <AddGame
+            userId={userId}
+            setAddGame={setAddGame}
+            username={username}
+          />
+        )}
+        {mainDisplay === PAGE_NAVIGATION.myGames && <MyGames userId={userId} />}
+        {mainDisplay === PAGE_NAVIGATION.vote && <Vote userId={userId} />}
+        {mainDisplay === PAGE_NAVIGATION.vote && (
+          <DashboardMain
+            firstName={firstName}
+            userId={userId}
+            tagArray={tagArray}
+            setTagArray={setTagArray}
+          />
+        )}
+        {mainDisplay === PAGE_NAVIGATION.vote && <BrowseGames />}
+        {mainDisplay === PAGE_NAVIGATION.profile && (
+          <Profile
+            firstName={firstName}
+            lastName={lastName}
+            email={email}
+            userId={userId}
+            setFirstName={setFirstName}
+            setLastName={setLastName}
+            setEmail={setEmail}
+          />
+        )}
       </div>
     </div>
   );
