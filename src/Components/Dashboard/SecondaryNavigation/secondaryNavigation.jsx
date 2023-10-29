@@ -53,7 +53,7 @@ export default function SecondaryNavigation({ setLoggedIn, setMainDisplay }) {
           <span>{BUTTON_TEXT.myGamesButton}</span>
         </div>
         <div className={style.sidebarButton} onClick={handleBrowseClick}>
-          <span>{BUTTON_TEXT.myGamesButton}</span>
+          <span>{BUTTON_TEXT.browseButton}</span>
         </div>
 
         <div className={style.sidebarButton} onClick={handleAddGame}>

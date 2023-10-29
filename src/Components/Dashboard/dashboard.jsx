@@ -59,7 +59,7 @@ export default function Dashboard({
         )}
         {mainDisplay === PAGE_NAVIGATION.myGames && <MyGames userId={userId} />}
         {mainDisplay === PAGE_NAVIGATION.vote && <Vote userId={userId} />}
-        {mainDisplay === PAGE_NAVIGATION.vote && (
+        {mainDisplay === PAGE_NAVIGATION.dashboard && (
           <DashboardMain
             firstName={firstName}
             userId={userId}
@@ -67,7 +67,7 @@ export default function Dashboard({
             setTagArray={setTagArray}
           />
         )}
-        {mainDisplay === PAGE_NAVIGATION.vote && <BrowseGames />}
+        {mainDisplay === PAGE_NAVIGATION.browse && <BrowseGames />}
         {mainDisplay === PAGE_NAVIGATION.profile && (
           <Profile
             firstName={firstName}
