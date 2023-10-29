@@ -5,7 +5,6 @@ import style from "./navbar.module.css";
 import { useState } from "react";
 
 export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
-
   //State for hamburger menu. True is hamburger open, false is closed
   const [hamburgerActive, setHamburgerActive] = useState(false);
 
@@ -41,9 +40,9 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
 
   function handleLogoutClick() {
     setLoggedIn(false);
-    sessionStorage.removeItem("loggedIn");
+    sessionStorage.removeItem(STORAGE.loggedIn);
     navigate("/");
-    setHamburgerActive(false)
+    setHamburgerActive(false);
   }
 
   function handleProfileClick() {
@@ -164,7 +163,6 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
             }`}
             onClick={handleAddGameClick}
             data-testid="addGameClick"
-            
           >
             <li className={style.navListItem}>Add Game</li>
           </Link>
