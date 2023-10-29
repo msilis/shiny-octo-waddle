@@ -21,4 +21,7 @@ export const URL_ENDPOINTS = {
   gamesForVote: "https://group-class-backend.onrender.com/gamesForVote",
   addGame: "https://group-class-backend.onrender.com/addGame",
   addGameForVote: "https://group-class-backend.onrender.com/addGameForVote",
+  getGameTechniques:
+    "https://group-class-backend.onrender.com/getGameTechniques",
+  getPieces: "https://group-class-backend.onrender.com/getPieces",
 };
