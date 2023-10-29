@@ -24,7 +24,7 @@ export default function Login({
   //Loading state
   const [loading, setLoading] = useState(false);
   //Get login status from sessionStorage
-  const loginStatus = sessionStorage.getItem("loggedIn");
+  const loginStatus = sessionStorage.getItem(STORAGE.loggedIn);
 
   //Login props
 
@@ -45,7 +45,7 @@ export default function Login({
   //If already logged in, redirect to dashboard
 
   function checkLoggedIn() {
-    const isLoggedIn = sessionStorage.getItem("loggedIn");
+    const isLoggedIn = sessionStorage.getItem(STORAGE.loggedIn);
     if (isLoggedIn) {
       navigate("/dashboard");
     }
@@ -63,7 +63,7 @@ export default function Login({
   const handleLogoutInternal = () => {
     setLoggedIn(false);
 
-    sessionStorage.removeItem("loggedIn");
+    sessionStorage.removeItem(STORAGE.loggedIn);
   };
 
   useEffect(() => {
@@ -79,7 +79,7 @@ export default function Login({
   ) : (
     <div className={classnames(style.loginContainer, style.fadeContainer)}>
       <h3 className={style.loginHeading}>
-        {sessionStorage.getItem("loggedIn")
+        {sessionStorage.getItem(STORAGE.loggedIn)
           ? "User already logged in"
           : "Log In"}
       </h3>

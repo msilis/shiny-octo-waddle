@@ -48,7 +48,7 @@ function App() {
 
   //Check sessionStorage to see if user is logged in
   useEffect(() => {
-    if (sessionStorage.getItem("loggedIn")) {
+    if (sessionStorage.getItem(STORAGE.loggedIn)) {
       setLoggedIn(true);
       let parsedUserInfo = JSON.parse(sessionStorage.user);
       setFirstName(parsedUserInfo.firstName);
