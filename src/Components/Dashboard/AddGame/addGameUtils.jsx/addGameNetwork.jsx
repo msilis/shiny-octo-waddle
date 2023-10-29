@@ -1,8 +1,10 @@
 //Fetch Game Techniques
 
+import { URL_ENDPOINTS } from "../../../../Utilities/Config/navigation";
+
 const fetchGameTechniques = (setGameTechniques) => {
   try {
-    fetch("https://group-class-backend.onrender.com/getGameTechniques", {
+    fetch(URL_ENDPOINTS.getGameTechniques, {
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -26,7 +28,7 @@ const fetchGameTechniques = (setGameTechniques) => {
 //Fetch pieces
 
 const fetchPieces = (setListOfPieces) => {
-  fetch("https://group-class-backend.onrender.com/getPieces")
+  fetch(URL_ENDPOINTS.getPieces)
     .then((response) => response.json())
     .then((data) => {
       let sortedPieces = data.map((item) => {
