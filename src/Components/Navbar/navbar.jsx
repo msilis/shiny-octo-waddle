@@ -3,6 +3,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import style from "./navbar.module.css";
 import { useState } from "react";
+import {
+  PAGE_NAVIGATION,
+  ROUTE_PATHS,
+} from "../../Utilities/Config/navigation";
+import { BUTTON_TEXT } from "../../Utilities/Config/ui-text";
 
 export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
   //State for hamburger menu. True is hamburger open, false is closed
@@ -19,34 +24,34 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
   //Secondary Navigation Functionality
 
   function handleMyGamesClick() {
-    setMainDisplay("myGames");
+    setMainDisplay(PAGE_NAVIGATION.myGames);
     setHamburgerActive(false);
   }
 
   function handleBrowseClick() {
-    setMainDisplay("browse");
+    setMainDisplay(PAGE_NAVIGATION.browse);
     setHamburgerActive(false);
   }
 
   function handleAddGameClick() {
-    setMainDisplay("addGame");
+    setMainDisplay(PAGE_NAVIGATION.addGame);
     setHamburgerActive(false);
   }
 
   function handleVoteClick() {
-    setMainDisplay("vote");
+    setMainDisplay(PAGE_NAVIGATION.vote);
     setHamburgerActive(false);
   }
 
   function handleLogoutClick() {
     setLoggedIn(false);
-    sessionStorage.removeItem(STORAGE.loggedIn);
-    navigate("/");
+    sessionStorage.removeItem(STORAGE_OPTIONS.loggedIn);
+    navigate(ROUTE_PATHS.home);
     setHamburgerActive(false);
   }
 
   function handleProfileClick() {
-    setMainDisplay("seeProfile");
+    setMainDisplay(PAGE_NAVIGATION.profile);
     setHamburgerActive(false);
   }
 
@@ -85,7 +90,7 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
             onClick={() => setHamburgerActive(false)}
             data-testid="homeClick"
           >
-            <li className={style.navListItem}>Home</li>
+            <li className={style.navListItem}>{BUTTON_TEXT.homeButton}</li>
           </Link>
           <Link
             to="about"
@@ -93,41 +98,41 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
             onClick={() => setHamburgerActive(false)}
             data-testid="aboutClick"
           >
-            <li className={style.navListItem}>About</li>
+            <li className={style.navListItem}>{BUTTON_TEXT.aboutButton}</li>
           </Link>
           {loggedIn ? (
             <Link
-              to="/dashboard"
+              to={ROUTE_PATHS.dashboard}
               className={style.navLink}
               onClick={() => {
-                setMainDisplay("dashboard");
+                setMainDisplay(PAGE_NAVIGATION.dashboard);
                 setHamburgerActive(false);
               }}
               data-testid="dashboardClick"
             >
-              <li className={style.navListItem}>Ideas</li>
+              <li className={style.navListItem}>{BUTTON_TEXT.ideasButton}</li>
             </Link>
           ) : (
             <Link
-              to="/login"
+              to={ROUTE_PATHS.login}
               className={style.navLink}
               onClick={() => setHamburgerActive(false)}
               data-testid="loginClick"
             >
-              <li className={style.navListItem}>Log In</li>
+              <li className={style.navListItem}>{BUTTON_TEXT.loginButton}</li>
             </Link>
           )}
 
           <Link
-            to="register"
+            to={ROUTE_PATHS.register}
             className={style.navLink}
             onClick={() => setHamburgerActive(false)}
             data-testid="registerClick"
           >
-            <li className={style.navListItem}>Register</li>
+            <li className={style.navListItem}>{BUTTON_TEXT.registerButton}</li>
           </Link>
           <Link
-            to="/dashboard"
+            to={ROUTE_PATHS.dashboard}
             className={style.navLink}
             onClick={handleMyGamesClick}
             data-testid="myGamesClick"
@@ -139,11 +144,11 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
                   : style.loggedInNavigationHidden
               }`}
             >
-              My Games
+              {BUTTON_TEXT.myGamesButton}
             </li>
           </Link>
           <Link
-            to="/dashboard"
+            to={ROUTE_PATHS.dashboard}
             className={`${style.navLink} ${
               loggedIn
                 ? style.loggedInNavigation
@@ -152,10 +157,10 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
             onClick={handleBrowseClick}
             data-testid="browseClick"
           >
-            <li className={style.navListItem}>Browse</li>
+            <li className={style.navListItem}>{BUTTON_TEXT.browseButton}</li>
           </Link>
           <Link
-            to="/dashboard"
+            to={ROUTE_PATHS.dashboard}
             className={`${style.navLink} ${
               loggedIn
                 ? style.loggedInNavigation
@@ -164,10 +169,10 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
             onClick={handleAddGameClick}
             data-testid="addGameClick"
           >
-            <li className={style.navListItem}>Add Game</li>
+            <li className={style.navListItem}>{BUTTON_TEXT.addGameButton}</li>
           </Link>
           <Link
-            to="/dashboard"
+            to={ROUTE_PATHS.dashboard}
             className={`${style.navLink} ${
               loggedIn
                 ? style.loggedInNavigation
@@ -176,10 +181,10 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
             onClick={handleVoteClick}
             data-testid="voteClick"
           >
-            <li className={style.navListItem}>Vote</li>
+            <li className={style.navListItem}>{BUTTON_TEXT.voteButton}</li>
           </Link>
           <Link
-            to="/dashboard"
+            to={ROUTE_PATHS.dashboard}
             className={`${style.navLink} ${
               loggedIn
                 ? style.loggedInNavigation
@@ -188,10 +193,10 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
             onClick={handleProfileClick}
             data-testid="profileClick"
           >
-            <li className={style.navListItem}>Profile</li>
+            <li className={style.navListItem}>{BUTTON_TEXT.profileButton}</li>
           </Link>
           <Link
-            to="/"
+            to={ROUTE_PATHS.home}
             className={`${style.navLink} ${
               loggedIn
                 ? style.loggedInNavigation
@@ -199,7 +204,7 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
             }`}
             onClick={handleLogoutClick}
           >
-            <li className={style.navListItem}>Log Out</li>
+            <li className={style.navListItem}>{BUTTON_TEXT.logOutButton}</li>
           </Link>
         </ul>
       </nav>

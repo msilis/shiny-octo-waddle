@@ -43,9 +43,9 @@ describe("Login", () => {
       }
     ).then((response) => {
       if (response.status === 200) {
-        sessionStorage.setItem(STORAGE.loggedIn, true);
+        sessionStorage.setItem(STORAGE_OPTIONS.loggedIn, true);
       }
-      const storage = sessionStorage.getItem(STORAGE.loggedIn);
+      const storage = sessionStorage.getItem(STORAGE_OPTIONS.loggedIn);
       expect(storage).toBeTruthy();
     });
   });

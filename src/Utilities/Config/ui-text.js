@@ -37,4 +37,8 @@ export const BUTTON_TEXT = {
   voteButton: "Vote",
   profileButton: "Profile",
   logOutButton: "Log Out",
+  registerButton: "Register",
+  loginButton: "Login",
+  aboutButton: "About",
+  homeButton: "Home",
 };

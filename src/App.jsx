@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { UserIdContext } from "./userIdContext";
 import { ERROR_MESSAGE, PAGE_TEXT } from "./Utilities/Config/ui-text";
 import { ROUTE_PATHS } from "./Utilities/Config/navigation";
+import { STORAGE_OPTIONS } from "./Utilities/Config/storage";
 //Lazy load components
 const Home = lazy(() => import("./Components/Home/home.jsx"));
 const About = lazy(() => import("./Components/About/about.jsx"));
@@ -48,7 +49,7 @@ function App() {
 
   //Check sessionStorage to see if user is logged in
   useEffect(() => {
-    if (sessionStorage.getItem(STORAGE.loggedIn)) {
+    if (sessionStorage.getItem(STORAGE_OPTIONS.loggedIn)) {
       setLoggedIn(true);
       let parsedUserInfo = JSON.parse(sessionStorage.user);
       setFirstName(parsedUserInfo.firstName);
