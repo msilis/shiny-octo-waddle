@@ -6,6 +6,7 @@ import { handleLoginSubmit } from "./login-utils";
 import Loading from "../Loading/loading";
 import { STORAGE_OPTIONS } from "../../Utilities/Config/storage";
 import { GoogleLogin } from "@react-oauth/google";
+import { googleLoginSuccess } from "./googleLogin";
 
 export default function Login({
   setFirstName,
@@ -120,9 +121,7 @@ export default function Login({
       </div>
       <div className={style.googleLoginContainer}>
         <GoogleLogin
-          onSuccess={(credentialResponse) => {
-            console.log(credentialResponse);
-          }}
+          onSuccess={googleLoginSuccess}
           onError={(error) => {
             console.log("Login Failed!");
           }}
