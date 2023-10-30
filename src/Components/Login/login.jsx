@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { handleLoginSubmit } from "./login-utils";
 import Loading from "../Loading/loading";
 import { STORAGE_OPTIONS } from "../../Utilities/Config/storage";
+import { GoogleLogin } from "@react-oauth/google";
 
 export default function Login({
   setFirstName,
@@ -116,6 +117,16 @@ export default function Login({
         onClick={handleLogoutInternal}
       >
         <span>Log out</span>
+      </div>
+      <div className={style.googleLoginContainer}>
+        <GoogleLogin
+          onSuccess={(credentialResponse) => {
+            console.log(credentialResponse);
+          }}
+          onError={(error) => {
+            console.log("Login Failed!");
+          }}
+        />
       </div>
     </div>
   );

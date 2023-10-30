@@ -10,6 +10,7 @@ import React, {
 import { Header, Navbar, Footer, Profile, AddGame, Vote } from "./Components";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import "react-toastify/dist/ReactToastify.css";
 import { UserIdContext } from "./userIdContext";
 import { ERROR_MESSAGE, PAGE_TEXT } from "./Utilities/Config/ui-text";
@@ -116,29 +117,31 @@ function App() {
   }
 
   return (
-    <UserIdContext.Provider value={userId}>
-      <div className="App">
-        <div className="headerContainer">
-          <Header />
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <UserIdContext.Provider value={userId}>
+        <div className="App">
+          <div className="headerContainer">
+            <Header />
+          </div>
+          <div className="navbarContainer">
+            <Navbar
+              setLoggedIn={setLoggedIn}
+              loggedIn={loggedIn}
+              seeProfile={seeProfile}
+              setSeeProfile={setSeeProfile}
+              setMainDisplay={setMainDisplay}
+            />
+          </div>
+          <ToastContainer />
+          <div className="routesContainer">
+            <Suspense fallback={suspenseLoading}>
+              <PageRoutes />
+            </Suspense>
+          </div>
+          <Footer />
         </div>
-        <div className="navbarContainer">
-          <Navbar
-            setLoggedIn={setLoggedIn}
-            loggedIn={loggedIn}
-            seeProfile={seeProfile}
-            setSeeProfile={setSeeProfile}
-            setMainDisplay={setMainDisplay}
-          />
-        </div>
-        <ToastContainer />
-        <div className="routesContainer">
-          <Suspense fallback={suspenseLoading}>
-            <PageRoutes />
-          </Suspense>
-        </div>
-        <Footer />
-      </div>
-    </UserIdContext.Provider>
+      </UserIdContext.Provider>
+    </GoogleOAuthProvider>
   );
 }
 

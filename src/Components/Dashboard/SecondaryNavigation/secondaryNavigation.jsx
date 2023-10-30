@@ -5,6 +5,7 @@ import {
   PAGE_NAVIGATION,
   ROUTE_PATHS,
 } from "../../../Utilities/Config/navigation";
+import { STORAGE_OPTIONS } from "../../../Utilities/Config/storage";
 
 export default function SecondaryNavigation({ setLoggedIn, setMainDisplay }) {
   //Import useNavigate to handle page redirect
