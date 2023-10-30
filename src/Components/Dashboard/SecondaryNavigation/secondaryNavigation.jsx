@@ -13,9 +13,17 @@ export default function SecondaryNavigation({ setLoggedIn, setMainDisplay }) {
 
   //handle logout button functionality
   function handleLogoutClick() {
-    setLoggedIn(false);
-    sessionStorage.removeItem(STORAGE_OPTIONS.loggedIn);
-    navigate(ROUTE_PATHS.login);
+    if (sessionStorage.getItem(STORAGE_OPTIONS.loggedIn)) {
+      setLoggedIn(false);
+      sessionStorage.removeItem(STORAGE_OPTIONS.loggedIn);
+      navigate(ROUTE_PATHS.login);
+    }
+    if (sessionStorage.getItem(STORAGE_OPTIONS.googleLogin)) {
+      setLoggedIn(false);
+      sessionStorage.removeItem(STORAGE_OPTIONS.googleLogin);
+      sessionStorage.removeItem(STORAGE_OPTIONS.googleLoginEmail);
+      sessionStorage.removeItem(STORAGE_OPTIONS.googleLoginName);
+    }
   }
 
   //Handle 'My Games' button click

@@ -61,6 +61,9 @@ function App() {
       setUsername(parsedUserInfo.username);
       setUserId(parsedUserInfo.userId);
     }
+    if (sessionStorage.getItem(STORAGE_OPTIONS.googleLogin)) {
+      setLoggedIn(true);
+    }
   }, []);
 
   //Routes

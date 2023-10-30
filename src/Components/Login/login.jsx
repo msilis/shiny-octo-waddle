@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { handleLoginSubmit } from "./login-utils";
 import Loading from "../Loading/loading";
 import { STORAGE_OPTIONS } from "../../Utilities/Config/storage";
-import { GoogleLogin } from "@react-oauth/google";
+import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { googleLoginSuccess } from "./googleLogin";
 
 export default function Login({
@@ -65,8 +65,14 @@ export default function Login({
 
   const handleLogoutInternal = () => {
     setLoggedIn(false);
-
-    sessionStorage.removeItem(STORAGE_OPTIONS.loggedIn);
+    if (STORAGE_OPTIONS.loggedIn) {
+      sessionStorage.removeItem(STORAGE_OPTIONS.loggedIn);
+    } else if (STORAGE_OPTIONS.googleLogin) {
+      sessionStorage.removeItem(STORAGE_OPTIONS.googleLogin);
+      sessionStorage.removeItem(STORAGE_OPTIONS.googleLoginName);
+      sessionStorage.removeItem(STORAGE_OPTIONS.googleLoginEmail);
+      googleLogout();
+    }
   };
 
   useEffect(() => {
