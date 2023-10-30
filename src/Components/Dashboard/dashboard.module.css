@@ -68,13 +68,13 @@
 
 @media only screen and (width >= 1160px) {
   .dashboardContainer {
-    width: 50%;
+    width: 65%;
   }
 }
 
 /* =============== Small Screen ================== */
 
-@media only screen and (width < 414px) {
+@media only screen and (width < 700px) {
   .dashboardContainer {
     margin-top: 1rem;
     box-shadow: 4px 4px 4px black;
