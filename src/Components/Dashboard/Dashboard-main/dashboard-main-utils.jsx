@@ -1,5 +1,8 @@
 import { ERROR_MESSAGE, TOAST_TEXT } from "../../../Utilities/Config/ui-text";
 import { showSuccessToast } from "../../../Utilities/toastSuccess";
+import { showErrorToast } from "../../../Utilities/toastError";
+import { useContext } from "react";
+import { UserContext } from "../../../userContext";
 
 //Go Button
 
@@ -61,34 +64,35 @@ const handleGoClick = (
 };
 
 //Save Game
-const handleGameSave = (setSavedGame, randomGame, userId) => {
-  //UserId
-  //! TODO, this isn't working correctly yet. Look at UserIdContext.Consumer
-  /* const userId = useContext(UserIdContext); */
+export function useHandleGameSave() {
+  const userContext = useContext(UserContext);
   //Game data
-  const saveGameData = {
-    gameName: randomGame.gameName,
-    gameText: randomGame.gameText,
-    saveUser: userId,
-  };
+  return (setSavedGame, randomGame) => {
+    const saveGameData = {
+      gameName: randomGame.gameName,
+      gameText: randomGame.gameText,
+      saveUser: userContext.userId,
+    };
 
-  fetch("https://group-class-backend.onrender.com/saveGame", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(saveGameData),
-  })
-    .then((response) => {
-      if (response.status === 201) {
-        setSavedGame(true);
-        showSuccessToast(TOAST_TEXT.gameSavedSuccess);
-      }
+    fetch("https://group-class-backend.onrender.com/saveGame", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(saveGameData),
     })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+      .then((response) => {
+        if (response.status === 201) {
+          setSavedGame(true);
+          showSuccessToast(TOAST_TEXT.gameSavedSuccess);
+        }
+      })
+      .catch((err) => {
+        showErrorToast(ERROR_MESSAGE.saveGameError);
+        console.log(err);
+      });
+  };
+}
 
 //Get tags
 
@@ -124,4 +128,4 @@ const getGameTags = (setTagArray, setError) => {
     });
 };
 
-export { handleGoClick, handleGameSave, getGameTags };
+export { handleGoClick, getGameTags };

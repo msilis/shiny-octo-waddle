@@ -26,6 +26,7 @@ export const ERROR_MESSAGE = {
   incorrectLogin: "Incorrect username or password",
   voteServerError: "There was an error getting votes from the server",
   noGamesError: "Server did not return any games",
+  saveGameError: "There was an error saving the game",
 };
 
 export const BUTTON_TEXT = {

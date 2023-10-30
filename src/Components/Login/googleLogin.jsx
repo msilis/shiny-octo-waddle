@@ -6,7 +6,6 @@ export const googleLoginSuccess = (credentialResponse, navigate) => {
   console.log(credentialResponse);
   const tokenToDecode = credentialResponse.credential;
   const decodedToken = jwtDecode(tokenToDecode);
-  console.log(decodedToken);
   sessionStorage.setItem(STORAGE_OPTIONS.googleLoginEmail, decodedToken.email);
   sessionStorage.setItem(STORAGE_OPTIONS.googleLoginName, decodedToken.name);
   sessionStorage.setItem(STORAGE_OPTIONS.googleLogin, true);
