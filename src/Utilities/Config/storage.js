@@ -3,4 +3,5 @@ export const STORAGE_OPTIONS = {
   user: "user",
   googleLoginName: "googleLoginName",
   googleLoginEmail: "googleLoginEmail",
+  googleLogin: "googleLogin",
 };
