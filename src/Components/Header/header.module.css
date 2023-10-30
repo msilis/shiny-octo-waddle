@@ -1,17 +1,17 @@
 .headerContainer {
-    display: flex;
-    justify-content: center;
-    background-color: #E1F16B;
-    width: 100%;
-    overflow: hidden;
+  display: flex;
+  justify-content: center;
+  background-color: #e1f16b;
+  width: 100%;
+  overflow: hidden;
 }
 
 .headerPic {
-    max-width: 477px;
+  max-width: 477px;
 }
 
-@media only screen and (width < 500px){
-    .headerPic {
-        width: 98dvw;
-    }
+@media only screen and (width <= 700px) {
+  .headerPic {
+    width: 98dvw;
+  }
 }
