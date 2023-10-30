@@ -121,7 +121,9 @@ export default function Login({
       </div>
       <div className={style.googleLoginContainer}>
         <GoogleLogin
-          onSuccess={googleLoginSuccess}
+          onSuccess={(credentialResponse) =>
+            googleLoginSuccess(credentialResponse, navigate)
+          }
           onError={(error) => {
             console.log("Login Failed!");
           }}
