@@ -12,7 +12,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import "react-toastify/dist/ReactToastify.css";
-import { UserIdContext } from "./userIdContext";
+import { UserContext } from "./userContext";
 import { ERROR_MESSAGE, PAGE_TEXT } from "./Utilities/Config/ui-text";
 import { ROUTE_PATHS } from "./Utilities/Config/navigation";
 import { STORAGE_OPTIONS } from "./Utilities/Config/storage";
@@ -47,6 +47,8 @@ function App() {
       <h3 className="loadingText">{PAGE_TEXT.loadingText}</h3>
     </div>
   );
+
+  const contextProps = { userId, setUserId, setEmail, setUserId, setLoggedIn };
 
   //Check sessionStorage to see if user is logged in
   useEffect(() => {
@@ -118,7 +120,7 @@ function App() {
 
   return (
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-      <UserIdContext.Provider value={userId}>
+      <UserContext.Provider value={contextProps}>
         <div className="App">
           <div className="headerContainer">
             <Header />
@@ -140,7 +142,7 @@ function App() {
           </div>
           <Footer />
         </div>
-      </UserIdContext.Provider>
+      </UserContext.Provider>
     </GoogleOAuthProvider>
   );
 }
