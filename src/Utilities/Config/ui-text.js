@@ -13,6 +13,8 @@ export const PAGE_TEXT = {
   reviewPieceText: "Suggested review pieces for: ",
   loadingText: "Loading...",
   bookOneText: "Book One Techniques",
+  loginText: "Log In",
+  logoutText: "Log Out",
 };
 
 export const ERROR_MESSAGE = {
