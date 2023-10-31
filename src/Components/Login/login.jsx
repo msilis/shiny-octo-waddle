@@ -7,6 +7,8 @@ import Loading from "../Loading/loading";
 import { STORAGE_OPTIONS } from "../../Utilities/Config/storage";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { googleLoginSuccess } from "./googleLogin";
+import { showErrorToast } from "../../Utilities/toastError";
+import { ERROR_MESSAGE } from "../../Utilities/Config/ui-text";
 
 export default function Login({
   setFirstName,
@@ -48,8 +50,13 @@ export default function Login({
   //If already logged in, redirect to dashboard
 
   function checkLoggedIn() {
-    const isLoggedIn = sessionStorage.getItem(STORAGE_OPTIONS.loggedIn);
-    if (isLoggedIn) {
+    const isGoogleLoggedIn = sessionStorage.getItem(
+      STORAGE_OPTIONS.googleLogin
+    );
+    if (loginStatus) {
+      navigate("/dashboard");
+    } else if (isGoogleLoggedIn) {
+      console.log("Google logged in");
       navigate("/dashboard");
     }
   }
@@ -77,7 +84,7 @@ export default function Login({
 
   useEffect(() => {
     checkLoggedIn();
-  }, []);
+  }, [loginStatus, navigate]);
 
   /* ======================================
   ||||||||||||||||Return|||||||||||||||||||
@@ -88,7 +95,8 @@ export default function Login({
   ) : (
     <div className={classnames(style.loginContainer, style.fadeContainer)}>
       <h3 className={style.loginHeading}>
-        {sessionStorage.getItem(STORAGE_OPTIONS.loggedIn)
+        {sessionStorage.getItem(STORAGE_OPTIONS.loggedIn) ||
+        sessionStorage.getItem(STORAGE_OPTIONS.googleLogin)
           ? "User already logged in"
           : "Log In"}
       </h3>
@@ -131,7 +139,8 @@ export default function Login({
             googleLoginSuccess(credentialResponse, navigate)
           }
           onError={(error) => {
-            console.log("Login Failed!");
+            showErrorToast(ERROR_MESSAGE.failedLogin);
+            console.log(ERROR_MESSAGE.failedLogin, error);
           }}
         />
       </div>

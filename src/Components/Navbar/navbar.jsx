@@ -8,10 +8,14 @@ import {
   ROUTE_PATHS,
 } from "../../Utilities/Config/navigation";
 import { BUTTON_TEXT } from "../../Utilities/Config/ui-text";
+import { STORAGE_OPTIONS } from "../../Utilities/Config/storage";
 
 export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
   //State for hamburger menu. True is hamburger open, false is closed
   const [hamburgerActive, setHamburgerActive] = useState(false);
+  const checkGoogleLoggedIn = sessionStorage.getItem(
+    STORAGE_OPTIONS.googleLogin
+  );
 
   //Used for redirecting on navigation clicks
   const navigate = useNavigate();
@@ -100,7 +104,7 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
           >
             <li className={style.navListItem}>{BUTTON_TEXT.aboutButton}</li>
           </Link>
-          {loggedIn ? (
+          {loggedIn || checkGoogleLoggedIn ? (
             <Link
               to={ROUTE_PATHS.dashboard}
               className={style.navLink}
