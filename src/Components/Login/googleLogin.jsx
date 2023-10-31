@@ -8,5 +8,4 @@ export const googleLoginSuccess = (credentialResponse, navigate) => {
   sessionStorage.setItem(STORAGE_OPTIONS.googleLoginEmail, decodedToken.email);
   sessionStorage.setItem(STORAGE_OPTIONS.googleLoginName, decodedToken.name);
   sessionStorage.setItem(STORAGE_OPTIONS.googleLogin, true);
-  navigate(ROUTE_PATHS.dashboard);
 };
