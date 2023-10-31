@@ -8,7 +8,7 @@ import { STORAGE_OPTIONS } from "../../Utilities/Config/storage";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { googleLoginSuccess } from "./googleLogin";
 import { showErrorToast } from "../../Utilities/toastError";
-import { ERROR_MESSAGE } from "../../Utilities/Config/ui-text";
+import { ERROR_MESSAGE, PAGE_TEXT } from "../../Utilities/Config/ui-text";
 
 export default function Login({
   setFirstName,
@@ -125,14 +125,14 @@ export default function Login({
           data-testid="loginButton"
         >
           {/* TODO: remove this and replace with string from ui text object */}
-          <span>Log In</span>
+          <span>{PAGE_TEXT.loginText}</span>
         </div>
       </div>
       <div
         className={loggedIn ? style.loginButton : style.userLoggedIn}
         onClick={handleLogoutInternal}
       >
-        <span>Log out</span>
+        <span>{PAGE_TEXT.logoutText}</span>
       </div>
       <div className={style.googleLoginContainer}>
         <GoogleLogin
