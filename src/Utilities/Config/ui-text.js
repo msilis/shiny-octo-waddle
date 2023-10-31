@@ -12,6 +12,7 @@ export const MODAL_TEXT = {
 export const PAGE_TEXT = {
   reviewPieceText: "Suggested review pieces for: ",
   loadingText: "Loading...",
+  bookOneText: "Book One Techniques",
 };
 
 export const ERROR_MESSAGE = {

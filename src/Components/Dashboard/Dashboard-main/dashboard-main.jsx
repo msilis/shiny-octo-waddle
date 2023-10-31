@@ -59,8 +59,7 @@ export default function DashboardMain({
     >
       <div className={style.dashboardMain}>
         <h2>{greetText}</h2>
-        {/* TODO: remove text from h3 and replace with text from ui object */}
-        <h3>Book One Techniques</h3>
+        <h3>{PAGE_TEXT.bookOneText}</h3>
         <div className={style.techniqueTagsContainer}>
           {error ? (
             <p className="errorText">{ERROR_MESSAGE.networkError}</p>
