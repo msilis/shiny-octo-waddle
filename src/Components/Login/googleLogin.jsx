@@ -22,7 +22,7 @@ const checkGoogleUser = () => {
   });
 };
 
-const createGoogleUser = () => {
+const createGoogleUser = (loginProps) => {
   const googleUserToCreate = {
     email: sessionStorage.getItem(STORAGE_OPTIONS.googleLoginEmail),
     name: sessionStorage.getItem(STORAGE_OPTIONS.googleLoginName),
@@ -36,6 +36,8 @@ const createGoogleUser = () => {
     mode: "cors",
   }).then((response) => {
     if (response.status === 200) {
+      loginProps.setGoogleName(response.fullName);
+      loginProps.setUserId(response._id);
       return;
     }
   });
@@ -51,7 +53,7 @@ export const googleLoginSuccess = (
   sessionStorage.setItem(STORAGE_OPTIONS.googleLoginEmail, decodedToken.email);
   sessionStorage.setItem(STORAGE_OPTIONS.googleLoginName, decodedToken.name);
   sessionStorage.setItem(STORAGE_OPTIONS.googleLogin, true);
-  checkGoogleUser();
+  checkGoogleUser(loginProps);
   loginProps.setLoggedIn(true);
   loginProps.setLoading(false);
 
