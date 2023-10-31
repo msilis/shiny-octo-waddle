@@ -32,6 +32,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   //State for user's name
   const [firstName, setFirstName] = useState("");
+  const [googleName, setGoogleName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -84,6 +85,7 @@ function App() {
               setEmail={setEmail}
               setUserId={setUserId}
               setUsername={setUsername}
+              setGoogleName={setGoogleName}
             />
           }
         ></Route>

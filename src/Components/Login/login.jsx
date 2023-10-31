@@ -18,6 +18,7 @@ export default function Login({
   setLoggedIn,
   setUserId,
   setUsername,
+  setGoogleName,
 }) {
   //Refs for inputs
   const loginUsername = useRef();
@@ -45,6 +46,7 @@ export default function Login({
     setUserId,
     setUsername,
     setLoading,
+    setGoogleName,
   };
 
   //If already logged in, redirect to dashboard
