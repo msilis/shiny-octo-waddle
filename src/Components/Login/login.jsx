@@ -124,6 +124,7 @@ export default function Login({
           onClick={() => handleLoginSubmit(loginProps, navigate)}
           data-testid="loginButton"
         >
+          {/* TODO: remove this and replace with string from ui text object */}
           <span>Log In</span>
         </div>
       </div>
@@ -136,7 +137,7 @@ export default function Login({
       <div className={style.googleLoginContainer}>
         <GoogleLogin
           onSuccess={(credentialResponse) =>
-            googleLoginSuccess(credentialResponse, navigate)
+            googleLoginSuccess(credentialResponse, navigate, loginProps)
           }
           onError={(error) => {
             showErrorToast(ERROR_MESSAGE.failedLogin);
