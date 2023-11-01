@@ -13,13 +13,17 @@ const checkGoogleUser = () => {
     },
     body: JSON.stringify(googleEmailToCheck),
     mode: "cors",
-  }).then((response) => {
-    if (response.status === 404) {
-      createGoogleUser();
-    } else if (response.status === 200) {
-      return;
-    }
-  });
+  })
+    .then((response) => {
+      if (response.status === 404) {
+        createGoogleUser();
+      } else if (response.status === 200) {
+        return response.json();
+      }
+    })
+    .then((jsonResponse) => {
+      sessionStorage.setItem(STORAGE_OPTIONS.userId, jsonResponse._id);
+    });
 };
 
 const createGoogleUser = (loginProps) => {
