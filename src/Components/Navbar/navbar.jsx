@@ -19,8 +19,7 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
 
   //Used for redirecting on navigation clicks
   const navigate = useNavigate();
-  const checkGoogleLoggedIn = () =>
-    sessionStorage.getItem(STORAGE_OPTIONS.googleLogin);
+
   //This function sets the state of the hamburger menu, toggling it visible or hidden
   function toggleHamburger() {
     setHamburgerActive(!hamburgerActive);
@@ -208,7 +207,6 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
                 : style.loggedInNavigationHidden
             }`}
             onClick={handleLogoutClick}
-            checkGoogleLoggedIn
           >
             <li className={style.navListItem}>{BUTTON_TEXT.logOutButton}</li>
           </Link>
