@@ -100,6 +100,7 @@ function App() {
                 username={username}
                 mainDisplay={mainDisplay}
                 setMainDisplay={setMainDisplay}
+                googleName={googleName}
               />
             </Protected>
           }
