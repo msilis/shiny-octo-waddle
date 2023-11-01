@@ -48,4 +48,5 @@ export const BUTTON_TEXT = {
   loginButton: "Login",
   aboutButton: "About",
   homeButton: "Home",
+  updateButton: "Update",
 };
