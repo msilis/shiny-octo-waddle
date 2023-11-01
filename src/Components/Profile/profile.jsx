@@ -1,6 +1,7 @@
 import style from "./profile.module.css";
 import { useRef } from "react";
 import { handleUpdateClick } from "./profile-utils";
+import { BUTTON_TEXT } from "../../Utilities/Config/ui-text";
 
 export default function Profile({
   firstName,
@@ -65,7 +66,7 @@ export default function Profile({
             )
           }
         >
-          <span>Update</span>
+          <span>{BUTTON_TEXT.updateButton}</span>
         </div>
       </div>
     </div>
