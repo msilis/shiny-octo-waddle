@@ -9,6 +9,7 @@ import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { googleLoginSuccess } from "./googleLogin";
 import { showErrorToast } from "../../Utilities/toastError";
 import { ERROR_MESSAGE, PAGE_TEXT } from "../../Utilities/Config/ui-text";
+import { ROUTE_PATHS } from "../../Utilities/Config/navigation";
 
 export default function Login({
   setFirstName,
@@ -56,10 +57,9 @@ export default function Login({
       STORAGE_OPTIONS.googleLogin
     );
     if (loginStatus) {
-      navigate("/dashboard");
+      navigate(ROUTE_PATHS.dashboard);
     } else if (isGoogleLoggedIn) {
-      console.log("Google logged in");
-      navigate("/dashboard");
+      navigate(ROUTE_PATHS.dashboard);
     }
   }
 
@@ -126,7 +126,6 @@ export default function Login({
           onClick={() => handleLoginSubmit(loginProps, navigate)}
           data-testid="loginButton"
         >
-          {/* TODO: remove this and replace with string from ui text object */}
           <span>{PAGE_TEXT.loginText}</span>
         </div>
       </div>
