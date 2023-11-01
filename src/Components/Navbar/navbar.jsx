@@ -2,24 +2,25 @@
 
 import { Link, useNavigate } from "react-router-dom";
 import style from "./navbar.module.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   PAGE_NAVIGATION,
   ROUTE_PATHS,
 } from "../../Utilities/Config/navigation";
 import { BUTTON_TEXT } from "../../Utilities/Config/ui-text";
 import { STORAGE_OPTIONS } from "../../Utilities/Config/storage";
-
-export const checkGoogleLoggedIn = () =>
-  sessionStorage.getItem(STORAGE_OPTIONS.googleLogin);
+import { UserContext } from "../../userContext";
 
 export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
   //State for hamburger menu. True is hamburger open, false is closed
   const [hamburgerActive, setHamburgerActive] = useState(false);
 
+  const userContext = useContext(UserContext);
+
   //Used for redirecting on navigation clicks
   const navigate = useNavigate();
-
+  const checkGoogleLoggedIn = () =>
+    sessionStorage.getItem(STORAGE_OPTIONS.googleLogin);
   //This function sets the state of the hamburger menu, toggling it visible or hidden
   function toggleHamburger() {
     setHamburgerActive(!hamburgerActive);
@@ -104,7 +105,7 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
           >
             <li className={style.navListItem}>{BUTTON_TEXT.aboutButton}</li>
           </Link>
-          {loggedIn || !!checkGoogleLoggedIn ? (
+          {loggedIn || userContext.checkGoogleLoggedIn ? (
             <Link
               to={ROUTE_PATHS.dashboard}
               className={style.navLink}
@@ -216,4 +217,3 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
     </div>
   );
 }
-checkGoogleLoggedIn;
