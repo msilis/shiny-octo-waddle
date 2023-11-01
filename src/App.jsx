@@ -1,15 +1,8 @@
 import "./App.css";
-import React, {
-  useEffect,
-  useState,
-  lazy,
-  Suspense,
-  useContext,
-  createContext,
-} from "react";
-import { Header, Navbar, Footer, Profile, AddGame, Vote } from "./Components";
+import React, { useEffect, useState, lazy, Suspense } from "react";
+import { Header, Navbar, Footer } from "./Components";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "./userContext";
@@ -26,7 +19,6 @@ const Protected = lazy(() => import("./Components/Protected/protected.jsx"));
 //For router
 
 function App() {
-  const location = useLocation();
   //State for user login
 
   const [loggedIn, setLoggedIn] = useState(false);
