@@ -25,6 +25,7 @@ export default function Dashboard({
   username,
   mainDisplay,
   setMainDisplay,
+  googleName,
 }) {
   //State to keep track of Secondary Navigation button clickS
 
@@ -77,6 +78,7 @@ export default function Dashboard({
             setFirstName={setFirstName}
             setLastName={setLastName}
             setEmail={setEmail}
+            googleName={googleName}
           />
         )}
       </div>
