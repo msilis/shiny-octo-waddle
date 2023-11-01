@@ -2,7 +2,7 @@ import { jwtDecode } from "jwt-decode";
 import { STORAGE_OPTIONS } from "../../Utilities/Config/storage";
 import { ROUTE_PATHS } from "../../Utilities/Config/navigation";
 
-const checkGoogleUser = () => {
+const checkGoogleUser = (loginProps) => {
   const googleEmailToCheck = {
     email: sessionStorage.getItem(STORAGE_OPTIONS.googleLoginEmail),
   };
@@ -22,7 +22,8 @@ const checkGoogleUser = () => {
       }
     })
     .then((jsonResponse) => {
-      sessionStorage.setItem(STORAGE_OPTIONS.userId, jsonResponse._id);
+      loginProps.setUserId(jsonResponse._id);
+      sessionStorage.setItem(STORAGE_OPTIONS.googleUserId, jsonResponse._id);
     });
 };
 
