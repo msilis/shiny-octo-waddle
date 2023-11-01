@@ -10,12 +10,12 @@ import {
 import { BUTTON_TEXT } from "../../Utilities/Config/ui-text";
 import { STORAGE_OPTIONS } from "../../Utilities/Config/storage";
 
+export const checkGoogleLoggedIn = () =>
+  sessionStorage.getItem(STORAGE_OPTIONS.googleLogin);
+
 export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
   //State for hamburger menu. True is hamburger open, false is closed
   const [hamburgerActive, setHamburgerActive] = useState(false);
-  const checkGoogleLoggedIn = sessionStorage.getItem(
-    STORAGE_OPTIONS.googleLogin
-  );
 
   //Used for redirecting on navigation clicks
   const navigate = useNavigate();
@@ -207,6 +207,7 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
                 : style.loggedInNavigationHidden
             }`}
             onClick={handleLogoutClick}
+            checkGoogleLoggedIn
           >
             <li className={style.navListItem}>{BUTTON_TEXT.logOutButton}</li>
           </Link>
@@ -215,3 +216,4 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
     </div>
   );
 }
+checkGoogleLoggedIn;

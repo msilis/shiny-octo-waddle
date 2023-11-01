@@ -15,6 +15,8 @@ export const PAGE_TEXT = {
   bookOneText: "Book One Techniques",
   loginText: "Log In",
   logoutText: "Log Out",
+  loggedInWithGoogle:
+    "You have logged in with Google, these values cannot be changed.",
 };
 
 export const ERROR_MESSAGE = {

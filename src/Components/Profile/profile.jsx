@@ -1,7 +1,8 @@
 import style from "./profile.module.css";
 import { useRef } from "react";
 import { handleUpdateClick } from "./profile-utils";
-import { BUTTON_TEXT } from "../../Utilities/Config/ui-text";
+import { BUTTON_TEXT, PAGE_TEXT } from "../../Utilities/Config/ui-text";
+import { checkGoogleLoggedIn } from "../Navbar/navbar";
 
 export default function Profile({
   firstName,
@@ -11,6 +12,7 @@ export default function Profile({
   setFirstName,
   setLastName,
   setEmail,
+  googleName,
 }) {
   // Refs for inputs ==================================================
   const firstNameEditInput = useRef();
@@ -24,11 +26,22 @@ export default function Profile({
     }
   }
 
+  const loggedInWithGoogle = (
+    <div className={style.profileContainer}>
+      <div className={style.profileVisible}>
+        <h5>{PAGE_TEXT.loggedInWithGoogle}</h5>
+        <input placeholder={googleName} disabled />
+      </div>
+    </div>
+  );
+
   /* =============================================================
 ||||||||||||||||| Return ||||||||||||||||||||||||||||||||||||||||\
 ================================================================= */
 
-  return (
+  return checkGoogleLoggedIn() ? (
+    loggedInWithGoogle
+  ) : (
     <div className={style.profileContainer}>
       <div className={style.profileVisible}>
         <input
