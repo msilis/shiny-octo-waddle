@@ -4,7 +4,7 @@ import classnames from "classnames";
 import Select from "react-select";
 import {
   handleGoClick,
-  handleGameSave,
+  useHandleGameSave,
   getGameTags,
 } from "./dashboard-main-utils";
 import {
@@ -32,6 +32,8 @@ export default function DashboardMain({
     getGameTags(setTagArray, setError);
   }, []);
 
+  const handleGameSave = useHandleGameSave();
+
   //Get options for tag dropdown ==============================================================
 
   const tagOptions = tagArray.map((tag, index) => {
@@ -41,7 +43,7 @@ export default function DashboardMain({
   //Save game functionality ===================================================================
   const saveGameText = savedGame
     ? null
-    : () => handleGameSave(setSavedGame, randomGame, userId);
+    : () => handleGameSave(setSavedGame, randomGame);
   const saveGameStyle =
     savedGame || error ? style.saveButtonDisable : style.saveButton;
 
@@ -57,7 +59,7 @@ export default function DashboardMain({
     >
       <div className={style.dashboardMain}>
         <h2>{greetText}</h2>
-        <h3>Book One Techniques</h3>
+        <h3>{PAGE_TEXT.bookOneText}</h3>
         <div className={style.techniqueTagsContainer}>
           {error ? (
             <p className="errorText">{ERROR_MESSAGE.networkError}</p>
@@ -90,7 +92,6 @@ export default function DashboardMain({
             <span>{BUTTON_TEXT.goButton}</span>
           </div>
         )}
-
         <div
           className={classnames(style.resultContainer, style.fadeContainer, {
             [style.resultsHidden]: results,

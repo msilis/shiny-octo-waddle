@@ -1,17 +1,11 @@
 import "./App.css";
-import React, {
-  useEffect,
-  useState,
-  lazy,
-  Suspense,
-  useContext,
-  createContext,
-} from "react";
-import { Header, Navbar, Footer, Profile, AddGame, Vote } from "./Components";
+import React, { useEffect, useState, lazy, Suspense } from "react";
+import { Header, Navbar, Footer } from "./Components";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import "react-toastify/dist/ReactToastify.css";
-import { UserIdContext } from "./userIdContext";
+import { UserContext } from "./userContext";
 import { ERROR_MESSAGE, PAGE_TEXT } from "./Utilities/Config/ui-text";
 import { ROUTE_PATHS } from "./Utilities/Config/navigation";
 import { STORAGE_OPTIONS } from "./Utilities/Config/storage";
@@ -25,12 +19,12 @@ const Protected = lazy(() => import("./Components/Protected/protected.jsx"));
 //For router
 
 function App() {
-  const location = useLocation();
   //State for user login
 
   const [loggedIn, setLoggedIn] = useState(false);
   //State for user's name
   const [firstName, setFirstName] = useState("");
+  const [googleName, setGoogleName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -46,6 +40,17 @@ function App() {
       <h3 className="loadingText">{PAGE_TEXT.loadingText}</h3>
     </div>
   );
+  const checkGoogleLoggedIn = () =>
+    sessionStorage.getItem(STORAGE_OPTIONS.googleLogin);
+
+  const contextProps = {
+    userId,
+    setUserId,
+    setEmail,
+    setUserId,
+    setLoggedIn,
+    checkGoogleLoggedIn,
+  };
 
   //Check sessionStorage to see if user is logged in
   useEffect(() => {
@@ -57,6 +62,11 @@ function App() {
       setEmail(parsedUserInfo.email);
       setUsername(parsedUserInfo.username);
       setUserId(parsedUserInfo.userId);
+    }
+    if (sessionStorage.getItem(STORAGE_OPTIONS.googleLogin)) {
+      setLoggedIn(true);
+      setEmail(sessionStorage.getItem(STORAGE_OPTIONS.googleLoginEmail));
+      setGoogleName(sessionStorage.getItem(STORAGE_OPTIONS.googleLoginName));
     }
   }, []);
 
@@ -78,6 +88,7 @@ function App() {
               setEmail={setEmail}
               setUserId={setUserId}
               setUsername={setUsername}
+              setGoogleName={setGoogleName}
             />
           }
         ></Route>
@@ -100,6 +111,7 @@ function App() {
                 username={username}
                 mainDisplay={mainDisplay}
                 setMainDisplay={setMainDisplay}
+                googleName={googleName}
               />
             </Protected>
           }
@@ -116,29 +128,31 @@ function App() {
   }
 
   return (
-    <UserIdContext.Provider value={userId}>
-      <div className="App">
-        <div className="headerContainer">
-          <Header />
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <UserContext.Provider value={contextProps}>
+        <div className="App">
+          <div className="headerContainer">
+            <Header />
+          </div>
+          <div className="navbarContainer">
+            <Navbar
+              setLoggedIn={setLoggedIn}
+              loggedIn={loggedIn}
+              seeProfile={seeProfile}
+              setSeeProfile={setSeeProfile}
+              setMainDisplay={setMainDisplay}
+            />
+          </div>
+          <ToastContainer />
+          <div className="routesContainer">
+            <Suspense fallback={suspenseLoading}>
+              <PageRoutes />
+            </Suspense>
+          </div>
+          <Footer />
         </div>
-        <div className="navbarContainer">
-          <Navbar
-            setLoggedIn={setLoggedIn}
-            loggedIn={loggedIn}
-            seeProfile={seeProfile}
-            setSeeProfile={setSeeProfile}
-            setMainDisplay={setMainDisplay}
-          />
-        </div>
-        <ToastContainer />
-        <div className="routesContainer">
-          <Suspense fallback={suspenseLoading}>
-            <PageRoutes />
-          </Suspense>
-        </div>
-        <Footer />
-      </div>
-    </UserIdContext.Provider>
+      </UserContext.Provider>
+    </GoogleOAuthProvider>
   );
 }
 

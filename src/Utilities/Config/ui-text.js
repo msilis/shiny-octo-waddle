@@ -12,6 +12,11 @@ export const MODAL_TEXT = {
 export const PAGE_TEXT = {
   reviewPieceText: "Suggested review pieces for: ",
   loadingText: "Loading...",
+  bookOneText: "Book One Techniques",
+  loginText: "Log In",
+  logoutText: "Log Out",
+  loggedInWithGoogle:
+    "You have logged in with Google, these values cannot be changed.",
 };
 
 export const ERROR_MESSAGE = {
@@ -26,6 +31,8 @@ export const ERROR_MESSAGE = {
   incorrectLogin: "Incorrect username or password",
   voteServerError: "There was an error getting votes from the server",
   noGamesError: "Server did not return any games",
+  saveGameError: "There was an error saving the game",
+  failedLogin: "Login failed!",
 };
 
 export const BUTTON_TEXT = {
@@ -43,4 +50,5 @@ export const BUTTON_TEXT = {
   loginButton: "Login",
   aboutButton: "About",
   homeButton: "Home",
+  updateButton: "Update",
 };

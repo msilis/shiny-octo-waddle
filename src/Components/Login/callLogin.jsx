@@ -1,6 +1,7 @@
 import { ROUTE_PATHS } from "../../Utilities/Config/navigation";
 import { ERROR_MESSAGE } from "../../Utilities/Config/ui-text";
 import { showErrorToast } from "../../Utilities/toastError";
+import { STORAGE_OPTIONS } from "../../Utilities/Config/storage";
 
 export function callLogin(loginProps, navigate) {
   const loginData = {
@@ -45,7 +46,7 @@ export function callLogin(loginProps, navigate) {
       sessionStorage.setItem(STORAGE_OPTIONS.user, JSON.stringify(userInfo));
       //Redirect user after sucessful login
       loginProps.setLoading(false);
-      return navigate(ROUTE_PATHS.navigation);
+      return navigate(ROUTE_PATHS.dashboard);
     })
     .catch((err) => {
       console.log(err.message);
