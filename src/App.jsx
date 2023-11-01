@@ -47,7 +47,6 @@ function App() {
     userId,
     setUserId,
     setEmail,
-    setUserId,
     setLoggedIn,
     checkGoogleLoggedIn,
   };
