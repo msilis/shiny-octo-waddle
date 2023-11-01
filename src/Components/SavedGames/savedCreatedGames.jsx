@@ -38,7 +38,6 @@ export default function SavedCreatedGames({ userId }) {
     setMyGamesPagination,
     setCurrentGamesPage,
     currentGamesPage,
-    setMyGamesPagination,
     myGamesPagination,
     createdGamePageSize,
   };
