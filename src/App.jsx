@@ -40,8 +40,17 @@ function App() {
       <h3 className="loadingText">{PAGE_TEXT.loadingText}</h3>
     </div>
   );
+  const checkGoogleLoggedIn = () =>
+    sessionStorage.getItem(STORAGE_OPTIONS.googleLogin);
 
-  const contextProps = { userId, setUserId, setEmail, setUserId, setLoggedIn };
+  const contextProps = {
+    userId,
+    setUserId,
+    setEmail,
+    setUserId,
+    setLoggedIn,
+    checkGoogleLoggedIn,
+  };
 
   //Check sessionStorage to see if user is logged in
   useEffect(() => {
@@ -56,6 +65,8 @@ function App() {
     }
     if (sessionStorage.getItem(STORAGE_OPTIONS.googleLogin)) {
       setLoggedIn(true);
+      setEmail(sessionStorage.getItem(STORAGE_OPTIONS.googleLoginEmail));
+      setGoogleName(sessionStorage.getItem(STORAGE_OPTIONS.googleLoginName));
     }
   }, []);
 

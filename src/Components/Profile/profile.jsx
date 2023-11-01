@@ -1,8 +1,8 @@
 import style from "./profile.module.css";
-import { useRef } from "react";
+import { useRef, useContext } from "react";
 import { handleUpdateClick } from "./profile-utils";
 import { BUTTON_TEXT, PAGE_TEXT } from "../../Utilities/Config/ui-text";
-import { checkGoogleLoggedIn } from "../Navbar/navbar";
+import { UserContext } from "../../userContext";
 
 export default function Profile({
   firstName,
@@ -26,11 +26,14 @@ export default function Profile({
     }
   }
 
+  const userContext = useContext(UserContext);
+
   const loggedInWithGoogle = (
     <div className={style.profileContainer}>
       <div className={style.profileVisible}>
         <h5>{PAGE_TEXT.loggedInWithGoogle}</h5>
-        <input placeholder={googleName} disabled />
+        <input placeholder={googleName} className={style.inputField} disabled />
+        <input placeholder={email} className={style.inputField} disabled />
       </div>
     </div>
   );
@@ -39,7 +42,7 @@ export default function Profile({
 ||||||||||||||||| Return ||||||||||||||||||||||||||||||||||||||||\
 ================================================================= */
 
-  return checkGoogleLoggedIn() ? (
+  return userContext.checkGoogleLoggedIn() ? (
     loggedInWithGoogle
   ) : (
     <div className={style.profileContainer}>
