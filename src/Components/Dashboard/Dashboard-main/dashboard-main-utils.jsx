@@ -17,7 +17,7 @@ const handleGoClick = (
   selectedTag
 ) => {
   if (selectedTag === "0") {
-    alert("You haven't selected a topic.");
+    showErrorToast(TOAST_TEXT.noTopicSelected);
   } else {
     const tagSearchData = {
       tagToSearch: selectedTag,
