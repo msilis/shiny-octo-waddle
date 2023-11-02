@@ -104,7 +104,7 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
           >
             <li className={style.navListItem}>{BUTTON_TEXT.aboutButton}</li>
           </Link>
-          {loggedIn || !!userContext.checkGoogleLoggedIn ? (
+          {loggedIn ? (
             <Link
               to={ROUTE_PATHS.dashboard}
               className={style.navLink}
