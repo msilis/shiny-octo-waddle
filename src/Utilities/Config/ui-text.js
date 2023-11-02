@@ -52,3 +52,8 @@ export const BUTTON_TEXT = {
   homeButton: "Home",
   updateButton: "Update",
 };
+
+export const PLACEHOLDER_TEXT = {
+  usernamePlaceholder: "Username",
+  passwordPlaceholder: "Password",
+};

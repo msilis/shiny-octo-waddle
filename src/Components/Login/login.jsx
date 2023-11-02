@@ -8,7 +8,11 @@ import { STORAGE_OPTIONS } from "../../Utilities/Config/storage";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { googleLoginSuccess } from "./googleLogin";
 import { showErrorToast } from "../../Utilities/toastError";
-import { ERROR_MESSAGE, PAGE_TEXT } from "../../Utilities/Config/ui-text";
+import {
+  ERROR_MESSAGE,
+  PAGE_TEXT,
+  PLACEHOLDER_TEXT,
+} from "../../Utilities/Config/ui-text";
 import { ROUTE_PATHS } from "../../Utilities/Config/navigation";
 
 export default function Login({
@@ -108,13 +112,13 @@ export default function Login({
         })}
       >
         <input
-          placeholder="Username"
+          placeholder={PLACEHOLDER_TEXT.usernamePlaceholder}
           ref={loginUsername}
           className={style.loginInput}
           data-testid="usernameInput"
         ></input>
         <input
-          placeholder="Password"
+          placeholder={PLACEHOLDER_TEXT.passwordPlaceholder}
           ref={loginPassword}
           className={style.loginInput}
           type="password"
