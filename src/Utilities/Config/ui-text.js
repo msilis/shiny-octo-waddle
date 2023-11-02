@@ -33,6 +33,9 @@ export const ERROR_MESSAGE = {
   noGamesError: "Server did not return any games",
   saveGameError: "There was an error saving the game",
   failedLogin: "Login failed!",
+  alreadyVoted: "You have already voted for this game",
+  failedGettingVoteGames:
+    "There was a network error and I could not get the games to vote on",
 };
 
 export const BUTTON_TEXT = {

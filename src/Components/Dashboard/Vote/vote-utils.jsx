@@ -1,8 +1,10 @@
 import { toast } from "react-toastify";
+import { API_URL } from "../../../Utilities/Config/api";
+import { ERROR_MESSAGE } from "../../../Utilities/Config/ui-text";
 
 //Fetch vote count to be able to update only count, not whole component
 function getOnlyVotes(voteProps) {
-  return fetch("https://group-class-backend.onrender.com/getVoteTotals", {
+  return fetch(API_URL.getVoteTotals, {
     method: "GET",
     headers: {
       "content-type": "application/json",
@@ -12,7 +14,7 @@ function getOnlyVotes(voteProps) {
   })
     .then((response) => {
       if (!response.ok) {
-        throw Error("There was an error getting votes from the server");
+        throw Error(ERROR_MESSAGE.voteServerError);
       }
 
       return response.json();
@@ -33,7 +35,7 @@ function handleYesVote(e, voteProps) {
     updateVoteValue: 1,
     userId: voteProps.userId,
   };
-  fetch("https://group-class-backend.onrender.com/trackVote", {
+  fetch(API_URL.trackVote, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -44,7 +46,7 @@ function handleYesVote(e, voteProps) {
   })
     .then((response) => {
       if (response.status === 409) {
-        toast.error("You have already voted for this game.", {
+        toast.error(ERROR_MESSAGE.alreadyVoted, {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -54,7 +56,7 @@ function handleYesVote(e, voteProps) {
           progress: undefined,
           theme: "light",
         });
-        throw new Error("You have already voted for this game");
+        throw new Error(ERROR_MESSAGE.alreadyVoted);
       } else if (response.status === 201) {
         voteProps.setVoteSuccess(true);
         getUserVotedGames(voteProps);
@@ -79,7 +81,7 @@ function handleNoVote(e, voteProps) {
     updateVoteValue: 0,
     userId: voteProps.userId,
   };
-  fetch("https://group-class-backend.onrender.com/trackVote", {
+  fetch(API_URL.trackVote, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -90,7 +92,7 @@ function handleNoVote(e, voteProps) {
   })
     .then((response) => {
       if (response.status === 409) {
-        toast.error("You have already voted for this game.", {
+        toast.error(ERROR_MESSAGE.alreadyVoted, {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -100,7 +102,7 @@ function handleNoVote(e, voteProps) {
           progress: undefined,
           theme: "light",
         });
-        throw new Error("You have already voted for this game");
+        throw new Error(ERROR_MESSAGE.alreadyVoted);
       } else {
         voteProps.setVoteSuccess(true);
         return response.json();
@@ -124,7 +126,7 @@ function getUserVotedGames(voteProps) {
   const idToCheck = {
     userId: voteProps.userId,
   };
-  fetch("https://group-class-backend.onrender.com/getUserVotes", {
+  fetch(API_URL.getUserVotes, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -133,9 +135,7 @@ function getUserVotedGames(voteProps) {
   })
     .then((response) => {
       if (!response.ok) {
-        throw Error(
-          "There was a network error and I could not get the games to vote on"
-        );
+        throw Error(ERROR_MESSAGE.failedGettingVoteGames);
       } else {
         return response.json();
       }
