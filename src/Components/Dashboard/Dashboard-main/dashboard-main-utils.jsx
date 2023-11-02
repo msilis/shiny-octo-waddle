@@ -3,6 +3,7 @@ import { showSuccessToast } from "../../../Utilities/toastSuccess";
 import { showErrorToast } from "../../../Utilities/toastError";
 import { useContext } from "react";
 import { UserContext } from "../../../userContext";
+import { API_URL } from "../../../Utilities/Config/api";
 
 //Go Button
 
@@ -22,7 +23,7 @@ const handleGoClick = (
       tagToSearch: selectedTag,
     };
     setLoadRandomGame(true);
-    fetch("https://group-class-backend.onrender.com/techniqueSearch", {
+    fetch(API_URL.techniqueSearch, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -35,7 +36,7 @@ const handleGoClick = (
         setReviewPieces(reviewArray);
       })
       .then(
-        fetch("https://group-class-backend.onrender.com/randomGame", {
+        fetch(API_URL.randomGame, {
           method: "GET",
           headers: {
             "content-type": "application/json",
@@ -74,7 +75,7 @@ export function useHandleGameSave() {
       saveUser: userContext.userId,
     };
 
-    fetch("https://group-class-backend.onrender.com/saveGame", {
+    fetch(API_URL.saveGame, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -97,7 +98,7 @@ export function useHandleGameSave() {
 //Get tags
 
 const getGameTags = (setTagArray, setError) => {
-  fetch("https://group-class-backend.onrender.com/tags", {
+  fetch(API_URL.getTags, {
     method: "GET",
     headers: {
       "content-type": "application/json",
