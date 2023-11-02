@@ -59,8 +59,6 @@ export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
     setHamburgerActive(false);
   }
 
-  console.log("checkGoogleLoggedIn: ", userContext.checkGoogleLoggedIn);
-
   return (
     <div className={style.navBackground}>
       <nav
