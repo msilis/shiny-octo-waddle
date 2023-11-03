@@ -23,6 +23,7 @@ export const PAGE_TEXT = {
 export const ERROR_MESSAGE = {
   emptyFieldsError: "Make sure you have filled in all the fields!",
   networkError: "There was a network error, please try this later.",
+  networkFailError: "Network error: Failed to fetch",
   genericError: "There was an error",
   serverError: "There was an error with the server, please try this later.",
   tagsError: "There was an error getting tags",
