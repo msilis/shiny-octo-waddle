@@ -29,7 +29,7 @@ export default function Profile({
   const userContext = useContext(UserContext);
 
   const loggedInWithGoogle = (
-    <div className={style.profileContainer}>
+    <div className={style.profileContainer} data-testid="profile-container">
       <div className={style.profileVisible}>
         <h5>{PAGE_TEXT.loggedInWithGoogle}</h5>
         <input placeholder={googleName} className={style.inputField} disabled />
@@ -45,7 +45,7 @@ export default function Profile({
   return userContext.checkGoogleLoggedIn() ? (
     loggedInWithGoogle
   ) : (
-    <div className={style.profileContainer}>
+    <div className={style.profileContainer} data-testid="profile-container">
       <div className={style.profileVisible}>
         <input
           placeholder={firstName}
