@@ -67,7 +67,7 @@ export default function Vote({ userId }) {
       : `${style.paginationDisplay}`;
 
   return (
-    <div className={style.voteContainer}>
+    <div className={style.voteContainer} data-testid="vote-container">
       <div className={style.voteText}>
         <h2>Vote</h2>
         <p className={style.voteSectionText}>

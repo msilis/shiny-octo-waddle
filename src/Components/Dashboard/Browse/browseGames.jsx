@@ -154,7 +154,10 @@ export default function BrowseGames() {
 ========================================================================================= */
 
   return (
-    <div className={style.browseGamesContainer}>
+    <div
+      className={style.browseGamesContainer}
+      data-testid="browse-games-container"
+    >
       <h2 className={style.browseHeading}>Browse Games to Play</h2>
       <div className={style.filterContainer}>
         <Select
