@@ -45,6 +45,7 @@ function getVoteGames(
         err instanceof TypeError &&
         err.message === ERROR_MESSAGE.failedToFetch
       ) {
+        console.log("Failed to fetch should be showing");
         console.log("Network error: ", err.message);
       }
       setLoadingVote(false);
