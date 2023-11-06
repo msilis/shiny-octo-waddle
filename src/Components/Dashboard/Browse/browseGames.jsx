@@ -108,7 +108,7 @@ export default function BrowseGames() {
 
   function displayAllGames() {
     if (loadingGames) {
-      return <p>Loading Games...</p>;
+      return <p>{PAGE_TEXT.loadingGamesText}</p>;
     } else {
       return paginationGames.map((game) => (
         <div className={style.gameItem} key={game._id} id={game._id}>
