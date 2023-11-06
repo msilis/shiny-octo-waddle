@@ -56,6 +56,8 @@ export const BUTTON_TEXT = {
   aboutButton: "About",
   homeButton: "Home",
   updateButton: "Update",
+  yesButton: "Yes",
+  noButton: "No",
 };
 
 export const PLACEHOLDER_TEXT = {
