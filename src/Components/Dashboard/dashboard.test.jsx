@@ -44,7 +44,7 @@ describe("Dashboard", () => {
   it("renders browseGames when mainDisplay is browseGames", () => {
     render(
       <Router>
-        <Dashboard mainDisplay={PAGE_NAVIGATION.browseGames} />
+        <Dashboard mainDisplay={PAGE_NAVIGATION.browse} />
       </Router>
     );
     expect(screen.getByTestId("browse-games-container")).toBeInTheDocument();
