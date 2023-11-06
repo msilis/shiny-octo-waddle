@@ -5,6 +5,11 @@ import style from "./browseGames.module.css";
 import BrowsePagination from "../../Pagination/browsePagination";
 import Select from "react-select";
 import { getAllGames, getTagsForBrowse } from "./browse-utils";
+import {
+  BUTTON_TEXT,
+  ERROR_MESSAGE,
+  PAGE_TEXT,
+} from "../../../Utilities/Config/ui-text";
 
 //Page size for pagination
 export const browsePageSize = 5;
@@ -117,7 +122,7 @@ export default function BrowseGames() {
             }
             onClick={handleGameItemClick}
           >
-            More Info
+            {BUTTON_TEXT.moreInfoButton}
           </button>
           <div
             className={
@@ -127,7 +132,7 @@ export default function BrowseGames() {
             }
             data-id={game._id}
           >
-            <h5>Game Focus:</h5>
+            <h5>{PAGE_TEXT.gameFocus}</h5>
             <ul>
               {game.gameTechnique.map((focus, index) => (
                 <li key={index}>
@@ -136,7 +141,7 @@ export default function BrowseGames() {
               ))}
             </ul>
             <button className={style.closeInfoButton} onClick={handleInfoClose}>
-              x
+              {BUTTON_TEXT.xButton}
             </button>
           </div>
         </div>
@@ -158,7 +163,7 @@ export default function BrowseGames() {
       className={style.browseGamesContainer}
       data-testid="browse-games-container"
     >
-      <h2 className={style.browseHeading}>Browse Games to Play</h2>
+      <h2 className={style.browseHeading}>{PAGE_TEXT.browseGames}</h2>
       <div className={style.filterContainer}>
         <Select
           options={browseOptions}
@@ -169,12 +174,12 @@ export default function BrowseGames() {
           value={selectedTag.length === 0 ? null : selectedTag.value}
         />
         <button onClick={handleFilterClear} className={style.clearButton}>
-          Clear
+          {BUTTON_TEXT.clearButton}
         </button>
       </div>
       <div className={style.browseGamesDisplay}>
         {errorMessage ? (
-          <p className="errorText">There was a server error</p>
+          <p className="errorText">{ERROR_MESSAGE.serverError}</p>
         ) : (
           displayAllGames()
         )}
