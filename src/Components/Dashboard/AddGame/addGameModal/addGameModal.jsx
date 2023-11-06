@@ -50,7 +50,7 @@ export default function AddGameModal({
             onClick={handleCancelClick}
             data-testid="cancelButton"
           >
-            Cancel
+            {BUTTON_TEXT.cancelButton}
           </button>
         </div>
       </div>

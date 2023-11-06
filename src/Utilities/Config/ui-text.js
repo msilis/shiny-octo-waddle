@@ -58,6 +58,7 @@ export const BUTTON_TEXT = {
   updateButton: "Update",
   yesButton: "Yes",
   noButton: "No",
+  cancelButton: "Cancel",
 };
 
 export const PLACEHOLDER_TEXT = {
