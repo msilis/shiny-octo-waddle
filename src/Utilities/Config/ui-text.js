@@ -18,6 +18,8 @@ export const PAGE_TEXT = {
   logoutText: "Log Out",
   loggedInWithGoogle:
     "You have logged in with Google, these values cannot be changed.",
+  browseGames: "Browse games to play",
+  gameFocus: "Game Focus",
 };
 
 export const ERROR_MESSAGE = {
@@ -59,6 +61,9 @@ export const BUTTON_TEXT = {
   yesButton: "Yes",
   noButton: "No",
   cancelButton: "Cancel",
+  clearButton: "Clear",
+  moreInfoButton: "More Info",
+  xButton: "x",
 };
 
 export const PLACEHOLDER_TEXT = {
