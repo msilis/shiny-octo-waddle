@@ -13,6 +13,7 @@ export const MODAL_TEXT = {
 export const PAGE_TEXT = {
   reviewPieceText: "Suggested review pieces for: ",
   loadingText: "Loading...",
+  loadingGamesText: "Loading games...",
   bookOneText: "Book One Techniques",
   loginText: "Log In",
   logoutText: "Log Out",
