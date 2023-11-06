@@ -1,4 +1,4 @@
-import { MODAL_TEXT } from "../../../../Utilities/Config/ui-text";
+import { BUTTON_TEXT, MODAL_TEXT } from "../../../../Utilities/Config/ui-text";
 import style from "./addGameModal.module.css";
 
 export default function AddGameModal({
@@ -36,14 +36,14 @@ export default function AddGameModal({
             onClick={handleYesButtonClick}
             data-testid="yesButton"
           >
-            Yes
+            {BUTTON_TEXT.yesButton}
           </button>
           <button
             className={style.cancelButton}
             onClick={handleNoButtonClick}
             data-testid="noButton"
           >
-            No
+            {BUTTON_TEXT.noButton}
           </button>
           <button
             className={style.cancelButton}
