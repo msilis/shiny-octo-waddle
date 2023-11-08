@@ -25,6 +25,7 @@ export const PAGE_TEXT = {
   browseGames: "Browse games to play",
   gameFocus: "Game Focus",
   welcomeText: "Welcome",
+  footerCopyright: "Copyright 2023",
 };
 
 export const ERROR_MESSAGE = {
