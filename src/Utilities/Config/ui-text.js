@@ -13,16 +13,20 @@ export const MODAL_TEXT = {
 export const PAGE_TEXT = {
   reviewPieceText: "Suggested review pieces for: ",
   loadingText: "Loading...",
+  loadingGamesText: "Loading games...",
   bookOneText: "Book One Techniques",
   loginText: "Log In",
   logoutText: "Log Out",
   loggedInWithGoogle:
     "You have logged in with Google, these values cannot be changed.",
+  browseGames: "Browse games to play",
+  gameFocus: "Game Focus",
 };
 
 export const ERROR_MESSAGE = {
   emptyFieldsError: "Make sure you have filled in all the fields!",
   networkError: "There was a network error, please try this later.",
+  networkFailError: "Network error: Failed to fetch",
   genericError: "There was an error",
   serverError: "There was an error with the server, please try this later.",
   tagsError: "There was an error getting tags",
@@ -55,6 +59,12 @@ export const BUTTON_TEXT = {
   aboutButton: "About",
   homeButton: "Home",
   updateButton: "Update",
+  yesButton: "Yes",
+  noButton: "No",
+  cancelButton: "Cancel",
+  clearButton: "Clear",
+  moreInfoButton: "More Info",
+  xButton: "x",
 };
 
 export const PLACEHOLDER_TEXT = {

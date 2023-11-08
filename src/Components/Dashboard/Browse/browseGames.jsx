@@ -1,40 +1,32 @@
-// This is the Browse games component. It depends on 'react' and 'react-select'.
-
 import { useEffect, useState } from "react";
 import style from "./browseGames.module.css";
 import BrowsePagination from "../../Pagination/browsePagination";
 import Select from "react-select";
 import { getAllGames, getTagsForBrowse } from "./browse-utils";
+import {
+  BUTTON_TEXT,
+  ERROR_MESSAGE,
+  PAGE_TEXT,
+} from "../../../Utilities/Config/ui-text";
 
-//Page size for pagination
 export const browsePageSize = 5;
 
 export default function BrowseGames() {
-  //State of Error
   const [errorMessage, setErrorMessage] = useState("");
-  //Pagination info
   const [browsePagination, setBrowsePagination] = useState({
     count: 0,
     from: 0,
     to: browsePageSize,
   });
 
-  //Array of all games from database
   const [allGames, setAllGames] = useState([]);
-  //Set the array of games for pagination to work
   const [paginationGames, setPaginationGames] = useState([]);
-  //While page is loading, this state is used to show conditional messages
   const [loadingGames, setLoadingGames] = useState(false);
-  //State for Select options and filter
   const [browseTags, setBrowseTags] = useState([]);
-  //This is the state of the react-select componenet
   const [selectedTag, setSelectedTag] = useState([]);
-  //State for div click
   const [showMoreInfo, setShowMoreInfo] = useState("");
-  //State for current pagination page
   const [currentPage, setCurrentPage] = useState(1);
 
-  //props to pass to utility functions
   const getAllGamesProps = {
     setLoadingGames,
     setPaginationGames,
@@ -51,27 +43,20 @@ export default function BrowseGames() {
     setShowMoreInfo(e.target.parentNode.id);
   }
 
-  //=================== Close info
   function handleInfoClose() {
     setShowMoreInfo("");
   }
 
-  //=================== Options for Browse Select
   const browseOptions = browseTags.map((tag, index) => {
     return { value: tag, label: tag, key: index };
   });
 
-  //=================== Select functionality
-
   function handleTagChange(event) {
     setSelectedTag(event.value);
-    //Reset pagination to work with filtered array
     setBrowsePagination({ ...browsePagination, from: 0, to: 5 });
-    //Take pagination back to page 1
     setCurrentPage(() => 1);
   }
 
-  //Clear filter
   function handleFilterClear() {
     setSelectedTag([]);
   }
@@ -103,7 +88,7 @@ export default function BrowseGames() {
 
   function displayAllGames() {
     if (loadingGames) {
-      return <p>Loading Games...</p>;
+      return <p>{PAGE_TEXT.loadingGamesText}</p>;
     } else {
       return paginationGames.map((game) => (
         <div className={style.gameItem} key={game._id} id={game._id}>
@@ -117,7 +102,7 @@ export default function BrowseGames() {
             }
             onClick={handleGameItemClick}
           >
-            More Info
+            {BUTTON_TEXT.moreInfoButton}
           </button>
           <div
             className={
@@ -127,16 +112,16 @@ export default function BrowseGames() {
             }
             data-id={game._id}
           >
-            <h5>Game Focus:</h5>
+            <h5>{PAGE_TEXT.gameFocus}</h5>
             <ul>
               {game.gameTechnique.map((focus, index) => (
-                <li key={index}>
+                <li key={index} data-testid="game-item">
                   {focus[0].toUpperCase() + focus.substring(1)}
                 </li>
               ))}
             </ul>
             <button className={style.closeInfoButton} onClick={handleInfoClose}>
-              x
+              {BUTTON_TEXT.xButton}
             </button>
           </div>
         </div>
@@ -149,13 +134,12 @@ export default function BrowseGames() {
       ? `${style.browsePaginationHidden}`
       : `${style.browsePaginationVisible}`;
 
-  /* ======================================================================================
-|||||||||||||||||||||||||||||||||| Return |||||||||||||||||||||||||||||||||||||||||||||||
-========================================================================================= */
-
   return (
-    <div className={style.browseGamesContainer}>
-      <h2 className={style.browseHeading}>Browse Games to Play</h2>
+    <div
+      className={style.browseGamesContainer}
+      data-testid="browse-games-container"
+    >
+      <h2 className={style.browseHeading}>{PAGE_TEXT.browseGames}</h2>
       <div className={style.filterContainer}>
         <Select
           options={browseOptions}
@@ -164,18 +148,26 @@ export default function BrowseGames() {
           onChange={handleTagChange}
           placeholder={"Choose a topic"}
           value={selectedTag.length === 0 ? null : selectedTag.value}
+          data-testid={"browse-select"}
         />
-        <button onClick={handleFilterClear} className={style.clearButton}>
-          Clear
+        <button
+          onClick={handleFilterClear}
+          className={style.clearButton}
+          role="button"
+        >
+          {BUTTON_TEXT.clearButton}
         </button>
       </div>
       <div className={style.browseGamesDisplay}>
         {errorMessage ? (
-          <p className="errorText">There was a server error</p>
+          <p className="errorText">{ERROR_MESSAGE.serverError}</p>
         ) : (
           displayAllGames()
         )}
-        <div className={browsePaginationDisplay}>
+        <div
+          className={browsePaginationDisplay}
+          data-testid="browse-pagination"
+        >
           <BrowsePagination
             browsePagination={browsePagination}
             setBrowsePagination={setBrowsePagination}

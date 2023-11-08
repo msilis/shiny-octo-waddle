@@ -138,6 +138,7 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
     <div
       className={style.addGameContainer}
       id="addGameContainer"
+      data-testid="add-game"
       ref={container}
     >
       <h3>Add a game!</h3>
