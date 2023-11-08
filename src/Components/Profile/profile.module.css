@@ -40,12 +40,11 @@
 .profileButton {
   outline: 2px solid white;
   width: 7rem;
-  padding: .10rem;
+  padding: 0.1rem;
   text-align: center;
-  transition: .3s;
+  transition: 0.3s;
   border-radius: 5px 0px 5px 0px;
   margin-bottom: 1rem;
- 
 }
 
 .profileButton:hover {
@@ -58,10 +57,7 @@
   transform: translateY(5px);
 }
 
-
-/* ============ Small Screen ============ */
-
-@media only screen and (width < 500px){
+@media only screen and (width < 500px) {
   .profileVisible {
     flex-direction: column;
   }
@@ -70,4 +66,3 @@
     width: 15rem;
   }
 }
-

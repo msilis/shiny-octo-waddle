@@ -9,11 +9,10 @@ import { getSavedGames, handleSavedGameDelete } from "./savedGames-utils";
 const savedGamePageSize = 3;
 
 export default function SavedGames({ userId }) {
-  //State for saved games
   const [savedGames, setSavedGames] = useState([]);
   const [loadingSaved, setLoadingSaved] = useState(false);
   const [savedGameError, setSavedGameError] = useState(null);
-  //State for pagination
+
   const [currentMyGamesPage, setCurrentMyGamesPage] = useState(1);
   const [savedGamesPagination, setSavedGamesPagination] = useState({
     count: 0,
@@ -21,7 +20,6 @@ export default function SavedGames({ userId }) {
     to: savedGamePageSize,
   });
 
-  // Get user's saved games
   useEffect(() => {
     getSavedGames(
       setSavedGames,
@@ -59,8 +57,6 @@ export default function SavedGames({ userId }) {
     savedGamesPagination.count,
     savedGames.length,
   ]);
-
-  //Conditionally render game display depending on fetch state and saved games array
 
   function displaySavedGames() {
     if (loadingSaved) {

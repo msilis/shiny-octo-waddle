@@ -1,5 +1,3 @@
-//Get Pieces for modal from database
-
 const fetchPieces = (setListOfPieces, setLoadingPieces) => {
   try {
     setLoadingPieces(true);
@@ -18,8 +16,6 @@ const fetchPieces = (setListOfPieces, setLoadingPieces) => {
     console.log(err);
   }
 };
-
-//Get techniques for modal from database
 
 const fetchGameTechniques = (setGameTechniques, setLoadingFocus) => {
   try {

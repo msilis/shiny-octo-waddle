@@ -64,7 +64,7 @@ const handleSavedGameDelete = (
   const deleteGameData = {
     gameToDelete: gameToDelete,
   };
-  //Make API call
+
   fetch("https://group-class-backend.onrender.com/deleteSavedGame", {
     method: "POST",
     headers: {
@@ -106,7 +106,6 @@ const handleSavedGameDelete = (
     });
 };
 
-//Get user's created games from db ==================================
 function getUserCreatedGames(createdGamesProps) {
   const createdById = {
     userId: createdGamesProps.userId,
@@ -133,7 +132,6 @@ function getUserCreatedGames(createdGamesProps) {
     });
 }
 
-//DELETE user created game =========================================
 function handleCreatedGameDelete(event, createdGamesProps) {
   const gameId = event.target.parentNode.parentNode.id;
   const deleteCreatedData = {

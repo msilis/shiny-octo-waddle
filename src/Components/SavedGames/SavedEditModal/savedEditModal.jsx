@@ -16,11 +16,10 @@ export default function EditModal({
   gameToEditId,
   getUserCreatedGames,
 }) {
-  //Conditionally render modal depending on state
   const modalDisplay = showModal
     ? `${style.modalVisible}`
     : `${style.modalHidden}`;
-  //Refs for inputs
+
   const editedGameName = useRef();
   const editedGameText = useRef();
   const [listOfPieces, setListOfPieces] = useState([]);
@@ -28,7 +27,6 @@ export default function EditModal({
   const [loadingPieces, setLoadingPieces] = useState(false);
   const [loadingFocus, setLoadingFocus] = useState(false);
 
-  //Cancel button function
   function handleCancelEditClick() {
     setGameToEditId("");
     editedGameName.current.value = gameToEdit.gameName;
@@ -39,16 +37,10 @@ export default function EditModal({
     setShowModal(false);
   }
 
-  // useEffect to get pieces and techniques for react-select
-
   useEffect(() => {
     fetchPieces(setListOfPieces, setLoadingPieces);
     fetchGameTechniques(setGameTechniques, setLoadingFocus);
   }, []);
-
-  /* =======  Options for react-select =========*/
-
-  //gameTechnique options
 
   const addTechniqueOptions = gameTechniques.map((tag, index) => {
     return {
@@ -58,7 +50,6 @@ export default function EditModal({
     };
   });
 
-  //Select onChange
   function handleTechniqueChange(e) {
     setAddGameTechniques(e);
   }
@@ -67,13 +58,10 @@ export default function EditModal({
     setAddGamePieces(e);
   }
 
-  //piecesOptions
-
   const piecesOptions = listOfPieces.map((piece, index) => {
     return { value: piece, label: piece, key: index };
   });
 
-  // Save edited piece to database =====================================
   function handleSaveEditedGame() {
     const saveGameData = {
       saveUser: gameToEdit.saveUser,

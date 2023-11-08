@@ -24,8 +24,6 @@
   gap: 1rem;
 }
 
-/* Button styles */
-
 .voteButtonContainer {
   display: flex;
   gap: 1rem;
@@ -97,20 +95,15 @@
   font-style: italic;
 }
 
+@media only screen and (width < 500px) {
+  .gameItem {
+    display: flex;
+    flex-direction: column;
+    width: 78vw;
+  }
 
-/* ============================
-|||||||||| Small Screen |||||||
-=============================== */
-
-@media only screen and ( width < 500px ){
-    .gameItem {
-      display: flex;
-      flex-direction: column;
-      width: 78vw;
-    }
-
-    .votedTextVisible {
-      top: auto;
-      bottom: 1rem;
-    }
+  .votedTextVisible {
+    top: auto;
+    bottom: 1rem;
+  }
 }

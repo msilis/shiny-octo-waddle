@@ -1,4 +1,3 @@
-//This component is for the pagination of a user's created games
 import Pagination from "@mui/material/Pagination";
 import { ThemeProvider } from "@mui/material";
 import { theme } from "../Pagination/gamePagination";

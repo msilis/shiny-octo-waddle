@@ -44,7 +44,7 @@ export function callLogin(loginProps, navigate) {
         userId: data.userId,
       };
       sessionStorage.setItem(STORAGE_OPTIONS.user, JSON.stringify(userInfo));
-      //Redirect user after sucessful login
+
       loginProps.setLoading(false);
       return navigate(ROUTE_PATHS.dashboard);
     })
