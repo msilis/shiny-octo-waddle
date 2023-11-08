@@ -43,7 +43,6 @@ const handleAddGame = (
   }
 };
 
-//Add game for voting
 const handleAddVoteGame = (
   gameName,
   gameText,

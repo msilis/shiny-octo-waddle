@@ -15,7 +15,6 @@
   display: none;
 }
 
-/* Pagination styling  */
 .browsePaginationHidden {
   display: none;
 }
@@ -27,8 +26,6 @@
   margin-left: auto;
 }
 
-/* Select Menu Style */
-
 .browseInput {
   width: 20rem;
   color: black;
@@ -38,8 +35,6 @@
   display: flex;
   gap: 1rem;
 }
-
-/* Button style */
 
 .clearButton {
   outline: 2px solid white;
@@ -94,7 +89,7 @@
   text-align: center;
   transition: 0.3s;
   border-radius: 100%;
-  font-size: .75rem;
+  font-size: 0.75rem;
 }
 
 .closeInfoButton:hover {
@@ -102,9 +97,6 @@
   color: red;
   outline: 2px solid red;
 }
-/* ===================================
-  ||||||||| Small Screen |||||||||||||||
-  ====================================== */
 
 @media only screen and (width < 500px) {
   .browsePaginationVisible {
