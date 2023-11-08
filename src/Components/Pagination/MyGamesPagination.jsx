@@ -10,8 +10,6 @@ export default function MyGamesPagination({
   setMyGamesPagination,
   createdGamePageSize,
 }) {
-  //Handle page change
-  //Maximum of 3 games per page
   function handleGamePageChange(event, page) {
     const from = (page - 1) * createdGamePageSize;
     const to = (page - 1) * createdGamePageSize + createdGamePageSize;
