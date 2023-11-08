@@ -25,19 +25,12 @@ export default function Login({
   setUsername,
   setGoogleName,
 }) {
-  //Refs for inputs
   const loginUsername = useRef();
   const loginPassword = useRef();
   const navigate = useNavigate();
-
-  //State for error handling
   const [loginError, setLoginError] = useState(null);
-  //Loading state
   const [loading, setLoading] = useState(false);
-  //Get login status from sessionStorage
   const loginStatus = sessionStorage.getItem(STORAGE_OPTIONS.loggedIn);
-
-  //Login props
 
   const loginProps = {
     setLoginError,
@@ -54,8 +47,6 @@ export default function Login({
     setGoogleName,
   };
 
-  //If already logged in, redirect to dashboard
-
   function checkLoggedIn() {
     const isGoogleLoggedIn = sessionStorage.getItem(
       STORAGE_OPTIONS.googleLogin
@@ -67,14 +58,11 @@ export default function Login({
     }
   }
 
-  //Enter key submits login info ================================
-
   function handleEnterKey(event) {
     if (event.key === "Enter") {
       handleLoginSubmit(loginProps, navigate);
     }
   }
-  // Handle Logout
 
   const handleLogoutInternal = () => {
     setLoggedIn(false);
@@ -91,10 +79,6 @@ export default function Login({
   useEffect(() => {
     checkLoggedIn();
   }, [loginStatus, navigate]);
-
-  /* ======================================
-  ||||||||||||||||Return|||||||||||||||||||
-  ========================================= */
 
   return loading ? (
     <Loading />
