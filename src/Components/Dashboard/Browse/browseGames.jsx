@@ -115,7 +115,7 @@ export default function BrowseGames() {
             <h5>{PAGE_TEXT.gameFocus}</h5>
             <ul>
               {game.gameTechnique.map((focus, index) => (
-                <li key={index}>
+                <li key={index} data-testid="game-item">
                   {focus[0].toUpperCase() + focus.substring(1)}
                 </li>
               ))}
@@ -164,7 +164,10 @@ export default function BrowseGames() {
         ) : (
           displayAllGames()
         )}
-        <div className={browsePaginationDisplay}>
+        <div
+          className={browsePaginationDisplay}
+          data-testid="browse-pagination"
+        >
           <BrowsePagination
             browsePagination={browsePagination}
             setBrowsePagination={setBrowsePagination}
