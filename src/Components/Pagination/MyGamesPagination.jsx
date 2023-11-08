@@ -1,4 +1,3 @@
-//This component is for the pagination of a user's created games
 import Pagination from "@mui/material/Pagination";
 import { ThemeProvider } from "@mui/material";
 import { theme } from "../Pagination/gamePagination";
@@ -10,8 +9,6 @@ export default function MyGamesPagination({
   setMyGamesPagination,
   createdGamePageSize,
 }) {
-  //Handle page change
-  //Maximum of 3 games per page
   function handleGamePageChange(event, page) {
     const from = (page - 1) * createdGamePageSize;
     const to = (page - 1) * createdGamePageSize + createdGamePageSize;

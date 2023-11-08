@@ -2,6 +2,9 @@ export const TOAST_TEXT = {
   gameAddSuccess: "Game added successfully",
   gameSavedSuccess: "Game has been saved to 'My Games'",
   noTopicSelected: "You haven't selected a topic.",
+  userAddedSuccess: "User added successfully",
+  noChangeMessage: "You haven't changed anything",
+  profileUpdated: "Profile updated successfully",
 };
 
 export const MODAL_TEXT = {
@@ -21,6 +24,11 @@ export const PAGE_TEXT = {
     "You have logged in with Google, these values cannot be changed.",
   browseGames: "Browse games to play",
   gameFocus: "Game Focus",
+  welcomeText: "Welcome",
+  footerCopyright: "Copyright 2023",
+  iVotedText: "I voted!",
+  voteSectionText:
+    "Vote on games on this page. If a game gets to 25 votes, it will be added to the main games database.",
 };
 
 export const ERROR_MESSAGE = {
@@ -41,6 +49,10 @@ export const ERROR_MESSAGE = {
   alreadyVoted: "You have already voted for this game",
   failedGettingVoteGames:
     "There was a network error and I could not get the games to vote on",
+  usernameAlreadyExists:
+    "That username already exists, please pick a different username.",
+  passwordsDoNotMatch: "Passwords do not match!",
+  noGamesToShowText: "There are no games to vote on now...",
 };
 
 export const BUTTON_TEXT = {
@@ -70,4 +82,10 @@ export const BUTTON_TEXT = {
 export const PLACEHOLDER_TEXT = {
   usernamePlaceholder: "Username",
   passwordPlaceholder: "Password",
+  confirmPasswordPlaceholder: "Confirm Password",
+  emailPlaceholder: "Email",
+  lastnamePlaceholder: "Last Name",
+  firstnamePlaceholder: "First Name",
+  countryPlaceholder: "--Select Country--",
+  anonymousPlaceholder: "Anonymous",
 };

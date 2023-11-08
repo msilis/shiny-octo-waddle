@@ -19,20 +19,14 @@ const Protected = lazy(() => import("./Components/Protected/protected.jsx"));
 //For router
 
 function App() {
-  //State for user login
-
   const [loggedIn, setLoggedIn] = useState(false);
-  //State for user's name
   const [firstName, setFirstName] = useState("");
   const [googleName, setGoogleName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [userId, setUserId] = useState("");
-  //Profile state
   const [seeProfile, setSeeProfile] = useState(false);
-
-  //Main display
   const [mainDisplay, setMainDisplay] = useState("dashboard");
 
   const suspenseLoading = (
@@ -51,7 +45,6 @@ function App() {
     checkGoogleLoggedIn,
   };
 
-  //Check sessionStorage to see if user is logged in
   useEffect(() => {
     if (sessionStorage.getItem(STORAGE_OPTIONS.loggedIn)) {
       setLoggedIn(true);
@@ -68,8 +61,6 @@ function App() {
       setGoogleName(sessionStorage.getItem(STORAGE_OPTIONS.googleLoginName));
     }
   }, []);
-
-  //Routes
 
   function PageRoutes() {
     return (

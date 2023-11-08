@@ -40,8 +40,6 @@
   display: none;
 }
 
-/* Buttons */
-
 .buttonContainer {
   display: flex;
   flex-direction: row;

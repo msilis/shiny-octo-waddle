@@ -12,7 +12,6 @@ import {
 const createdGamePageSize = 3;
 
 export default function SavedCreatedGames({ userId }) {
-  //State for user-created saved games
   const [savedCreatedGames, setSavedCreatedGames] = useState([]);
   const [loadingCreated, setLoadingCreated] = useState(false);
   const [gameToEditId, setGameToEditId] = useState("");
@@ -21,7 +20,7 @@ export default function SavedCreatedGames({ userId }) {
   const [addGameTechniques, setAddGameTechniques] = useState([]);
   const [addGamePieces, setAddGamePieces] = useState([]);
   const [savedCreatedGameError, setSavedCreatedGameError] = useState(null);
-  //State for pagination
+
   const [currentGamesPage, setCurrentGamesPage] = useState(1);
   const [myGamesPagination, setMyGamesPagination] = useState({
     count: 0,
@@ -42,10 +41,6 @@ export default function SavedCreatedGames({ userId }) {
     createdGamePageSize,
   };
 
-  //EDIT user created game =========================================
-
-  //API Call for data
-  //Call API and get game details
   function getUserGameToEdit(gameId) {
     try {
       fetch(
@@ -67,7 +62,7 @@ export default function SavedCreatedGames({ userId }) {
       console.log(err);
     }
   }
-  //Edit User Game ===========================================
+
   function handleEditUserCreatedGame(event) {
     const gameId = event.target.parentNode.parentNode.id;
     setGameToEditId(gameId);
@@ -75,7 +70,6 @@ export default function SavedCreatedGames({ userId }) {
     getUserGameToEdit(gameId);
   }
 
-  //Get user created games with effect hook ================
   useEffect(() => {
     getUserCreatedGames(createdGamesProps);
   }, []);

@@ -1,90 +1,84 @@
 /* Login Container */
 .loginContainer {
-    display: flex;
-    flex-direction: column;
-    padding: 2rem;
-    gap: 1rem;
-    max-width: 500px;
-    margin-top: 2rem;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #6C464F;
-    border-radius: 30px 0px 30px 0px;
-    box-shadow: 8px 8px 8px black;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 1rem;
+  max-width: 500px;
+  margin-top: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #6c464f;
+  border-radius: 30px 0px 30px 0px;
+  box-shadow: 8px 8px 8px black;
 }
 
 .userLoggedIn {
-    display: none;
+  display: none;
 }
 
 .loginHeading {
-    color: white;
-    font-weight: 600;
+  color: white;
+  font-weight: 600;
 }
 
 .loginInput {
-    width: 27rem;
-    height: 2.5rem;
-    font-size: 1.25rem;
-    border-radius: 3px;
-    outline: none;
+  width: 27rem;
+  height: 2.5rem;
+  font-size: 1.25rem;
+  border-radius: 3px;
+  outline: none;
 }
 
-/* Login Button */
-
 .loginButton {
-    display: flex;
-    justify-content: center;
-    width: 6rem;
-    color: white;
-    background-color: #241E4E;
-    margin-top: 3rem;
-    padding: .5rem;
-    border-radius: 10px;
-    transition: .5s;
-
+  display: flex;
+  justify-content: center;
+  width: 6rem;
+  color: white;
+  background-color: #241e4e;
+  margin-top: 3rem;
+  padding: 0.5rem;
+  border-radius: 10px;
+  transition: 0.5s;
 }
 
 .loginButton:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .loginButton:active {
-    transform: translateY(5px);
-    box-shadow: 2px 2px 2px black;
+  transform: translateY(5px);
+  box-shadow: 2px 2px 2px black;
 }
 
-
-/* Animate container on load */
 .fadeContainer {
-    animation: .25s animate-fade-container ease-out 1;
+  animation: 0.25s animate-fade-container ease-out 1;
 }
 
 @keyframes animate-fade-container {
-
-    0% {
-        opacity: 0;
-    }
-    20% {
-        opacity: .25;
-    }
-    50% {
-        opacity: .5;
-    }
-    80% {
-        opacity: .75;
-    }
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  80% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
-@media only screen and (width < 500px){
-    .loginContainer {
-        max-width: 290px;
-    }
+@media only screen and (width < 500px) {
+  .loginContainer {
+    max-width: 290px;
+  }
 
-    .loginInput {
-        width: 18rem;
-    }
+  .loginInput {
+    width: 18rem;
+  }
 }

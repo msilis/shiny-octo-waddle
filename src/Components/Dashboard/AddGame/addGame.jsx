@@ -14,18 +14,16 @@ import { showErrorToast } from "../../../Utilities/toastError";
 import { ERROR_MESSAGE, TOAST_TEXT } from "../../../Utilities/Config/ui-text";
 
 const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
-  //Refs ***********************
   const gameName = useRef();
   const gameText = useRef();
   const container = useRef();
-  //State **********************
+
   const [listOfPieces, setListOfPieces] = useState([]);
   const [addPieces, setAddPieces] = useState([]);
   const [gameTechniques, setGameTechniques] = useState([]);
   const [addGameTechniques, setAddGameTechniques] = useState([]);
   const [showAddGameModal, setShowAddGameModal] = useState(false);
 
-  //Clear Button click ============================================================================================
   function handleClearClick(event) {
     setAddGame(false);
     gameName.current.value = "";
@@ -34,13 +32,11 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
     setAddPieces([]);
   }
 
-  // useEffect to get info on page load ============================================================
   useEffect(() => {
     fetchPieces(setListOfPieces);
     fetchGameTechniques(setGameTechniques);
   }, []);
 
-  //Options to send to Select element ===============================================================
   const addGameOptions = gameTechniques.map((tag, index) => {
     return {
       value: tag,
@@ -49,28 +45,19 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
     };
   });
 
-  //Handle tag input ================================================================================
   function handleTagChange(e) {
     const tagValues = e.map((tag) => tag.value);
     setAddGameTechniques(e);
   }
 
-  //Assign pieces to value to send to react-select dropdown list ======================================
-
   const pieceOptions = listOfPieces.map((piece, index) => {
     return { value: piece, label: piece, key: index };
   });
-  //Handle adding a piece to game ====================================================================
+
   function handlePieceChange(e) {
     const pieceValues = e.map((piece) => piece.value);
     setAddPieces(e);
   }
-
-  //   //Map values of pieces and techniques to correctly send to database
-  //   const tagValues = addGameTechniques.map((tag) => tag.value);
-  //   const pieceValues = addPieces.map((piece) => piece.value);
-
-  //If user selects yes, add game to vote list. If user selects no, add game only to profile.
 
   const handleYesClick = () => {
     handleAddGame(
@@ -116,7 +103,6 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
     gameSelectPlaceholder: "Select Game Focus",
     gameTechniqueSelectPlaceholder: "Select Game Focus",
   };
-  //Show modal and ask if user wants game added to vote list
 
   function handleShowModal() {
     if (
@@ -130,9 +116,6 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
       setShowAddGameModal(true);
     }
   }
-  /* ==============================================================
-|||||||||||| Return |||||||||||||||||||||||||||||||||||||||||||||
-================================================================= */
 
   return (
     <div

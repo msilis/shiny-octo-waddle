@@ -1,90 +1,82 @@
 .savedGameDisplayContainer {
-    margin-bottom: 5rem;
-    
-  }
-  
-  .gameItem {
-    background-color: #388697;
-    padding: 1rem;
-    margin-top: 1rem;
-    margin-right: 1rem;
-    border-radius: 30px 0px 30px 0px;
-    box-shadow: 8px 8px 8px black;
-    animation: gameItemFadeIn 1s;
-    
-  }
-  
-  @keyframes gameItemFadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
+  margin-bottom: 5rem;
+}
 
+.gameItem {
+  background-color: #388697;
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  border-radius: 30px 0px 30px 0px;
+  box-shadow: 8px 8px 8px black;
+  animation: gameItemFadeIn 1s;
+}
 
-  .gameTechniqueContainer {
-    display: flex;
-    margin-top: -2rem;
-    gap: 1rem;
+@keyframes gameItemFadeIn {
+  from {
+    opacity: 0;
   }
+  to {
+    opacity: 1;
+  }
+}
 
-  /* Clear default button styling so new style can be applied */
-  button {
-    all: unset;
-    cursor: pointer;
-  }
+.gameTechniqueContainer {
+  display: flex;
+  margin-top: -2rem;
+  gap: 1rem;
+}
 
-  .buttonContainer {
-    display: flex;
-    gap: 1rem;
-  }
-  
-  
-  .deleteSavedGameButton {
-    outline: 2px solid white;
-    width: 4rem;
-    padding: .10rem;
-    text-align: center;
-    transition: .3s;
-    border-radius: 5px 0px 5px 0px;
-  }
-  
-  .deleteSavedGameButton:hover {
-    cursor: pointer;
-    color: red;
-    outline: 2px solid red;
-  }
-  
-  .deleteSavedGameButton:active {
-    transform: translateY(5px);
-  }
+button {
+  all: unset;
+  cursor: pointer;
+}
 
-  .editSavedGameButton {
-    outline: 2px solid white;
-    width: 4rem;
-    padding: .10rem;
-    text-align: center;
-    transition: .3s;
-    border-radius: 5px 0px 5px 0px;
-  }
+.buttonContainer {
+  display: flex;
+  gap: 1rem;
+}
 
-  .editSavedGameButton:hover {
-    cursor: pointer;
-    color: lightgreen;
-    outline: 2px solid lightgreen;
-  }
-  
-  .editSavedGameButton:active {
-    transform: translateY(5px);
-  }
+.deleteSavedGameButton {
+  outline: 2px solid white;
+  width: 4rem;
+  padding: 0.1rem;
+  text-align: center;
+  transition: 0.3s;
+  border-radius: 5px 0px 5px 0px;
+}
 
-  /* Pagination styling */
+.deleteSavedGameButton:hover {
+  cursor: pointer;
+  color: red;
+  outline: 2px solid red;
+}
 
-  .paginationContainer {
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-  }
-  
+.deleteSavedGameButton:active {
+  transform: translateY(5px);
+}
+
+.editSavedGameButton {
+  outline: 2px solid white;
+  width: 4rem;
+  padding: 0.1rem;
+  text-align: center;
+  transition: 0.3s;
+  border-radius: 5px 0px 5px 0px;
+}
+
+.editSavedGameButton:hover {
+  cursor: pointer;
+  color: lightgreen;
+  outline: 2px solid lightgreen;
+}
+
+.editSavedGameButton:active {
+  transform: translateY(5px);
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
