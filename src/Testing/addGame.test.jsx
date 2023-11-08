@@ -9,7 +9,6 @@ describe("AddGame", () => {
   //Clean up
   afterEach(cleanup);
 
-  //This is for react-select. It was throwing errors without this mocking
   vi.mock("react-select", () => ({
     __esModule: true,
     default: vi.fn(),

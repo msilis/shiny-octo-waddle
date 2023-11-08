@@ -29,22 +29,20 @@ describe("Navbar", () => {
 
     //Assert
     expect(mainDisplay).toBe("dashboard");
-
-    
   });
   //Browse
-  it("should update mainDisplay to 'browse' when 'browse' button is clicked", ()=>{
+  it("should update mainDisplay to 'browse' when 'browse' button is clicked", () => {
     let mainDisplay = "";
 
     //Render Navbar
     render(
-        <Router>
-            <Navbar
+      <Router>
+        <Navbar
           loggedIn={true}
           setMainDisplay={(value) => (mainDisplay = value)}
           setLoggedIn={vi.fn()}
         />
-        </Router>
+      </Router>
     );
 
     //Get Browse button
@@ -54,22 +52,22 @@ describe("Navbar", () => {
     fireEvent.click(browseButton);
 
     //Assert
-    expect(mainDisplay).toBe("browse")
+    expect(mainDisplay).toBe("browse");
   });
 
   //Register
-  it("should update mainDisplay to 'register' when 'register' button is clicked",()=>{
+  it("should update mainDisplay to 'register' when 'register' button is clicked", () => {
     let mainDisplay = "";
 
     //Render Navbar
     render(
-        <Router>
-            <Navbar
+      <Router>
+        <Navbar
           loggedIn={true}
           setMainDisplay={(value) => (mainDisplay = value)}
           setLoggedIn={vi.fn()}
         />
-        </Router>
+      </Router>
     );
 
     //Get Browse button
@@ -79,22 +77,22 @@ describe("Navbar", () => {
     fireEvent.click(voteButton);
 
     //Assert
-    expect(mainDisplay).toBe("vote")
+    expect(mainDisplay).toBe("vote");
   });
 
   //MyGames
-  it("should update mainDisplay to 'myGames' when 'my games' button is clicked",()=>{
+  it("should update mainDisplay to 'myGames' when 'my games' button is clicked", () => {
     let mainDisplay = "";
 
     //Render Navbar
     render(
-        <Router>
-            <Navbar
+      <Router>
+        <Navbar
           loggedIn={true}
           setMainDisplay={(value) => (mainDisplay = value)}
           setLoggedIn={vi.fn()}
         />
-        </Router>
+      </Router>
     );
 
     //Get Browse button
@@ -104,22 +102,22 @@ describe("Navbar", () => {
     fireEvent.click(myGamesButton);
 
     //Assert
-    expect(mainDisplay).toBe("myGames")
+    expect(mainDisplay).toBe("myGames");
   });
 
-  //Add Game 
-  it("should update mainDisplay to 'addGame' when 'add game' button is clicked",()=>{
+  //Add Game
+  it("should update mainDisplay to 'addGame' when 'add game' button is clicked", () => {
     let mainDisplay = "";
 
     //Render Navbar
     render(
-        <Router>
-            <Navbar
+      <Router>
+        <Navbar
           loggedIn={true}
           setMainDisplay={(value) => (mainDisplay = value)}
           setLoggedIn={vi.fn()}
         />
-        </Router>
+      </Router>
     );
 
     //Get Browse button
@@ -129,23 +127,23 @@ describe("Navbar", () => {
     fireEvent.click(addGameButton);
 
     //Assert
-    expect(mainDisplay).toBe("addGame")
+    expect(mainDisplay).toBe("addGame");
   });
 
-  //Profile 
+  //Profile
 
-  it("should update mainDisplay to 'seeProfile' when 'profile' button is clicked",()=>{
+  it("should update mainDisplay to 'seeProfile' when 'profile' button is clicked", () => {
     let mainDisplay = "";
 
     //Render Navbar
     render(
-        <Router>
-            <Navbar
+      <Router>
+        <Navbar
           loggedIn={true}
           setMainDisplay={(value) => (mainDisplay = value)}
           setLoggedIn={vi.fn()}
         />
-        </Router>
+      </Router>
     );
 
     //Get Browse button
@@ -155,7 +153,6 @@ describe("Navbar", () => {
     fireEvent.click(profileButton);
 
     //Assert
-    expect(mainDisplay).toBe("seeProfile")
+    expect(mainDisplay).toBe("seeProfile");
   });
-
 });

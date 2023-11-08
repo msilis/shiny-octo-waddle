@@ -56,6 +56,7 @@ export default function DashboardMain({
   return (
     <div
       className={classnames(style.dashboardMainContainer, style.fadeContainer)}
+      data-testid="dashboard-main-container"
     >
       <div className={style.dashboardMain}>
         <h2>{greetText}</h2>
