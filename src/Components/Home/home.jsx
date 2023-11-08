@@ -1,3 +1,4 @@
+import { PAGE_TEXT } from "../../Utilities/Config/ui-text";
 import style from "./home.module.css";
 import classnames from "classnames";
 
@@ -7,7 +8,7 @@ export default function Home() {
       className={classnames(style.homeContainer, style.fadeContainer)}
       data-testid="home-container"
     >
-      <h2 className={style.homeHeading}>Welcome</h2>
+      <h2 className={style.homeHeading}>{PAGE_TEXT.welcomeText}</h2>
       <p className={style.homeText} data-testid="home-paragraph">
         This tool is designed to complement your planning efforts and serve as a
         helpful reminder. While some of the suggested games and reviews may be
