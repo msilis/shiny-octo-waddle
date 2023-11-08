@@ -5,8 +5,6 @@ import { useContext } from "react";
 import { UserContext } from "../../../userContext";
 import { API_URL } from "../../../Utilities/Config/api";
 
-//Go Button
-
 const handleGoClick = (
   setLoadRandomGame,
   setReviewPieces,
@@ -64,10 +62,9 @@ const handleGoClick = (
   }
 };
 
-//Save Game
 export function useHandleGameSave() {
   const userContext = useContext(UserContext);
-  //Game data
+
   return (setSavedGame, randomGame) => {
     const saveGameData = {
       gameName: randomGame.gameName,
@@ -95,8 +92,6 @@ export function useHandleGameSave() {
   };
 }
 
-//Get tags
-
 const getGameTags = (setTagArray, setError) => {
   fetch(API_URL.getTags, {
     method: "GET",
@@ -113,10 +108,8 @@ const getGameTags = (setTagArray, setError) => {
       return response.json();
     })
     .then((data) => {
-      //Map tags from each object to array
       const dataArray = data.map((tag) => tag.techniqueTags);
 
-      //Flatten the multiple arrays returned by dataArray into single array
       const flattenedArray = dataArray.flat(1);
       const filteredArray = flattenedArray.filter(
         (tag, index) => flattenedArray.indexOf(tag) === index
