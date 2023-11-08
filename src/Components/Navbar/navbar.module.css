@@ -1,6 +1,5 @@
 .navBackground {
   display: flex;
-  /* justify-content: flex-start; */
   justify-content: center;
   background-color: #388697;
 }
@@ -9,7 +8,7 @@
   display: flex;
   background-color: #388697;
 }
-/* This sets a fallback for when the screen is large and hamburger menu isn't shown. navBarContainer is visible*/
+
 .navbarContainerHide {
   display: flex;
   justify-content: flex-start;
@@ -24,7 +23,7 @@
   gap: 6rem;
   list-style: none;
 }
-/* This sets a fallback for when the screen is large and hamburger menu isn't shown. Navlist is visible */
+
 .navListHidden {
   display: flex;
   justify-items: center;
@@ -46,16 +45,12 @@
   color: black;
 }
 
-/* ==================================== Logged In Navigation Big screen =========================== */
-
 .loggedInNavigation {
   display: none;
 }
 .loggedInNavigationHidden {
   display: none;
 }
-
-/* ==================================== Hamurger Menu=============================================== */
 
 .hamburgerMenu {
   display: none;
@@ -102,8 +97,6 @@
   left: 8px;
 }
 
-/* ========================== Small Screen ============================= */
-
 @media only screen and (width < 700px) {
   .navBackground {
     justify-content: flex-start;
@@ -145,8 +138,6 @@
     cursor: pointer;
     margin-top: 10px;
   }
-
-  /* Logged in navigation */
 
   .loggedInNavigation {
     display: block;

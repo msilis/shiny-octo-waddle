@@ -8,10 +8,8 @@ import {
 import { STORAGE_OPTIONS } from "../../../Utilities/Config/storage";
 
 export default function SecondaryNavigation({ setLoggedIn, setMainDisplay }) {
-  //Import useNavigate to handle page redirect
   const navigate = useNavigate();
 
-  //handle logout button functionality
   function handleLogoutClick() {
     if (sessionStorage.getItem(STORAGE_OPTIONS.loggedIn)) {
       setLoggedIn(false);
@@ -26,32 +24,26 @@ export default function SecondaryNavigation({ setLoggedIn, setMainDisplay }) {
     }
   }
 
-  //Handle 'My Games' button click
   function handleMyGamesClick() {
     setMainDisplay(PAGE_NAVIGATION.myGames);
   }
 
-  //Handle Add Game click
   function handleAddGame() {
     setMainDisplay(PAGE_NAVIGATION.addGame);
   }
 
-  //Handle Vote button click
   function handleVoteClick() {
     setMainDisplay(PAGE_NAVIGATION.vote);
   }
 
-  //Dashboard click
   function handleDashboardClick() {
     setMainDisplay(PAGE_NAVIGATION.dashboard);
   }
 
-  //Browse click
   function handleBrowseClick() {
     setMainDisplay(PAGE_NAVIGATION.browse);
   }
 
-  //Handle Profile click
   function handleProfileCLick() {
     setMainDisplay(PAGE_NAVIGATION.profile);
   }

@@ -4,17 +4,23 @@ import countries from "countries-list";
 import { useRef, useState } from "react";
 import Select from "react-select";
 import { useNavigate } from "react-router";
+import { showSuccessToast } from "../../Utilities/toastSuccess";
+import { showErrorToast } from "../../Utilities/toastError";
+import {
+  BUTTON_TEXT,
+  ERROR_MESSAGE,
+  PLACEHOLDER_TEXT,
+  TOAST_TEXT,
+} from "../../Utilities/Config/ui-text";
+import { ROUTE_PATHS } from "../../Utilities/Config/navigation";
 
 export default function Register() {
-  //Refs for inputs
   const firstNameInput = useRef();
   const lastNameInput = useRef();
   const emailInput = useRef();
   const usernameInput = useRef();
   const passwordInput = useRef();
   const checkPasswordInput = useRef();
-
-  //State for input checking
   const [firstNameCheck, setFirstNameCheck] = useState(false);
   const [lastNameCheck, setLastNameCheck] = useState(false);
   const [emailCheck, setEmailCheck] = useState(false);
@@ -25,20 +31,17 @@ export default function Register() {
 
   const navigate = useNavigate();
 
-  //List of countries
   const countryCodes = Object.keys(countries.countries);
   const countryNames = countryCodes.map(
     (code) => countries.countries[code].name
   );
   const sortedCountry = countryNames.sort();
-  sortedCountry.unshift("--Select Country--");
+  sortedCountry.unshift(PLACEHOLDER_TEXT.countryPlaceholder);
   const options = sortedCountry.map((country, index) => {
     return { value: country, label: country, key: index };
   });
-  //Selection menu functionality
 
   function handleRegisterClick() {
-    // Check input fields
     if (firstNameInput.current?.value === "") {
       setFirstNameCheck(true);
     } else if (lastNameInput.current?.value === "") {
@@ -52,10 +55,9 @@ export default function Register() {
     } else if (checkPasswordInput.current?.value === "") {
       setPasswordDoubleCheck(true);
     } else if (
-      //Check password match
       passwordInput.current?.value != checkPasswordInput.current?.value
     ) {
-      alert("Passwords do not match!");
+      showErrorToast(ERROR_MESSAGE.passwordsDoNotMatch);
     } else {
       const newUserData = {
         firstName: firstNameInput.current?.value,
@@ -66,7 +68,6 @@ export default function Register() {
         password: passwordInput.current?.value,
       };
       try {
-        console.log(newUserData);
         fetch("https://group-class-backend.onrender.com/addUser", {
           method: "POST",
           headers: {
@@ -74,21 +75,16 @@ export default function Register() {
           },
           body: JSON.stringify(newUserData),
         }).then((response) => {
-          //Check if username already exists
           if (response.status === 409) {
-            return alert(
-              "That username already exists, please pick a different username."
-            );
+            return showErrorToast(ERROR_MESSAGE.usernameAlreadyExists);
           } else {
-            alert("User added sucessfully!");
-            //Reset field values if submission sucessful
+            showSuccessToast(TOAST_TEXT.userAddedSuccess);
             firstNameInput.current.value = "";
             lastNameInput.current.value = "";
             emailInput.current.value = "";
             usernameInput.current.value = "";
             passwordInput.current.value = "";
             checkPasswordInput.current.value = "";
-            //Reset any error message fields
             setFirstNameCheck(false);
             setLastNameCheck(false);
             setEmailCheck(false);
@@ -96,7 +92,7 @@ export default function Register() {
             setPasswordCheck(false);
             setPasswordDoubleCheck(false);
             setCountryInput("0");
-            navigate("/login");
+            navigate(ROUTE_PATHS.login);
           }
         });
       } catch (err) {
@@ -107,27 +103,27 @@ export default function Register() {
 
   return (
     <div className={classnames(style.registerContainer, style.fadeContainer)}>
-      <h3 className={style.registerHeading}>Register</h3>
+      <h3 className={style.registerHeading}>{BUTTON_TEXT.registerButton}</h3>
       <div className={style.inputContainer}>
         <input
           className={classnames(style.registerInput, {
             [style.registerInputError]: firstNameCheck,
           })}
-          placeholder="First Name"
+          placeholder={PLACEHOLDER_TEXT.firstNamePlaceholder}
           ref={firstNameInput}
         />
         <input
           className={classnames(style.registerInput, {
             [style.registerInputError]: lastNameCheck,
           })}
-          placeholder="Last Name"
+          placeholder={PLACEHOLDER_TEXT.lastNamePlaceholder}
           ref={lastNameInput}
         />
         <input
           className={classnames(style.registerInput, {
             [style.registerInputError]: emailCheck,
           })}
-          placeholder="Email"
+          placeholder={PLACEHOLDER_TEXT.emailPlaceholder}
           ref={emailInput}
         />
         <Select
@@ -150,7 +146,7 @@ export default function Register() {
           className={classnames(style.registerInput, {
             [style.registerInputError]: passwordCheck,
           })}
-          placeholder="Password"
+          placeholder={PLACEHOLDER_TEXT.passwordPlaceholder}
           type="password"
           ref={passwordInput}
         />
@@ -158,14 +154,16 @@ export default function Register() {
           className={classnames(style.registerInput, {
             [style.registerInputError]: passwordDoubleCheck,
           })}
-          placeholder="Confirm Password"
+          placeholder={PLACEHOLDER_TEXT.confirmPasswordPlaceholder}
           type="password"
           ref={checkPasswordInput}
         />
       </div>
       <div className={style.registerButtonContainer}>
         <div className={style.registerButton} onClick={handleRegisterClick}>
-          <span className={style.registerText}>Register</span>
+          <span className={style.registerText}>
+            {BUTTON_TEXT.registerButton}
+          </span>
         </div>
       </div>
     </div>

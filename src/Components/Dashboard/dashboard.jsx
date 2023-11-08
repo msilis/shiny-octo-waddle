@@ -27,13 +27,9 @@ export default function Dashboard({
   setMainDisplay,
   googleName,
 }) {
-  //State to keep track of Secondary Navigation button clickS
-
   const [addGame, setAddGame] = useState(false);
-  //State for technique tags so it can be passed to both DashboardMain and AddGame
   const [tagArray, setTagArray] = useState([]);
 
-  //Get back to top of window
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

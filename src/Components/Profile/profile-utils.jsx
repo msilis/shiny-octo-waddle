@@ -1,3 +1,4 @@
+import { TOAST_TEXT } from "../../Utilities/Config/ui-text";
 import { showGenericToast } from "../../Utilities/toastGeneric";
 import { showSuccessToast } from "../../Utilities/toastSuccess";
 
@@ -18,7 +19,7 @@ const handleUpdateClick = (
     lastNameEditInput.current?.value === "" &&
     emailEditInput.current?.value === ""
   ) {
-    showGenericToast("You haven't changed anything");
+    showGenericToast(TOAST_TEXT.noChangeMessage);
   } else {
     const updateUserData = {
       userId: userId,
@@ -47,16 +48,15 @@ const handleUpdateClick = (
       })
         .then((result) => {
           if (result.status === 200) {
-            showSuccessToast("Profile information updated!");
+            showSuccessToast(TOAST_TEXT.profileUpdated);
           }
           return result.json();
         })
         .then((data) => {
-          //Set state for updated values
           setFirstName(data.firstName);
           setLastName(data.lastName);
           setEmail(data.email);
-          //Set refs to empty strings to show updated values
+
           firstNameEditInput.current.value = "";
           lastNameEditInput.current.value = "";
           emailEditInput.current.value = "";

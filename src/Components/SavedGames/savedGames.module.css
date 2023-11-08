@@ -1,6 +1,5 @@
 .savedGameDisplayContainer {
   margin-bottom: 5rem;
-  
 }
 
 .gameItem {
@@ -10,7 +9,6 @@
   margin-right: 1rem;
   border-radius: 30px 0px 30px 0px;
   box-shadow: 8px 8px 8px black;
-  
 }
 
 .gameTechniqueContainer {
@@ -22,9 +20,9 @@
 .deleteSavedGameButton {
   outline: 2px solid white;
   width: 4rem;
-  padding: .10rem;
+  padding: 0.1rem;
   text-align: center;
-  transition: .3s;
+  transition: 0.3s;
   border-radius: 5px 0px 5px 0px;
 }
 
@@ -37,8 +35,6 @@
 .deleteSavedGameButton:active {
   transform: translateY(5px);
 }
-
-/* Pagination styling */
 
 .savedGamesPagination {
   display: flex;

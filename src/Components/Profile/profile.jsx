@@ -14,12 +14,10 @@ export default function Profile({
   setEmail,
   googleName,
 }) {
-  // Refs for inputs ==================================================
   const firstNameEditInput = useRef();
   const lastNameEditInput = useRef();
   const emailEditInput = useRef();
 
-  //Enter key used to update info =================================
   function handleEnterKey(event) {
     if (event.key === "Enter") {
       handleUpdateClick();
@@ -37,10 +35,6 @@ export default function Profile({
       </div>
     </div>
   );
-
-  /* =============================================================
-||||||||||||||||| Return ||||||||||||||||||||||||||||||||||||||||\
-================================================================= */
 
   return userContext.checkGoogleLoggedIn() ? (
     loggedInWithGoogle

@@ -68,7 +68,6 @@ export default function BrowseGames() {
     getTagsForBrowse(browseTagProps);
   }, [browsePagination.from, browsePagination.to, allGames.length]);
 
-  //Set filter for games
   useEffect(() => {
     const filteredTagGames =
       selectedTag.length === 0

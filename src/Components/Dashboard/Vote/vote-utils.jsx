@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
 import { API_URL } from "../../../Utilities/Config/api";
 import { ERROR_MESSAGE } from "../../../Utilities/Config/ui-text";
+import { showErrorToast } from "../../../Utilities/toastError";
 
-//Fetch vote count to be able to update only count, not whole component
 function getOnlyVotes(voteProps) {
   return fetch(API_URL.getVoteTotals, {
     method: "GET",
@@ -28,7 +28,6 @@ function getOnlyVotes(voteProps) {
     });
 }
 
-// User votes Yes
 function handleYesVote(e, voteProps) {
   const yesVoteData = {
     gameId: e.target.parentNode.parentNode.id,
@@ -46,16 +45,7 @@ function handleYesVote(e, voteProps) {
   })
     .then((response) => {
       if (response.status === 409) {
-        toast.error(ERROR_MESSAGE.alreadyVoted, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: undefined,
-          theme: "light",
-        });
+        showErrorToast(ERROR_MESSAGE.alreadyVoted);
         throw new Error(ERROR_MESSAGE.alreadyVoted);
       } else if (response.status === 201) {
         voteProps.setVoteSuccess(true);
@@ -74,7 +64,6 @@ function handleYesVote(e, voteProps) {
     });
 }
 
-//User votes No
 function handleNoVote(e, voteProps) {
   const noVoteData = {
     gameId: e.target.parentNode.parentNode.id,
@@ -92,16 +81,7 @@ function handleNoVote(e, voteProps) {
   })
     .then((response) => {
       if (response.status === 409) {
-        toast.error(ERROR_MESSAGE.alreadyVoted, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: undefined,
-          theme: "light",
-        });
+        showErrorToast(ERROR_MESSAGE.alreadyVoted);
         throw new Error(ERROR_MESSAGE.alreadyVoted);
       } else {
         voteProps.setVoteSuccess(true);
@@ -118,8 +98,6 @@ function handleNoVote(e, voteProps) {
       console.log(error);
     });
 }
-
-//Games user has voted on
 
 function getUserVotedGames(voteProps) {
   voteProps.setVoteNetworkError(null);
