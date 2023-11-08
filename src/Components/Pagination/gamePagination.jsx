@@ -3,7 +3,6 @@ import { ThemeProvider, createTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getVoteGames } from "../Dashboard/Vote/getVotes";
 
-//Theme for pagination
 export const theme = createTheme({
   palette: {
     primary: {
@@ -43,8 +42,6 @@ export default function VoteGamePagination({
     setPagination({ ...pagination, count: votingGames.length });
     setPaginationVote(voteTotal.slice(pagination.from, pagination.to));
   }, [pagination.from, pagination.to, votingGames.length]);
-
-  //Set vote totals based on pagination
 
   function handlePageChange(event, page) {
     const from = (page - 1) * pageSize;
