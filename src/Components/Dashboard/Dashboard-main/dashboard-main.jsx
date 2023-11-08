@@ -27,32 +27,24 @@ export default function DashboardMain({
   const [loadRandomGame, setLoadRandomGame] = useState(false);
   const [error, setError] = useState(null);
 
-  //Call API to get tags on initial page load ==================================================
   useEffect(() => {
     getGameTags(setTagArray, setError);
   }, []);
 
   const handleGameSave = useHandleGameSave();
 
-  //Get options for tag dropdown ==============================================================
-
   const tagOptions = tagArray.map((tag, index) => {
     return { value: tag, label: tag, key: index };
   });
 
-  //Save game functionality ===================================================================
   const saveGameText = savedGame
     ? null
     : () => handleGameSave(setSavedGame, randomGame);
   const saveGameStyle =
     savedGame || error ? style.saveButtonDisable : style.saveButton;
 
-  //Text for greeting ==========================================================================
   const greetText = `Hi ${firstName}, what do you want to work on in your group?`;
 
-  /* ============================================================================================
-                                    Return
-  =============================================================================================== */
   return (
     <div
       className={classnames(style.dashboardMainContainer, style.fadeContainer)}
