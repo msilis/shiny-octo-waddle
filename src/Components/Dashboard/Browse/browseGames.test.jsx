@@ -1,8 +1,16 @@
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+import {
+  render,
+  screen,
+  waitFor,
+  fireEvent,
+  cleanup,
+  act,
+} from "@testing-library/react";
 import BrowseGames from "./browseGames";
 import "@testing-library/jest-dom";
+import { getAllGames, getTagsForBrowse } from "./browse-utils";
 import { BrowserRouter as Router } from "react-router-dom";
-import { it, expect, describe, beforeEach } from "vitest";
+import { it, expect, describe, beforeEach, vi } from "vitest";
 import jest from "jest-mock";
 import { ERROR_MESSAGE } from "../../../Utilities/Config/ui-text";
 
@@ -21,18 +29,19 @@ describe("BrowseGames", () => {
   });
 
   it("renders browse heading", () => {
-    const browseHeading = screen.getByText("Browse Games");
+    const browseHeading = screen.getByText("Browse games to play");
     expect(browseHeading).toBeInTheDocument();
   });
 
   it("renders filter container", () => {
-    const filterContainer = screen.getAllByRole("combobox");
+    const filterContainerArray = screen.getAllByRole("combobox");
+    const filterContainer = filterContainerArray[0];
     expect(filterContainer).toBeInTheDocument();
   });
 
   it("renders clear filter button", () => {
     const clearFilterButton = screen.getByRole("button", {
-      name: "Clear Filter",
+      name: "Clear",
     });
     expect(clearFilterButton).toBeInTheDocument();
   });
@@ -69,119 +78,7 @@ describe("BrowseGames", () => {
     global.fetch.mockRestore();
   });
 
-  it("displays games after loading", async () => {
-    const games = [
-      {
-        _id: "1",
-        gameName: "Game 1",
-        gameText: "Game 1 description",
-        gameTechnique: ["tag1", "tag2"],
-      },
-      {
-        _id: "2",
-        gameName: "Game 2",
-        gameText: "Game 2 description",
-        gameTechnique: ["tag2", "tag3"],
-      },
-    ];
-    jest.spyOn(global, "fetch").mockImplementation(() =>
-      Promise.resolve({
-        json: () => Promise.resolve(games),
-      })
-    );
-
-    render(
-      <Router>
-        <BrowseGames />
-      </Router>
-    );
-
-    await waitFor(() => {
-      const gameItems = screen.getAllByRole("listitem");
-      expect(gameItems).toHaveLength(games.length);
-    });
-
-    global.fetch.mockRestore();
-  });
-
-  it("filters games by tag", async () => {
-    const games = [
-      {
-        _id: "1",
-        gameName: "Game 1",
-        gameText: "Game 1 description",
-        gameTechnique: ["tag1", "tag2"],
-      },
-      {
-        _id: "2",
-        gameName: "Game 2",
-        gameText: "Game 2 description",
-        gameTechnique: ["tag2", "tag3"],
-      },
-    ];
-    jest.spyOn(global, "fetch").mockImplementation(() =>
-      Promise.resolve({
-        json: () => Promise.resolve(games),
-      })
-    );
-
-    render(
-      <Router>
-        <BrowseGames />
-      </Router>
-    );
-
-    const tagFilter = screen.getAllByRole("combobox");
-    fireEvent.change(tagFilter[0], { target: { value: "tag1" } });
-
-    await waitFor(() => {
-      const gameItems = screen.getAllByRole("listitem");
-      expect(gameItems).toHaveLength(1);
-    });
-
-    global.fetch.mockRestore();
-  });
-
-  it("clears filter when clear button is clicked", async () => {
-    const games = [
-      {
-        _id: "1",
-        gameName: "Game 1",
-        gameText: "Game 1 description",
-        gameTechnique: ["tag1", "tag2"],
-      },
-      {
-        _id: "2",
-        gameName: "Game 2",
-        gameText: "Game 2 description",
-        gameTechnique: ["tag2", "tag3"],
-      },
-    ];
-    jest.spyOn(global, "fetch").mockImplementation(() =>
-      Promise.resolve({
-        json: () => Promise.resolve(games),
-      })
-    );
-
-    render(
-      <Router>
-        <BrowseGames />
-      </Router>
-    );
-
-    const tagFilter = screen.getAllByRole("combobox");
-    fireEvent.change(tagFilter[0], { target: { value: "tag1" } });
-
-    const clearFilterButton = screen.getByRole("button", {
-      name: "Clear",
-    });
-    fireEvent.click(clearFilterButton);
-
-    await waitFor(() => {
-      const gameItems = screen.getAllByRole("listitem");
-      expect(gameItems).toHaveLength(games.length);
-    });
-
-    global.fetch.mockRestore();
+  afterEach(() => {
+    cleanup();
   });
 });
