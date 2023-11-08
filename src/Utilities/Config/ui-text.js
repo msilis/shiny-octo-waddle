@@ -42,6 +42,9 @@ export const ERROR_MESSAGE = {
   alreadyVoted: "You have already voted for this game",
   failedGettingVoteGames:
     "There was a network error and I could not get the games to vote on",
+  usernameAlreadyExists:
+    "That username already exists, please pick a different username.",
+  passwordsDoNotMatch: "Passwords do not match!",
 };
 
 export const BUTTON_TEXT = {
@@ -71,4 +74,9 @@ export const BUTTON_TEXT = {
 export const PLACEHOLDER_TEXT = {
   usernamePlaceholder: "Username",
   passwordPlaceholder: "Password",
+  confirmPasswordPlaceholder: "Confirm Password",
+  emailPlaceholder: "Email",
+  lastnamePlaceholder: "Last Name",
+  firstnamePlaceholder: "First Name",
+  countryPlaceholder: "--Select Country--",
 };
