@@ -24,6 +24,7 @@ export const PAGE_TEXT = {
     "You have logged in with Google, these values cannot be changed.",
   browseGames: "Browse games to play",
   gameFocus: "Game Focus",
+  welcomeText: "Welcome",
 };
 
 export const ERROR_MESSAGE = {
