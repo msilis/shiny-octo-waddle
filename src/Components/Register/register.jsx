@@ -4,17 +4,16 @@ import countries from "countries-list";
 import { useRef, useState } from "react";
 import Select from "react-select";
 import { useNavigate } from "react-router";
+import { showSuccessToast } from "../../Utilities/toastSuccess";
+import { TOAST_TEXT } from "../../Utilities/Config/ui-text";
 
 export default function Register() {
-  //Refs for inputs
   const firstNameInput = useRef();
   const lastNameInput = useRef();
   const emailInput = useRef();
   const usernameInput = useRef();
   const passwordInput = useRef();
   const checkPasswordInput = useRef();
-
-  //State for input checking
   const [firstNameCheck, setFirstNameCheck] = useState(false);
   const [lastNameCheck, setLastNameCheck] = useState(false);
   const [emailCheck, setEmailCheck] = useState(false);
@@ -25,7 +24,6 @@ export default function Register() {
 
   const navigate = useNavigate();
 
-  //List of countries
   const countryCodes = Object.keys(countries.countries);
   const countryNames = countryCodes.map(
     (code) => countries.countries[code].name
@@ -35,10 +33,8 @@ export default function Register() {
   const options = sortedCountry.map((country, index) => {
     return { value: country, label: country, key: index };
   });
-  //Selection menu functionality
 
   function handleRegisterClick() {
-    // Check input fields
     if (firstNameInput.current?.value === "") {
       setFirstNameCheck(true);
     } else if (lastNameInput.current?.value === "") {
@@ -52,7 +48,6 @@ export default function Register() {
     } else if (checkPasswordInput.current?.value === "") {
       setPasswordDoubleCheck(true);
     } else if (
-      //Check password match
       passwordInput.current?.value != checkPasswordInput.current?.value
     ) {
       alert("Passwords do not match!");
@@ -66,7 +61,6 @@ export default function Register() {
         password: passwordInput.current?.value,
       };
       try {
-        console.log(newUserData);
         fetch("https://group-class-backend.onrender.com/addUser", {
           method: "POST",
           headers: {
@@ -74,21 +68,18 @@ export default function Register() {
           },
           body: JSON.stringify(newUserData),
         }).then((response) => {
-          //Check if username already exists
           if (response.status === 409) {
             return alert(
               "That username already exists, please pick a different username."
             );
           } else {
-            alert("User added sucessfully!");
-            //Reset field values if submission sucessful
+            showSuccessToast(TOAST_TEXT.userAddedSuccess);
             firstNameInput.current.value = "";
             lastNameInput.current.value = "";
             emailInput.current.value = "";
             usernameInput.current.value = "";
             passwordInput.current.value = "";
             checkPasswordInput.current.value = "";
-            //Reset any error message fields
             setFirstNameCheck(false);
             setLastNameCheck(false);
             setEmailCheck(false);
