@@ -2,6 +2,7 @@
 
 import { ERROR_MESSAGE } from "../../../Utilities/Config/ui-text";
 import { URL_ENDPOINTS } from "../../../Utilities/Config/navigation.js";
+import { showErrorToast } from "../../../Utilities/toastError.js";
 
 function getVoteGames(
   setLoadingVote,
@@ -22,6 +23,7 @@ function getVoteGames(
   })
     .then((response) => {
       if (!response.ok) {
+        showErrorToast(ERROR_MESSAGE.voteServerError);
         throw Error(ERROR_MESSAGE.voteServerError);
       } else {
         return response.json();
@@ -45,14 +47,13 @@ function getVoteGames(
         err instanceof TypeError &&
         err.message === ERROR_MESSAGE.failedToFetch
       ) {
-        console.log("Failed to fetch should be showing");
+        showErrorToast(ERROR_MESSAGE.failedToFetch);
         console.log("Network error: ", err.message);
       }
       setLoadingVote(false);
     });
 }
 
-//Fetch vote count to be able to update only count, not whole component
 function getOnlyVotes(setVoteTotal) {
   return new Promise((resolve, reject) => {
     fetch(URL_ENDPOINTS.getVoteTotal, {
