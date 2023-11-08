@@ -5,7 +5,14 @@ import { useRef, useState } from "react";
 import Select from "react-select";
 import { useNavigate } from "react-router";
 import { showSuccessToast } from "../../Utilities/toastSuccess";
-import { TOAST_TEXT } from "../../Utilities/Config/ui-text";
+import { showErrorToast } from "../../Utilities/toastError";
+import {
+  BUTTON_TEXT,
+  ERROR_MESSAGE,
+  PLACEHOLDER_TEXT,
+  TOAST_TEXT,
+} from "../../Utilities/Config/ui-text";
+import { ROUTE_PATHS } from "../../Utilities/Config/navigation";
 
 export default function Register() {
   const firstNameInput = useRef();
@@ -29,7 +36,7 @@ export default function Register() {
     (code) => countries.countries[code].name
   );
   const sortedCountry = countryNames.sort();
-  sortedCountry.unshift("--Select Country--");
+  sortedCountry.unshift(PLACEHOLDER_TEXT.countryPlaceholder);
   const options = sortedCountry.map((country, index) => {
     return { value: country, label: country, key: index };
   });
@@ -50,7 +57,7 @@ export default function Register() {
     } else if (
       passwordInput.current?.value != checkPasswordInput.current?.value
     ) {
-      alert("Passwords do not match!");
+      showErrorToast(ERROR_MESSAGE.passwordsDoNotMatch);
     } else {
       const newUserData = {
         firstName: firstNameInput.current?.value,
@@ -69,9 +76,7 @@ export default function Register() {
           body: JSON.stringify(newUserData),
         }).then((response) => {
           if (response.status === 409) {
-            return alert(
-              "That username already exists, please pick a different username."
-            );
+            return showErrorToast(ERROR_MESSAGE.usernameAlreadyExists);
           } else {
             showSuccessToast(TOAST_TEXT.userAddedSuccess);
             firstNameInput.current.value = "";
@@ -87,7 +92,7 @@ export default function Register() {
             setPasswordCheck(false);
             setPasswordDoubleCheck(false);
             setCountryInput("0");
-            navigate("/login");
+            navigate(ROUTE_PATHS.login);
           }
         });
       } catch (err) {
@@ -98,27 +103,27 @@ export default function Register() {
 
   return (
     <div className={classnames(style.registerContainer, style.fadeContainer)}>
-      <h3 className={style.registerHeading}>Register</h3>
+      <h3 className={style.registerHeading}>{BUTTON_TEXT.registerButton}</h3>
       <div className={style.inputContainer}>
         <input
           className={classnames(style.registerInput, {
             [style.registerInputError]: firstNameCheck,
           })}
-          placeholder="First Name"
+          placeholder={PLACEHOLDER_TEXT.firstNamePlaceholder}
           ref={firstNameInput}
         />
         <input
           className={classnames(style.registerInput, {
             [style.registerInputError]: lastNameCheck,
           })}
-          placeholder="Last Name"
+          placeholder={PLACEHOLDER_TEXT.lastNamePlaceholder}
           ref={lastNameInput}
         />
         <input
           className={classnames(style.registerInput, {
             [style.registerInputError]: emailCheck,
           })}
-          placeholder="Email"
+          placeholder={PLACEHOLDER_TEXT.emailPlaceholder}
           ref={emailInput}
         />
         <Select
@@ -141,7 +146,7 @@ export default function Register() {
           className={classnames(style.registerInput, {
             [style.registerInputError]: passwordCheck,
           })}
-          placeholder="Password"
+          placeholder={PLACEHOLDER_TEXT.passwordPlaceholder}
           type="password"
           ref={passwordInput}
         />
@@ -149,14 +154,16 @@ export default function Register() {
           className={classnames(style.registerInput, {
             [style.registerInputError]: passwordDoubleCheck,
           })}
-          placeholder="Confirm Password"
+          placeholder={PLACEHOLDER_TEXT.confirmPasswordPlaceholder}
           type="password"
           ref={checkPasswordInput}
         />
       </div>
       <div className={style.registerButtonContainer}>
         <div className={style.registerButton} onClick={handleRegisterClick}>
-          <span className={style.registerText}>Register</span>
+          <span className={style.registerText}>
+            {BUTTON_TEXT.registerButton}
+          </span>
         </div>
       </div>
     </div>
