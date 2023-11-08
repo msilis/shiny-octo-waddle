@@ -27,6 +27,8 @@ export const PAGE_TEXT = {
   welcomeText: "Welcome",
   footerCopyright: "Copyright 2023",
   iVotedText: "I voted!",
+  voteSectionText:
+    "Vote on games on this page. If a game gets to 25 votes, it will be added to the main games database.",
 };
 
 export const ERROR_MESSAGE = {

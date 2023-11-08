@@ -3,31 +3,25 @@ import style from "./vote.module.css";
 import VoteGamesDisplay from "./voteGamesDisplay";
 import VoteGamePagination from "../../Pagination/gamePagination";
 import { getOnlyVotes, getUserVotedGames } from "./vote-utils";
+import { ERROR_MESSAGE, PAGE_TEXT } from "../../../Utilities/Config/ui-text";
 
 export default function Vote({ userId }) {
-  //Loading state
   const [loadingVote, setLoadingVote] = useState(false);
-  //State for games to be voted on
   const [votingGames, setVotingGames] = useState([]);
   const [voteTotal, setVoteTotal] = useState([]);
   const [paginationVote, setPaginationVote] = useState([]);
   const [userVotedGames, setUserVotedGames] = useState([]);
-  //Vote Error
   const [voteError, setVoteError] = useState(false);
   const [voteNetworkError, setVoteNetworkError] = useState(null);
-  //Vote sucess
   const [voteSuccess, setVoteSuccess] = useState(false);
   const [gamesForPagination, setGamesForPagination] = useState([]);
 
-  //State and properties for pagination
   const pageSize = 5;
   const [pagination, setPagination] = useState({
     count: 0,
     from: 0,
     to: pageSize,
   });
-
-  //props for components
 
   const voteProps = {
     loadingVote,
@@ -50,7 +44,6 @@ export default function Vote({ userId }) {
     setVoteSuccess,
   };
 
-  //Call function at page load to get games to be voted on
   useEffect(() => {
     getUserVotedGames(voteProps);
     getOnlyVotes(voteProps);
@@ -60,7 +53,6 @@ export default function Vote({ userId }) {
     setPaginationVote(voteTotal);
   }, [voteTotal]);
 
-  //Conditionally show pagination
   const paginationDisplay =
     loadingVote || votingGames.length === 0
       ? `${style.paginationDisplayHidden}`
@@ -70,16 +62,11 @@ export default function Vote({ userId }) {
     <div className={style.voteContainer} data-testid="vote-container">
       <div className={style.voteText}>
         <h2>Vote</h2>
-        <p className={style.voteSectionText}>
-          Vote on games on this page. If a game gets to 25 votes, it will be
-          added to the main games database.
-        </p>
+        <p className={style.voteSectionText}>{PAGE_TEXT.voteSectionText}</p>
       </div>
       <div className={style.voteGamesDisplay}>
         {voteNetworkError ? (
-          <p className="errorText">
-            There was an error getting the games to vote on.
-          </p>
+          <p className="errorText">{ERROR_MESSAGE.failedGettingVoteGames}</p>
         ) : (
           <VoteGamesDisplay voteProps={voteProps} />
         )}
