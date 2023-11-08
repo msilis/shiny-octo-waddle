@@ -3,6 +3,8 @@ export const TOAST_TEXT = {
   gameSavedSuccess: "Game has been saved to 'My Games'",
   noTopicSelected: "You haven't selected a topic.",
   userAddedSuccess: "User added successfully",
+  noChangeMessage: "You haven't changed anything",
+  profileUpdated: "Profile updated successfully",
 };
 
 export const MODAL_TEXT = {
