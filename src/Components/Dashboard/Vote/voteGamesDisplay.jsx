@@ -1,28 +1,30 @@
 import style from "./voteGamesDisplay.module.css";
 import { handleYesVote, handleNoVote } from "./vote-utils";
+import {
+  BUTTON_TEXT,
+  ERROR_MESSAGE,
+  PAGE_TEXT,
+  PLACEHOLDER_TEXT,
+} from "../../../Utilities/Config/ui-text";
 
 export default function VoteGamesDisplay({ voteProps }) {
-  //conditional style for vote badge
-
   const sliceGameVote = voteProps.voteTotal.slice(
     voteProps.pagination.from,
     voteProps.pagination.to
   );
 
   if (voteProps.loadingVote) {
-    return <p>Loading...</p>;
+    return <p>{PAGE_TEXT.loadingText}</p>;
   } else if (voteProps.votingGames.length === 0) {
     return (
-      <p className={style.noVoteText}>There are no games to vote on now...</p>
+      <p className={style.noVoteText}>{ERROR_MESSAGE.noGamesToShowText}</p>
     );
   } else {
     return voteProps.gamesForPagination.map((voteGame, index) => {
-      //Yes Vote count display
       const yesDisplay =
         sliceGameVote[index]?.yesVote !== undefined
           ? sliceGameVote[index]?.yesVote
           : "0";
-      //No Vote count display
       const noDisplay =
         sliceGameVote[index]?.noVote !== undefined
           ? sliceGameVote[index]?.noVote
@@ -34,10 +36,12 @@ export default function VoteGamesDisplay({ voteProps }) {
       return (
         <div className={style.gameItem} key={voteGame._id} id={voteGame._id}>
           <h4>{`${voteGame.gameName} created by ${
-            voteGame.username ? voteGame.username : "Anonymous"
+            voteGame.username
+              ? voteGame.username
+              : PLACEHOLDER_TEXT.anonymousPlaceholder
           }`}</h4>
           <p>{voteGame.gameText}</p>
-          <h5>Game focus:</h5>
+          <h5>{PAGE_TEXT.gameFocus}</h5>
           <div className={style.gameTechniqueContainer}>
             {voteGame.gameTechnique.map((item) => {
               return <p key={item.key}>{item.label}</p>;
@@ -48,20 +52,20 @@ export default function VoteGamesDisplay({ voteProps }) {
             <p>No: {sliceGameVote[index]?.noVote || "0"}</p>
           </div>
           <div className={voteStyle}>
-            <p>I voted!</p>
+            <p>{PAGE_TEXT.iVotedText}</p>
           </div>
           <div className={style.voteButtonContainer}>
             <button
               className={style.voteYesButton}
               onClick={(e) => handleYesVote(e, voteProps)}
             >
-              Yes
+              {BUTTON_TEXT.yesButton}
             </button>
             <button
               className={style.voteNoButton}
               onClick={(e) => handleNoVote(e, voteProps)}
             >
-              No
+              {BUTTON_TEXT.noButton}
             </button>
           </div>
         </div>

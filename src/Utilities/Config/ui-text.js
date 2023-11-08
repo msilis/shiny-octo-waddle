@@ -26,6 +26,7 @@ export const PAGE_TEXT = {
   gameFocus: "Game Focus",
   welcomeText: "Welcome",
   footerCopyright: "Copyright 2023",
+  iVotedText: "I voted!",
 };
 
 export const ERROR_MESSAGE = {
@@ -49,6 +50,7 @@ export const ERROR_MESSAGE = {
   usernameAlreadyExists:
     "That username already exists, please pick a different username.",
   passwordsDoNotMatch: "Passwords do not match!",
+  noGamesToShowText: "There are no games to vote on now...",
 };
 
 export const BUTTON_TEXT = {
@@ -83,4 +85,5 @@ export const PLACEHOLDER_TEXT = {
   lastnamePlaceholder: "Last Name",
   firstnamePlaceholder: "First Name",
   countryPlaceholder: "--Select Country--",
+  anonymousPlaceholder: "Anonymous",
 };
