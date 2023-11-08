@@ -1,5 +1,3 @@
-//This is the main navigation bar that sits under the banner. Depends on 'react-router-dom' and 'react'.
-
 import { Link, useNavigate } from "react-router-dom";
 import style from "./navbar.module.css";
 import { useState, useContext } from "react";
@@ -12,20 +10,15 @@ import { STORAGE_OPTIONS } from "../../Utilities/Config/storage";
 import { UserContext } from "../../userContext";
 
 export default function Navbar({ loggedIn, setMainDisplay, setLoggedIn }) {
-  //State for hamburger menu. True is hamburger open, false is closed
   const [hamburgerActive, setHamburgerActive] = useState(false);
 
   const userContext = useContext(UserContext);
 
-  //Used for redirecting on navigation clicks
   const navigate = useNavigate();
 
-  //This function sets the state of the hamburger menu, toggling it visible or hidden
   function toggleHamburger() {
     setHamburgerActive(!hamburgerActive);
   }
-
-  //Secondary Navigation Functionality
 
   function handleMyGamesClick() {
     setMainDisplay(PAGE_NAVIGATION.myGames);
