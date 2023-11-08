@@ -25,8 +25,6 @@ const fetchGameTechniques = (setGameTechniques) => {
   }
 };
 
-//Fetch pieces
-
 const fetchPieces = (setListOfPieces) => {
   fetch(URL_ENDPOINTS.getPieces)
     .then((response) => response.json())
@@ -34,7 +32,6 @@ const fetchPieces = (setListOfPieces) => {
       let sortedPieces = data.map((item) => {
         return item.pieceName;
       });
-      //Include option to add various pieces to game
       sortedPieces.push("Various");
       sortedPieces.sort();
       setListOfPieces(sortedPieces);

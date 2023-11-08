@@ -54,10 +54,6 @@
   box-shadow: 2px 2px 2px black;
 }
 
-/* ============================================
-|||||||||||| Small Screen ||||||||||||||||||||| 
-===============================================*/
-
 @media only screen and (width < 500px) {
   .gameNameInput {
     width: 308px;

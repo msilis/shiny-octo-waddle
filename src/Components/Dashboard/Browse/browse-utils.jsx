@@ -1,8 +1,6 @@
 import { ERROR_MESSAGE } from "../../../Utilities/Config/ui-text";
 
-// Get all games
 function getAllGames(getAllGamesProps) {
-  //Get all games from database
   getAllGamesProps.setLoadingGames(true);
   return fetch("https://group-class-backend.onrender.com/gameSearch", {
     method: "GET",
@@ -33,7 +31,6 @@ function getAllGames(getAllGamesProps) {
     .finally(() => getAllGamesProps.setLoadingGames(false));
 }
 
-//Get technique tags from database
 function getTagsForBrowse(browseTagProps) {
   return fetch("https://group-class-backend.onrender.com/gameTechniques", {
     method: "GET",
