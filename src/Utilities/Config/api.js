@@ -1,9 +1,9 @@
 export const API_URL = {
-  techniqueSearch: "https://group-class-backend.onrender.com/techniqueSearch",
-  randomGame: "https://group-class-backend.onrender.com/randomGame",
-  saveGame: "https://group-class-backend.onrender.com/saveGame",
-  getTags: "https://group-class-backend.onrender.com/tags",
-  getVoteTotals: "https://group-class-backend.onrender.com/getVoteTotals",
-  trackVote: "https://group-class-backend.onrender.com/trackVote",
-  getUserVotes: "https://group-class-backend.onrender.com/getUserVotes",
+  techniqueSearch: `${import.meta.env.BACKEND_BASE_URL}/techniqueSearch`,
+  randomGame: `${import.meta.env.BACKEND_BASE_URL}/randomGame`,
+  saveGame: `${import.meta.env.BACKEND_BASE_URL}/saveGame`,
+  getTags: `${import.meta.env.BACKEND_BASE_URL}/tags`,
+  getVoteTotals: `${import.meta.env.BACKEND_BASE_URL}/getVoteTotals`,
+  trackVote: `${import.meta.env.BACKEND_BASE_URL}/trackVote`,
+  getUserVotes: `${import.meta.env.BACKEND_BASE_URL}/getUserVotes`,
 };
