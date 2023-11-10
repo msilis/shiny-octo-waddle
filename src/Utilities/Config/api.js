@@ -6,4 +6,10 @@ export const API_URL = {
   getVoteTotals: `${import.meta.env.BACKEND_BASE_URL}/getVoteTotals`,
   trackVote: `${import.meta.env.BACKEND_BASE_URL}/trackVote`,
   getUserVotes: `${import.meta.env.BACKEND_BASE_URL}/getUserVotes`,
+  addGame: `${import.meta.env.BACKEND_BASE_URL}/addGame`,
+  addGameForVote: `${import.meta.env.BACKEND_BASE_URL}/addGameForVote`,
+  getPieces: `${import.meta.env.BACKEND_BASE_URL}/getPieces`,
+  getGameTechniques: `${import.meta.env.BACKEND_BASE_URL}/getGameTechniques`,
+  getGamesForVote: `${import.meta.env.BACKEND_BASE_URL}/gamesForVote`,
+  gamesForVote: `${import.meta.env.BACKEND_BASE_URL}/gamesForVote`,
 };

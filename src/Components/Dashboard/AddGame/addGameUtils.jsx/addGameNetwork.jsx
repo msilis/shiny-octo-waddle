@@ -1,10 +1,10 @@
 //Fetch Game Techniques
 
-import { URL_ENDPOINTS } from "../../../../Utilities/Config/navigation";
+import { API_URL } from "../../../../Utilities/Config/api";
 
 const fetchGameTechniques = (setGameTechniques) => {
   try {
-    fetch(URL_ENDPOINTS.getGameTechniques, {
+    fetch(API_URL.getGameTechniques, {
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -26,7 +26,7 @@ const fetchGameTechniques = (setGameTechniques) => {
 };
 
 const fetchPieces = (setListOfPieces) => {
-  fetch(URL_ENDPOINTS.getPieces)
+  fetch(API_URL.getPieces)
     .then((response) => response.json())
     .then((data) => {
       let sortedPieces = data.map((item) => {
