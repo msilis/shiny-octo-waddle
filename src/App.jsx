@@ -7,7 +7,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "./userContext";
 import { ERROR_MESSAGE, PAGE_TEXT } from "./Utilities/Config/ui-text";
-import { ROUTE_PATHS } from "./Utilities/Config/navigation";
+import { PAGE_NAVIGATION, ROUTE_PATHS } from "./Utilities/Config/navigation";
 import { STORAGE_OPTIONS } from "./Utilities/Config/storage";
 //Lazy load components
 const Home = lazy(() => import("./Components/Home/home.jsx"));
@@ -27,7 +27,7 @@ function App() {
   const [email, setEmail] = useState("");
   const [userId, setUserId] = useState("");
   const [seeProfile, setSeeProfile] = useState(false);
-  const [mainDisplay, setMainDisplay] = useState("dashboard");
+  const [mainDisplay, setMainDisplay] = useState(PAGE_NAVIGATION.dashboard);
 
   const suspenseLoading = (
     <div className="loadingMessage">
