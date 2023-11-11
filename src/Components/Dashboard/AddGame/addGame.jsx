@@ -11,7 +11,7 @@ import {
   fetchPieces,
 } from "./addGameUtils.jsx/addGameNetwork";
 import { showErrorToast } from "../../../Utilities/toastError";
-import { ERROR_MESSAGE, TOAST_TEXT } from "../../../Utilities/Config/ui-text";
+import { ERROR_MESSAGE } from "../../../Utilities/Config/ui-text";
 
 const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
   const gameName = useRef();

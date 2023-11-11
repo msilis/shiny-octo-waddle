@@ -4,7 +4,7 @@ import { API_URL } from "../../../../Utilities/Config/api";
 
 const fetchGameTechniques = (setGameTechniques) => {
   try {
-    fetch(API_URL.getGameTechniques, {
+    fetch(API_URL.gameTechniques, {
       method: "GET",
       headers: {
         "content-type": "application/json",

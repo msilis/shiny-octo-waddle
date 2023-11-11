@@ -1,3 +1,5 @@
+import { API_URL } from "../../../Utilities/Config/api";
+
 const fetchPieces = (setListOfPieces, setLoadingPieces) => {
   try {
     setLoadingPieces(true);
@@ -20,7 +22,7 @@ const fetchPieces = (setListOfPieces, setLoadingPieces) => {
 const fetchGameTechniques = (setGameTechniques, setLoadingFocus) => {
   try {
     setLoadingFocus(true);
-    fetch("https://group-class-backend.onrender.com/getGameTechniques", {
+    fetch(`${API_URL.gameTechniques}gameTechniques`, {
       method: "GET",
       headers: {
         "content-type": "application/json",

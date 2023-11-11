@@ -45,6 +45,8 @@ function App() {
     checkGoogleLoggedIn,
   };
 
+  console.log("Backend base url: ", import.meta.env.VITE_BACKEND_BASE_URL);
+
   useEffect(() => {
     if (sessionStorage.getItem(STORAGE_OPTIONS.loggedIn)) {
       setLoggedIn(true);
