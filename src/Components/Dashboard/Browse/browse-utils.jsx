@@ -3,7 +3,7 @@ import { API_URL } from "../../../Utilities/Config/api";
 
 function getAllGames(getAllGamesProps) {
   getAllGamesProps.setLoadingGames(true);
-  return fetch(`${API_URL.gameSearch}gameSearch`, {
+  return fetch(API_URL.gameSearch, {
     method: "GET",
     headers: {
       "content-type": "application/json",
