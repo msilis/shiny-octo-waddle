@@ -33,7 +33,7 @@ function getAllGames(getAllGamesProps) {
 }
 
 function getTagsForBrowse(browseTagProps) {
-  return fetch(`${API_URL.gameTechniques}gameTechniques`, {
+  return fetch(API_URL.gameTechniques, {
     method: "GET",
     headers: {
       "content-type": "application/json",

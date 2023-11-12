@@ -44,7 +44,7 @@ export default function SavedCreatedGames({ userId }) {
 
   function getUserGameToEdit(gameId) {
     try {
-      fetch(`${API_URL.get}getOneUserGame/${gameId}`, {
+      fetch(`${API_URL.getOneUserGame}${gameId}`, {
         method: "GET",
         headers: {
           "content-type": "application/json",

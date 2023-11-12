@@ -13,7 +13,11 @@ export const API_URL = {
   getGamesForVote: `${import.meta.env.BACKEND_BASE_URL}/gamesForVote`,
   gamesForVote: `${import.meta.env.BACKEND_BASE_URL}/gamesForVote`,
   login: `${import.meta.env.BACKEND_BASE_URL}/login`,
-  getOneUserGame: `${
+  getOneUserGame: `${import.meta.env.BACKEND_BASE_URL}/getOneUserGame`,
+  getSavedGames: `${import.meta.env.BACKEND_BASE_URL}/getSavedGames`,
+  deleteSavedGame: `${import.meta.env.BACKEND_BASE_URL}/deleteSavedGame`,
+  getUserCreatedGames: `${
     import.meta.env.BACKEND_BASE_URL
-  }/getOneUserGame/${gameId}`,
+  }/getUserCreatedGames`,
+  deleteCreated: `${import.meta.env.BACKEND_BASE_URL}/deleteCreated`,
 };
