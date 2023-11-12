@@ -1,5 +1,5 @@
 //Add Game - not for voting
-import { URL_ENDPOINTS } from "../../../../Utilities/Config/navigation";
+import { API_URL } from "../../../../Utilities/Config/api";
 import { TOAST_TEXT } from "../../../../Utilities/Config/ui-text";
 import { showSuccessToast } from "../../../../Utilities/toastSuccess";
 
@@ -23,7 +23,7 @@ const handleAddGame = (
   };
 
   try {
-    fetch(URL_ENDPOINTS.addGame, {
+    fetch(API_URL.addGame, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -62,7 +62,7 @@ const handleAddVoteGame = (
     noVote: 0,
   };
   try {
-    fetch(URL_ENDPOINTS.addGameForVote, {
+    fetch(API_URL.addGameForVote, {
       method: "POST",
       headers: {
         "content-type": "application/json",

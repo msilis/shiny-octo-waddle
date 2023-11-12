@@ -2,13 +2,14 @@ import { ROUTE_PATHS } from "../../Utilities/Config/navigation";
 import { ERROR_MESSAGE } from "../../Utilities/Config/ui-text";
 import { showErrorToast } from "../../Utilities/toastError";
 import { STORAGE_OPTIONS } from "../../Utilities/Config/storage";
+import { API_URL } from "../../Utilities/Config/api";
 
 export function callLogin(loginProps, navigate) {
   const loginData = {
     userName: loginProps.loginUsername.current?.value,
     password: loginProps.loginPassword.current?.value,
   };
-  fetch("https://group-class-backend.onrender.com/login", {
+  fetch(`${API_URL.login}`, {
     method: "POST",
     headers: {
       "content-type": "application/json",

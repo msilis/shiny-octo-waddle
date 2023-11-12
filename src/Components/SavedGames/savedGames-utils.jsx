@@ -1,5 +1,7 @@
 //Get a user's saved games
 
+import { API_URL } from "../../Utilities/Config/api";
+
 const getSavedGames = (
   setSavedGames,
   savedGames,
@@ -15,7 +17,13 @@ const getSavedGames = (
     saveUser: userId,
   };
   setLoadingSaved(true);
-  fetch("https://group-class-backend.onrender.com/getSavedGames", {
+
+  console.log("URL from getSavedGames: ", API_URL.getSavedGames);
+  console.log(
+    "base url from getSavedGames: ",
+    import.meta.env.VITE_BACKEND_BASE_URL
+  );
+  fetch(API_URL.getSavedGames, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -65,7 +73,7 @@ const handleSavedGameDelete = (
     gameToDelete: gameToDelete,
   };
 
-  fetch("https://group-class-backend.onrender.com/deleteSavedGame", {
+  fetch(`${API_URL.deleteSavedGame}`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -113,7 +121,7 @@ function getUserCreatedGames(createdGamesProps) {
 
   createdGamesProps.setLoadingCreated(true);
   createdGamesProps.setSavedCreatedGameError(null);
-  fetch("https://group-class-backend.onrender.com/getUserCreatedGames", {
+  fetch(`${API_URL.getUserCreatedGames}`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -138,7 +146,7 @@ function handleCreatedGameDelete(event, createdGamesProps) {
     gameToDelete: gameId,
   };
 
-  fetch("https://group-class-backend.onrender.com/deleteCreated", {
+  fetch(`${API_URL.deleteCreated}`, {
     method: "POST",
     headers: {
       "content-type": "application/json",

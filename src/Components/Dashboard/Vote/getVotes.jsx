@@ -1,8 +1,8 @@
 //Get all games to vote on from database
 
 import { ERROR_MESSAGE } from "../../../Utilities/Config/ui-text";
-import { URL_ENDPOINTS } from "../../../Utilities/Config/navigation.js";
 import { showErrorToast } from "../../../Utilities/toastError.js";
+import { API_URL } from "../../../Utilities/Config/api.js";
 
 function getVoteGames(
   setLoadingVote,
@@ -13,7 +13,7 @@ function getVoteGames(
   setGamesForPagination
 ) {
   setLoadingVote(true);
-  fetch(URL_ENDPOINTS.gamesForVote, {
+  fetch(API_URL.gamesForVote, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -56,7 +56,7 @@ function getVoteGames(
 
 function getOnlyVotes(setVoteTotal) {
   return new Promise((resolve, reject) => {
-    fetch(URL_ENDPOINTS.getVoteTotal, {
+    fetch(API_URL.getVoteTotal, {
       method: "GET",
       headers: {
         "content-type": "application/json",

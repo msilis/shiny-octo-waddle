@@ -8,6 +8,7 @@ import {
   getUserCreatedGames,
   handleCreatedGameDelete,
 } from "./savedGames-utils";
+import { API_URL } from "../../Utilities/Config/api";
 
 const createdGamePageSize = 3;
 
@@ -43,15 +44,12 @@ export default function SavedCreatedGames({ userId }) {
 
   function getUserGameToEdit(gameId) {
     try {
-      fetch(
-        `https://group-class-backend.onrender.com/getOneUserGame/${gameId}`,
-        {
-          method: "GET",
-          headers: {
-            "content-type": "application/json",
-          },
-        }
-      )
+      fetch(`${API_URL.getOneUserGame}${gameId}`, {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+      })
         .then((response) => response.json())
         .then((data) => {
           setAddGameTechniques(data.gameTechnique);
