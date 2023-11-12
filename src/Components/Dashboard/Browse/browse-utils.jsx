@@ -1,8 +1,9 @@
 import { ERROR_MESSAGE } from "../../../Utilities/Config/ui-text";
+import { API_URL } from "../../../Utilities/Config/api";
 
 function getAllGames(getAllGamesProps) {
   getAllGamesProps.setLoadingGames(true);
-  return fetch("https://group-class-backend.onrender.com/gameSearch", {
+  return fetch(`${API_URL.gameSearch}gameSearch`, {
     method: "GET",
     headers: {
       "content-type": "application/json",
@@ -32,7 +33,7 @@ function getAllGames(getAllGamesProps) {
 }
 
 function getTagsForBrowse(browseTagProps) {
-  return fetch("https://group-class-backend.onrender.com/gameTechniques", {
+  return fetch(`${API_URL.gameTechniques}gameTechniques`, {
     method: "GET",
     headers: {
       "content-type": "application/json",
