@@ -1,12 +1,13 @@
 import { jwtDecode } from "jwt-decode";
 import { STORAGE_OPTIONS } from "../../Utilities/Config/storage";
 import { ROUTE_PATHS } from "../../Utilities/Config/navigation";
+import { API_URL } from "../../Utilities/Config/api";
 
 const checkGoogleUser = (loginProps) => {
   const googleEmailToCheck = {
     email: sessionStorage.getItem(STORAGE_OPTIONS.googleLoginEmail),
   };
-  fetch("https://group-class-backend.onrender.com/checkGoogleUser", {
+  fetch(API_URL.checkGoogleUser, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -32,7 +33,7 @@ const createGoogleUser = (loginProps) => {
     email: sessionStorage.getItem(STORAGE_OPTIONS.googleLoginEmail),
     name: sessionStorage.getItem(STORAGE_OPTIONS.googleLoginName),
   };
-  fetch("https://group-class-backend.onrender.com/addGoogleUser", {
+  fetch(API_URL.addGoogleUser, {
     method: "POST",
     headers: {
       "content-type": "application/json",
