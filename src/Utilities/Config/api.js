@@ -13,4 +13,7 @@ export const API_URL = {
   getGamesForVote: `${import.meta.env.BACKEND_BASE_URL}/gamesForVote`,
   gamesForVote: `${import.meta.env.BACKEND_BASE_URL}/gamesForVote`,
   login: `${import.meta.env.BACKEND_BASE_URL}/login`,
+  getOneUserGame: `${
+    import.meta.env.BACKEND_BASE_URL
+  }/getOneUserGame/${gameId}`,
 };
