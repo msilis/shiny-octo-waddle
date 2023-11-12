@@ -3,7 +3,7 @@ import { API_URL } from "../../../Utilities/Config/api";
 const fetchPieces = (setListOfPieces, setLoadingPieces) => {
   try {
     setLoadingPieces(true);
-    fetch("https://group-class-backend.onrender.com/getPieces")
+    fetch(`${API_URL}getPieces`)
       .then((response) => response.json())
       .then((data) => {
         let sortedPieces = data.map((item) => {
