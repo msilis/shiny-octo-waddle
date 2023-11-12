@@ -9,7 +9,7 @@ export function callLogin(loginProps, navigate) {
     userName: loginProps.loginUsername.current?.value,
     password: loginProps.loginPassword.current?.value,
   };
-  fetch(`${API_URL.login}login`, {
+  fetch(`${API_URL.login}`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
