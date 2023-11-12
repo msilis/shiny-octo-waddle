@@ -17,7 +17,13 @@ const getSavedGames = (
     saveUser: userId,
   };
   setLoadingSaved(true);
-  fetch(`${API_URL.getSavedGames}`, {
+
+  console.log("URL from getSavedGames: ", API_URL.getSavedGames);
+  console.log(
+    "base url from getSavedGames: ",
+    import.meta.env.VITE_BACKEND_BASE_URL
+  );
+  fetch(API_URL.getSavedGames, {
     method: "POST",
     headers: {
       "content-type": "application/json",
