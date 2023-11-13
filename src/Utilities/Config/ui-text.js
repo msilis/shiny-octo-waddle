@@ -54,6 +54,7 @@ export const ERROR_MESSAGE = {
     "That username already exists, please pick a different username.",
   passwordsDoNotMatch: "Passwords do not match!",
   noGamesToShowText: "There are no games to vote on now...",
+  profileUpdateError: "There was an error updating your profile",
 };
 
 export const BUTTON_TEXT = {

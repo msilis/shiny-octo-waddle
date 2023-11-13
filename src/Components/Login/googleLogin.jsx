@@ -18,14 +18,19 @@ const checkGoogleUser = (loginProps) => {
   })
     .then((response) => {
       if (response.status === 404) {
-        createGoogleUser();
+        createGoogleUser(loginProps);
       } else if (response.status === 200) {
         return response.json();
       }
     })
     .then((jsonResponse) => {
+      console.log({ jsonResponse });
       loginProps.setUserId(jsonResponse._id);
       sessionStorage.setItem(STORAGE_OPTIONS.googleUserId, jsonResponse._id);
+      sessionStorage.setItem(
+        STORAGE_OPTIONS.googleDisplayName,
+        jsonResponse.displayName
+      );
     });
 };
 
@@ -33,6 +38,7 @@ const createGoogleUser = (loginProps) => {
   const googleUserToCreate = {
     email: sessionStorage.getItem(STORAGE_OPTIONS.googleLoginEmail),
     name: sessionStorage.getItem(STORAGE_OPTIONS.googleLoginName),
+    displayName: sessionStorage.getItem(STORAGE_OPTIONS.googleLoginName),
   };
   fetch(API_URL.addGoogleUser, {
     method: "POST",
@@ -41,13 +47,18 @@ const createGoogleUser = (loginProps) => {
     },
     body: JSON.stringify(googleUserToCreate),
     mode: "cors",
-  }).then((response) => {
-    if (response.status === 200) {
-      loginProps.setGoogleName(response.fullName);
-      loginProps.setUserId(response._id);
-      return;
-    }
-  });
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status === 201) {
+        console.log({ data });
+        loginProps.setGoogleName(data.fullName);
+        loginProps.setUserId(data._id);
+        loginProps.setDisplayName(data.displayName);
+
+        return;
+      }
+    });
 };
 
 export const googleLoginSuccess = (

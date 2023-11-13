@@ -1,7 +1,10 @@
 import { API_URL } from "../../Utilities/Config/api";
-import { TOAST_TEXT } from "../../Utilities/Config/ui-text";
+import { ERROR_MESSAGE, TOAST_TEXT } from "../../Utilities/Config/ui-text";
+import { showErrorToast } from "../../Utilities/toastError";
 import { showGenericToast } from "../../Utilities/toastGeneric";
 import { showSuccessToast } from "../../Utilities/toastSuccess";
+import { UserContext } from "../../userContext";
+import { useContext } from "react";
 
 const handleUpdateClick = (
   firstNameEditInput,
@@ -63,8 +66,40 @@ const handleUpdateClick = (
           emailEditInput.current.value = "";
         });
     } catch (err) {
+      showErrorToast(ERROR_MESSAGE.profileUpdateError);
       console.log(err);
     }
+  }
+};
+
+const handleGoogleDisplayNameUpdate = async (googleNameEditInput) => {
+  const userContext = useContext(UserContext);
+  if (googleNameEditInput.current?.value === "") {
+    showGenericToast(TOAST_TEXT.noChangeMessage);
+  }
+  const updatedGoogleInfo = {
+    userId: sessionStorage.getItem("googleUserId"),
+    googleName: googleNameEditInput.current?.value,
+  };
+  try {
+    const updateResponse = await fetch(API_URL.updateGoogleDisplayName, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+        "X-custom-cookie": "jwt",
+      },
+      credentials: "include",
+      body: JSON.stringify(updatedGoogleInfo),
+    });
+    if (!updateResponse.ok) {
+      throw new Error(ERROR_MESSAGE.profileUpdateError);
+    }
+    const data = await updateResponse.json();
+    userContext.setDisplayName(data.googleName);
+    showSuccessToast(TOAST_TEXT.profileUpdated);
+  } catch (error) {
+    showErrorToast(ERROR_MESSAGE.profileUpdateError);
+    console.log(error);
   }
 };
 

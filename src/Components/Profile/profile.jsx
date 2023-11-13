@@ -33,7 +33,7 @@ export default function Profile({
         <h5>{PAGE_TEXT.loggedInWithGoogle}</h5>
         <label htmlFor="displayName">{PAGE_TEXT.displayName}</label>
         <input
-          placeholder={googleName}
+          placeholder={userContext.displayName}
           className={style.inputField}
           ref={googleNameEditInput}
         />

@@ -24,4 +24,7 @@ export const API_URL = {
   addGoogleUser: `${import.meta.env.VITE_BACKEND_BASE_URL}/addGoogleUser`,
   gameSearch: `${import.meta.env.VITE_BACKEND_BASE_URL}/gameSearch`,
   updateUser: `${import.meta.env.VITE_BACKEND_BASE_URL}/updateUser`,
+  updateGoogleDisplayName: `${
+    import.meta.env.VITE_BACKEND_BASE_URL
+  }/updateGoogleDisplayName`,
 };
