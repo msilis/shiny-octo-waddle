@@ -1,7 +1,11 @@
 import style from "./profile.module.css";
 import { useRef, useContext } from "react";
 import { handleUpdateClick } from "./profile-utils";
-import { BUTTON_TEXT, PAGE_TEXT } from "../../Utilities/Config/ui-text";
+import {
+  BUTTON_TEXT,
+  PAGE_TEXT,
+  PLACEHOLDER_TEXT,
+} from "../../Utilities/Config/ui-text";
 import { UserContext } from "../../userContext";
 
 export default function Profile({
@@ -30,6 +34,11 @@ export default function Profile({
     <div className={style.profileContainer} data-testid="profile-container">
       <div className={style.profileVisible}>
         <h5>{PAGE_TEXT.loggedInWithGoogle}</h5>
+        <label htmlFor="displayName">{PAGE_TEXT.displayName}</label>
+        <input placeholder={googleName} className={style.inputField} />
+        <div className={style.updateButton}>
+          <span>{BUTTON_TEXT.updateDisplayName}</span>
+        </div>
         <input placeholder={googleName} className={style.inputField} disabled />
         <input placeholder={email} className={style.inputField} disabled />
       </div>
