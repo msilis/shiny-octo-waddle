@@ -97,8 +97,8 @@ const handleGoogleDisplayNameUpdate = async (
       throw new Error(ERROR_MESSAGE.profileUpdateError);
     }
     const data = await updateResponse.json();
-    console.log(data, "data");
-    setDisplayName(data.googleName);
+
+    setDisplayName(data.displayName);
     showSuccessToast(TOAST_TEXT.profileUpdated);
   } catch (error) {
     showErrorToast(ERROR_MESSAGE.profileUpdateError);

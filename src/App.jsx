@@ -38,8 +38,6 @@ function App() {
   const checkGoogleLoggedIn = () =>
     sessionStorage.getItem(STORAGE_OPTIONS.googleLogin);
 
-  console.log(displayName, "display name from app.jsx");
-
   const contextProps = {
     userId,
     setUserId,

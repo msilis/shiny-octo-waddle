@@ -30,8 +30,6 @@ export default function Profile({
     }
   }
 
-  console.log(displayName, "display name from profile.jsx");
-
   const userContext = useContext(UserContext);
 
   const loggedInWithGoogle = (
