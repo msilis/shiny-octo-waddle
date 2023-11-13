@@ -17,6 +17,7 @@ export default function Profile({
   const firstNameEditInput = useRef();
   const lastNameEditInput = useRef();
   const emailEditInput = useRef();
+  const googleNameEditInput = useRef();
 
   function handleEnterKey(event) {
     if (event.key === "Enter") {
@@ -31,7 +32,11 @@ export default function Profile({
       <div className={style.profileVisible}>
         <h5>{PAGE_TEXT.loggedInWithGoogle}</h5>
         <label htmlFor="displayName">{PAGE_TEXT.displayName}</label>
-        <input placeholder={googleName} className={style.inputField} />
+        <input
+          placeholder={googleName}
+          className={style.inputField}
+          ref={googleNameEditInput}
+        />
         <div className={style.updateButton}>
           <span>{BUTTON_TEXT.updateDisplayName}</span>
         </div>

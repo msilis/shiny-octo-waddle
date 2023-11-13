@@ -1,3 +1,4 @@
+import { API_URL } from "../../Utilities/Config/api";
 import { TOAST_TEXT } from "../../Utilities/Config/ui-text";
 import { showGenericToast } from "../../Utilities/toastGeneric";
 import { showSuccessToast } from "../../Utilities/toastSuccess";
@@ -37,7 +38,7 @@ const handleUpdateClick = (
           : email,
     };
     try {
-      fetch("https://group-class-backend.onrender.com/updateUser", {
+      fetch(API_URL.updateUser, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",

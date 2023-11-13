@@ -23,4 +23,5 @@ export const API_URL = {
   checkGoogleUser: `${import.meta.env.VITE_BACKEND_BASE_URL}/checkGoogleUser`,
   addGoogleUser: `${import.meta.env.VITE_BACKEND_BASE_URL}/addGoogleUser`,
   gameSearch: `${import.meta.env.VITE_BACKEND_BASE_URL}/gameSearch`,
+  updateUser: `${import.meta.env.VITE_BACKEND_BASE_URL}/updateUser`,
 };
