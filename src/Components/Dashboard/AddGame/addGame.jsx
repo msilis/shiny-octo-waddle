@@ -101,7 +101,7 @@ const AddGame = forwardRef(({ setAddGame, userId, username }, ref) => {
     textRows: "6",
     textCols: "75",
     gameSelectPlaceholder: "Select Game Focus",
-    gameTechniqueSelectPlaceholder: "Select Game Focus",
+    gameTechniqueSelectPlaceholder: "Select Pieces",
   };
 
   function handleShowModal() {

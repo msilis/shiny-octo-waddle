@@ -22,4 +22,5 @@ export const API_URL = {
   deleteCreated: `${import.meta.env.VITE_BACKEND_BASE_URL}/deleteCreated`,
   checkGoogleUser: `${import.meta.env.VITE_BACKEND_BASE_URL}/checkGoogleUser`,
   addGoogleUser: `${import.meta.env.VITE_BACKEND_BASE_URL}/addGoogleUser`,
+  gameSearch: `${import.meta.env.VITE_BACKEND_BASE_URL}/gameSearch`,
 };
