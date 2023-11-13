@@ -1,4 +1,5 @@
 import { API_URL } from "../../Utilities/Config/api";
+import { STORAGE_OPTIONS } from "../../Utilities/Config/storage";
 import { ERROR_MESSAGE, TOAST_TEXT } from "../../Utilities/Config/ui-text";
 import { showErrorToast } from "../../Utilities/toastError";
 import { showGenericToast } from "../../Utilities/toastGeneric";
@@ -99,7 +100,7 @@ const handleGoogleDisplayNameUpdate = async (
     const data = await updateResponse.json();
 
     setDisplayName(data.displayName);
-    sessionStorage.setItem("googleDisplayName", data.displayName);
+    sessionStorage.setItem(STORAGE_OPTIONS.googleDisplayName, data.displayName);
     showSuccessToast(TOAST_TEXT.profileUpdated);
   } catch (error) {
     showErrorToast(ERROR_MESSAGE.profileUpdateError);
