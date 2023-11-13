@@ -30,7 +30,6 @@ export default function Profile({
   const loggedInWithGoogle = (
     <div className={style.profileContainer} data-testid="profile-container">
       <div className={style.profileVisible}>
-        <h5>{PAGE_TEXT.loggedInWithGoogle}</h5>
         <label htmlFor="displayName">{PAGE_TEXT.displayName}</label>
         <input
           placeholder={userContext.displayName}
@@ -40,6 +39,7 @@ export default function Profile({
         <div className={style.updateButton}>
           <span>{BUTTON_TEXT.updateDisplayName}</span>
         </div>
+        <h5>{PAGE_TEXT.loggedInWithGoogle}</h5>
         <input placeholder={googleName} className={style.inputField} disabled />
         <input placeholder={email} className={style.inputField} disabled />
       </div>

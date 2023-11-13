@@ -31,15 +31,18 @@ const checkGoogleUser = (loginProps) => {
         STORAGE_OPTIONS.googleDisplayName,
         jsonResponse.displayName
       );
+      loginProps.setDisplayName(jsonResponse.displayName);
     });
 };
 
 const createGoogleUser = (loginProps) => {
   const googleUserToCreate = {
     email: sessionStorage.getItem(STORAGE_OPTIONS.googleLoginEmail),
-    name: sessionStorage.getItem(STORAGE_OPTIONS.googleLoginName),
+    fullName: sessionStorage.getItem(STORAGE_OPTIONS.googleLoginName),
     displayName: sessionStorage.getItem(STORAGE_OPTIONS.googleLoginName),
   };
+
+  console.log("googleUserToCreate", googleUserToCreate);
   fetch(API_URL.addGoogleUser, {
     method: "POST",
     headers: {
