@@ -1,11 +1,7 @@
 import style from "./profile.module.css";
 import { useRef, useContext } from "react";
 import { handleUpdateClick } from "./profile-utils";
-import {
-  BUTTON_TEXT,
-  PAGE_TEXT,
-  PLACEHOLDER_TEXT,
-} from "../../Utilities/Config/ui-text";
+import { BUTTON_TEXT, PAGE_TEXT } from "../../Utilities/Config/ui-text";
 import { UserContext } from "../../userContext";
 
 export default function Profile({
