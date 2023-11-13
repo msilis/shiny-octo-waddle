@@ -24,7 +24,6 @@ const checkGoogleUser = (loginProps) => {
       }
     })
     .then((jsonResponse) => {
-      console.log({ jsonResponse });
       loginProps.setUserId(jsonResponse._id);
       sessionStorage.setItem(STORAGE_OPTIONS.googleUserId, jsonResponse._id);
       sessionStorage.setItem(
@@ -42,7 +41,6 @@ const createGoogleUser = (loginProps) => {
     displayName: sessionStorage.getItem(STORAGE_OPTIONS.googleLoginName),
   };
 
-  console.log("googleUserToCreate", googleUserToCreate);
   fetch(API_URL.addGoogleUser, {
     method: "POST",
     headers: {
