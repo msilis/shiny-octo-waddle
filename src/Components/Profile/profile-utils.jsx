@@ -99,6 +99,7 @@ const handleGoogleDisplayNameUpdate = async (
     const data = await updateResponse.json();
 
     setDisplayName(data.displayName);
+    sessionStorage.setItem("googleDisplayName", data.displayName);
     showSuccessToast(TOAST_TEXT.profileUpdated);
   } catch (error) {
     showErrorToast(ERROR_MESSAGE.profileUpdateError);
