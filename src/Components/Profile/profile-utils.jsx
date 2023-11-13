@@ -72,14 +72,16 @@ const handleUpdateClick = (
   }
 };
 
-const handleGoogleDisplayNameUpdate = async (googleNameEditInput) => {
-  const userContext = useContext(UserContext);
+const handleGoogleDisplayNameUpdate = async (
+  googleNameEditInput,
+  setDisplayName
+) => {
   if (googleNameEditInput.current?.value === "") {
     showGenericToast(TOAST_TEXT.noChangeMessage);
   }
   const updatedGoogleInfo = {
-    userId: sessionStorage.getItem("googleUserId"),
-    googleName: googleNameEditInput.current?.value,
+    googleUserId: sessionStorage.getItem("googleUserId"),
+    googleDisplayName: googleNameEditInput.current?.value,
   };
   try {
     const updateResponse = await fetch(API_URL.updateGoogleDisplayName, {
@@ -95,7 +97,8 @@ const handleGoogleDisplayNameUpdate = async (googleNameEditInput) => {
       throw new Error(ERROR_MESSAGE.profileUpdateError);
     }
     const data = await updateResponse.json();
-    userContext.setDisplayName(data.googleName);
+    console.log(data, "data");
+    setDisplayName(data.googleName);
     showSuccessToast(TOAST_TEXT.profileUpdated);
   } catch (error) {
     showErrorToast(ERROR_MESSAGE.profileUpdateError);
@@ -103,4 +106,4 @@ const handleGoogleDisplayNameUpdate = async (googleNameEditInput) => {
   }
 };
 
-export { handleUpdateClick };
+export { handleUpdateClick, handleGoogleDisplayNameUpdate };
