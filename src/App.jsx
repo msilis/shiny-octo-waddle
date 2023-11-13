@@ -48,8 +48,6 @@ function App() {
     setDisplayName,
   };
 
-  console.log("Display name: ", displayName);
-
   useEffect(() => {
     if (sessionStorage.getItem(STORAGE_OPTIONS.loggedIn)) {
       setLoggedIn(true);
