@@ -1,4 +1,4 @@
-import { test } from "vitest";
+import { test, expect, vi } from "vitest";
 import { handleUpdateClick } from "./profile-utils";
 import {
   showGenericToast,
@@ -6,10 +6,10 @@ import {
 } from "../../Utilities/toastGeneric";
 import { TOAST_TEXT } from "../../Utilities/Config/ui-text";
 import jest from "jest-mock";
-import fetchMock from "fetch-mock";
+// import fetchMock from "fetch-mock";
 
 test("handleUpdateClick", async ({ mock }) => {
-  const fetchMock = mock.fn(fetch, () => ({
+  const fetchMock = vi.fn(fetch, () => ({
     json: () => ({
       firstName: "John",
       lastName: "Doe",
@@ -21,9 +21,9 @@ test("handleUpdateClick", async ({ mock }) => {
   const firstNameEditInput = { current: { value: "John" } };
   const lastNameEditInput = { current: { value: "Doe" } };
   const emailEditInput = { current: { value: "john.doe@example.com" } };
-  const setFirstName = mock.fn();
-  const setLastName = mock.fn();
-  const setEmail = mock.fn();
+  const setFirstName = vi.fn();
+  const setLastName = vi.fn();
+  const setEmail = vi.fn();
 
   await handleUpdateClick(
     firstNameEditInput,
