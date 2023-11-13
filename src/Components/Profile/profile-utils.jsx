@@ -4,8 +4,6 @@ import { ERROR_MESSAGE, TOAST_TEXT } from "../../Utilities/Config/ui-text";
 import { showErrorToast } from "../../Utilities/toastError";
 import { showGenericToast } from "../../Utilities/toastGeneric";
 import { showSuccessToast } from "../../Utilities/toastSuccess";
-import { UserContext } from "../../userContext";
-import { useContext } from "react";
 
 const handleUpdateClick = (
   firstNameEditInput,
@@ -81,7 +79,7 @@ const handleGoogleDisplayNameUpdate = async (
     showGenericToast(TOAST_TEXT.noChangeMessage);
   }
   const updatedGoogleInfo = {
-    googleUserId: sessionStorage.getItem("googleUserId"),
+    googleUserId: sessionStorage.getItem(STORAGE_OPTIONS.googleUserId),
     googleDisplayName: googleNameEditInput.current?.value,
   };
   try {
