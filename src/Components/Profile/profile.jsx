@@ -1,6 +1,9 @@
 import style from "./profile.module.css";
 import { useRef, useContext } from "react";
-import { handleUpdateClick } from "./profile-utils";
+import {
+  handleUpdateClick,
+  handleGoogleDisplayNameUpdate,
+} from "./profile-utils";
 import { BUTTON_TEXT, PAGE_TEXT } from "../../Utilities/Config/ui-text";
 import { UserContext } from "../../userContext";
 
@@ -13,10 +16,13 @@ export default function Profile({
   setLastName,
   setEmail,
   googleName,
+  displayName,
+  setDisplayName,
 }) {
   const firstNameEditInput = useRef();
   const lastNameEditInput = useRef();
   const emailEditInput = useRef();
+  const googleNameEditInput = useRef();
 
   function handleEnterKey(event) {
     if (event.key === "Enter") {
@@ -29,6 +35,20 @@ export default function Profile({
   const loggedInWithGoogle = (
     <div className={style.profileContainer} data-testid="profile-container">
       <div className={style.profileVisible}>
+        <label htmlFor="displayName">{PAGE_TEXT.displayName}</label>
+        <input
+          placeholder={userContext.displayName}
+          className={style.inputField}
+          ref={googleNameEditInput}
+        />
+        <div
+          className={style.updateButton}
+          onClick={() =>
+            handleGoogleDisplayNameUpdate(googleNameEditInput, setDisplayName)
+          }
+        >
+          <span>{BUTTON_TEXT.updateDisplayName}</span>
+        </div>
         <h5>{PAGE_TEXT.loggedInWithGoogle}</h5>
         <input placeholder={googleName} className={style.inputField} disabled />
         <input placeholder={email} className={style.inputField} disabled />

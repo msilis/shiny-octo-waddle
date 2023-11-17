@@ -8,6 +8,7 @@ import { STORAGE_OPTIONS } from "../../Utilities/Config/storage";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { googleLoginSuccess } from "./googleLogin";
 import { showErrorToast } from "../../Utilities/toastError";
+
 import {
   ERROR_MESSAGE,
   PAGE_TEXT,
@@ -24,6 +25,8 @@ export default function Login({
   setUserId,
   setUsername,
   setGoogleName,
+  displayName,
+  setDisplayName,
 }) {
   const loginUsername = useRef();
   const loginPassword = useRef();
@@ -45,6 +48,8 @@ export default function Login({
     setUsername,
     setLoading,
     setGoogleName,
+    displayName,
+    setDisplayName,
   };
 
   function checkLoggedIn() {

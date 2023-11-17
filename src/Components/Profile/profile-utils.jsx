@@ -1,4 +1,7 @@
-import { TOAST_TEXT } from "../../Utilities/Config/ui-text";
+import { API_URL } from "../../Utilities/Config/api";
+import { STORAGE_OPTIONS } from "../../Utilities/Config/storage";
+import { ERROR_MESSAGE, TOAST_TEXT } from "../../Utilities/Config/ui-text";
+import { showErrorToast } from "../../Utilities/toastError";
 import { showGenericToast } from "../../Utilities/toastGeneric";
 import { showSuccessToast } from "../../Utilities/toastSuccess";
 
@@ -37,7 +40,7 @@ const handleUpdateClick = (
           : email,
     };
     try {
-      fetch("https://group-class-backend.onrender.com/updateUser", {
+      fetch(API_URL.updateUser, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
@@ -62,9 +65,45 @@ const handleUpdateClick = (
           emailEditInput.current.value = "";
         });
     } catch (err) {
+      showErrorToast(ERROR_MESSAGE.profileUpdateError);
       console.log(err);
     }
   }
 };
 
-export { handleUpdateClick };
+const handleGoogleDisplayNameUpdate = async (
+  googleNameEditInput,
+  setDisplayName
+) => {
+  if (googleNameEditInput.current?.value === "") {
+    showGenericToast(TOAST_TEXT.noChangeMessage);
+  }
+  const updatedGoogleInfo = {
+    googleUserId: sessionStorage.getItem(STORAGE_OPTIONS.googleUserId),
+    googleDisplayName: googleNameEditInput.current?.value,
+  };
+  try {
+    const updateResponse = await fetch(API_URL.updateGoogleDisplayName, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+        "X-custom-cookie": "jwt",
+      },
+      credentials: "include",
+      body: JSON.stringify(updatedGoogleInfo),
+    });
+    if (!updateResponse.ok) {
+      throw new Error(ERROR_MESSAGE.profileUpdateError);
+    }
+    const data = await updateResponse.json();
+
+    setDisplayName(data.displayName);
+    sessionStorage.setItem(STORAGE_OPTIONS.googleDisplayName, data.displayName);
+    showSuccessToast(TOAST_TEXT.profileUpdated);
+  } catch (error) {
+    showErrorToast(ERROR_MESSAGE.profileUpdateError);
+    console.log(error);
+  }
+};
+
+export { handleUpdateClick, handleGoogleDisplayNameUpdate };

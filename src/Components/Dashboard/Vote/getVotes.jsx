@@ -70,7 +70,10 @@ function getOnlyVotes(setVoteTotal) {
         }
         return response.json();
       })
-      .then((jsonResponse) => setVoteTotal(jsonResponse))
+      .then((jsonResponse) => {
+        console.log("Vote total: ", jsonResponse);
+        return setVoteTotal(jsonResponse);
+      })
       .then(() => {
         resolve();
       })

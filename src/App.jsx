@@ -28,6 +28,7 @@ function App() {
   const [userId, setUserId] = useState("");
   const [seeProfile, setSeeProfile] = useState(false);
   const [mainDisplay, setMainDisplay] = useState(PAGE_NAVIGATION.dashboard);
+  const [displayName, setDisplayName] = useState("");
 
   const suspenseLoading = (
     <div className="loadingMessage">
@@ -43,6 +44,8 @@ function App() {
     setEmail,
     setLoggedIn,
     checkGoogleLoggedIn,
+    displayName,
+    setDisplayName,
   };
 
   useEffect(() => {
@@ -79,6 +82,8 @@ function App() {
               setUserId={setUserId}
               setUsername={setUsername}
               setGoogleName={setGoogleName}
+              displayName={displayName}
+              setDisplayName={setDisplayName}
             />
           }
         ></Route>
@@ -102,6 +107,8 @@ function App() {
                 mainDisplay={mainDisplay}
                 setMainDisplay={setMainDisplay}
                 googleName={googleName}
+                displayName={displayName}
+                setDisplayName={setDisplayName}
               />
             </Protected>
           }
