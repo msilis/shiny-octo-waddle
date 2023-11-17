@@ -29,6 +29,7 @@ export const PAGE_TEXT = {
   iVotedText: "I voted!",
   voteSectionText:
     "Vote on games on this page. If a game gets to 25 votes, it will be added to the main games database.",
+  displayName: "Display Name",
 };
 
 export const ERROR_MESSAGE = {
@@ -53,6 +54,7 @@ export const ERROR_MESSAGE = {
     "That username already exists, please pick a different username.",
   passwordsDoNotMatch: "Passwords do not match!",
   noGamesToShowText: "There are no games to vote on now...",
+  profileUpdateError: "There was an error updating your profile",
 };
 
 export const BUTTON_TEXT = {
@@ -77,6 +79,7 @@ export const BUTTON_TEXT = {
   clearButton: "Clear",
   moreInfoButton: "More Info",
   xButton: "x",
+  updateDisplayName: "Update",
 };
 
 export const PLACEHOLDER_TEXT = {

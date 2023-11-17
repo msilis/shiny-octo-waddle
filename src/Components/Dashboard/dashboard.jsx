@@ -26,6 +26,8 @@ export default function Dashboard({
   mainDisplay,
   setMainDisplay,
   googleName,
+  displayName,
+  setDisplayName,
 }) {
   const [addGame, setAddGame] = useState(false);
   const [tagArray, setTagArray] = useState([]);
@@ -75,6 +77,8 @@ export default function Dashboard({
             setLastName={setLastName}
             setEmail={setEmail}
             googleName={googleName}
+            displayName={displayName}
+            setDisplayName={setDisplayName}
           />
         )}
       </div>
